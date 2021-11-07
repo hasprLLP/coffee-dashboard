@@ -1,8 +1,22 @@
-import Head from "next/head";
 import "../styles/main.scss";
+import Head from "next/head";
+import { useEffect } from "react";
+import Scrollbar from "smooth-scrollbar";
+import EdgeDamping from "@/helpers/edgeDamping";
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
+  //$ Run on Page Load
+  useEffect(() => {
+    const view = document.getElementById("view-main"); //` Declare View Reference to be Jellyfied
+    const settings = {
+      damping: 0.075,
+      renderByPixels: true,
+    }; //` Options
+    Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
+    const smoothscroll = Scrollbar.init(view, settings);
+  }, []);
+
   return (
     <>
       {/* //& Head & Meta Tags */}
@@ -15,10 +29,7 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=3,user-scalable=yes" />
         <meta name="msapplication-TileColor" content="#000" />
         <meta name="theme-color" content="#000" />
-        <meta
-          name="keywords"
-          content="put,keywords,here,30,word,limit"
-        />
+        <meta name="keywords" content="put,keywords,here,30,word,limit" />
         <meta
           name="description"
           content="put description here, this much word limit dont exceed by even one word, this much word limit dont exceed by even one word, , this much word limit dont exceed by ..."
@@ -45,6 +56,8 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       {/* //& Site Code */}
+      {/* //$ Dashboard */}
+      <div style={{ width: "20vw", height: "100vh", position: "fixed", left: "0px", top: "0px", background: "lightgreen" }} />
       {/* //$ App Entry Point */}
       <Component {...pageProps} />
     </>

@@ -5,6 +5,7 @@
       "paths": {
         "@/components/*": ["src/components/*"],
         "@/utilities/*": ["src/utilities/*"],
+        "@/helpers/*": ["src/helpers/*"],
       }
     },
     "exclude": ["node_modules", "out"]
