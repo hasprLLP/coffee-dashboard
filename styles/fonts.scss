@@ -1,0 +1,32 @@
+//& Gilroy Font
+/*  
+    Font Weight Chart
+    400: Regular
+    500: Medium
+    600: Semi Bold
+*/
+
+//$ 400: Light
+@font-face {
+  font-family: "Gilroy";
+  src: url("/static/fonts/Gilroy-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+//$ 500: Regular
+@font-face {
+  font-family: "Gilroy";
+  src: url("/static/fonts/Gilroy-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+//$ 600: Semi Bold
+@font-face {
+  font-family: "Gilroy";
+  src: url("/static/fonts/Gilroy-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}

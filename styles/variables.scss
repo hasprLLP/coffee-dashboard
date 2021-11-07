@@ -1,0 +1,57 @@
+/* Main Colors */
+$color-base: #fff;
+$color-graybase: #000;
+
+$color-primary: #0a57f4;
+$color-secondary: #00092b;
+
+$color-fill: #f4f6f8;
+$color-smooth: #b2b2b2;
+$color-muted: #ecf0f3;
+$color-disabled: #8c8c8c;
+
+$color-error: #eb4242;
+$color-info: #01d7fd;
+$color-success: #51c67d;
+$color-warning: #ff9f4d;
+$color-danger: $color-error;
+
+$color-bg: $color-base;
+$color-text: #000;
+$color-link: inherit;
+$color-link-hover: inherit;
+
+/* Project Colors */
+$color-light-red: #ff6961;
+$color-light-green: #51c67d;
+
+/* Fonts */
+$font-family: "Gilroy", sans-serif;
+$font-family-secondary: sans-serif;
+$font-size: 14px;
+$font-weight: normal;
+$letter-spacing: normal;
+$line-height: normal;
+
+/* Screen sizes */
+$screen-xs: 375px;
+$screen-sm: 768px;
+$screen-md: 1024px;
+$screen-lg: 1200px;
+$screen-ml: 1400px;
+$screen-xl: 1600px;
+$screen-ul: 1900px;
+
+$screen-xs-min: $screen-xs;
+$screen-xs-max: ($screen-sm - 1);
+$screen-sm-min: $screen-sm;
+$screen-sm-max: ($screen-md - 1);
+$screen-md-min: $screen-md;
+$screen-md-max: ($screen-lg - 1);
+$screen-lg-min: $screen-lg;
+$screen-lg-max: ($screen-ml - 1);
+$screen-ml-min: $screen-ml;
+$screen-ml-max: ($screen-xl - 1);
+$screen-xl-min: $screen-xl;
+$screen-xl-max: ($screen-ul - 1);
+$screen-ul-min: $screen-ul;

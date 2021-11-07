@@ -1,0 +1,11 @@
+{
+    "_comment": "Module to Declare Path to Folders",
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/components/*": ["src/components/*"],
+        "@/utilities/*": ["src/utilities/*"],
+      }
+    },
+    "exclude": ["node_modules", "out"]
+  }
