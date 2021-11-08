@@ -18,16 +18,23 @@ $color-danger: $color-error;
 
 $color-bg: $color-base;
 $color-text: #333333;
+$color-disabled: #8A92A6;
+$color-active: #38B2AC;
 $color-link: inherit;
 $color-link-hover: inherit;
 
 /* Project Colors */
-$color-teal: #e9f5f4;
+$color-teal: #38B2AC;
 
 /* Fonts */
 $font-family: "Gilroy", sans-serif;
 $font-family-secondary: sans-serif;
-$font-size: 14px;
+$h1: 7vw;
+$h2: 5vw;
+$h3: 3vw;
+$h4: 1vw;
+$h5: 0.85vw;
+$h6: 0.7vw;
 $font-weight: normal;
 $letter-spacing: normal;
 $line-height: normal;
@@ -54,3 +61,30 @@ $screen-ml-max: ($screen-xl - 1);
 $screen-xl-min: $screen-xl;
 $screen-xl-max: ($screen-ul - 1);
 $screen-ul-min: $screen-ul;
+
+/* Custom Mixins */
+@mixin center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin space-between {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin row {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+@mixin column {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}

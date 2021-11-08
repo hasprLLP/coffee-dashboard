@@ -13,7 +13,7 @@ body {
   color: $color-text;
 
   font-family: $font-family !important;
-  font-size: $font-size;
+  font-size: $h4;
   letter-spacing: $letter-spacing;
   line-height: $line-height;
   text-align: left;
@@ -111,4 +111,12 @@ blockquote {
 
 em {
   font-style: normal;
+}
+
+.-dark-mode {
+  filter: invert(100%) !important;
+  transition: all 2s !important;
+  html, img, video, iframe {
+    filter: invert(1) hue-rotate(180deg)
+}
 }

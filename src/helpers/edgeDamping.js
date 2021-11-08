@@ -14,6 +14,7 @@ class EdgeDamping extends Scrollbar.ScrollbarPlugin {
             this.lockY = null;
         }
 
+        delta["x"] = 0;
         return delta;
     }
 

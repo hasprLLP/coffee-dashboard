@@ -1,23 +1,29 @@
 import "../styles/main.scss";
 import Head from "next/head";
+import Header from "@/blocks/header";
+import Footer from "@/blocks/footer";
+import Drawer from "@/blocks/drawer";
 import { useEffect } from "react";
 import Scrollbar from "smooth-scrollbar";
 import EdgeDamping from "@/helpers/edgeDamping";
+import { useRouter } from "next/router";
+
 import { ChakraProvider } from "@chakra-ui/react";
-import Drawer from "@/blocks/drawer";
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
   //$ Run on Page Load
   useEffect(() => {
-    const view = document.getElementById("view-main"); //` Declare View Reference to be Jellyfied
+    const view = document.querySelector(".home"); //` Declare View Reference to be Jellyfied
     const settings = {
       damping: 0.075,
       renderByPixels: true,
     }; //` Options
     Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
-    const smoothscroll = Scrollbar.init(view, settings);
-  }, []);
+    Scrollbar.init(view, settings);
+  }, [router]);
 
   return (
     <>
@@ -58,11 +64,17 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       {/* //& Site Code */}
-      {/* //$ Dashboard */}
-      <Drawer />
-      {/* //$ App Entry Point */}
       <ChakraProvider>
-        <Component {...pageProps} />
+        {/* //$ Dashboard */}
+        <Drawer />
+        {/* //$ Header */}
+        <Header />
+        {/* //$ Footer */}
+        <Footer />
+        {/* //$ App Entry Point */}
+        <div id="view-main">
+          <Component {...pageProps} />
+        </div>
       </ChakraProvider>
     </>
   );

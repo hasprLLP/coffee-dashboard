@@ -2,11 +2,14 @@
   $root: &;
 
   height: 100vh;
+  background: $color-bg;
 
   padding-left: 13.5vw;  //` Start off everything beside Drawer
 
-  .driver {
-      padding-left: 4vw;
-      padding-top: 4vw;
-    }
+}
+
+.driver {
+  padding-left: 4vw;
+  padding-top: 4vw;
+  height: 200vh;
 }
