@@ -1,0 +1,12 @@
+.home {
+  $root: &;
+
+  height: 100vh;
+
+  padding-left: 13.5vw;  //` Start off everything beside Drawer
+
+  .driver {
+      padding-left: 4vw;
+      padding-top: 4vw;
+    }
+}

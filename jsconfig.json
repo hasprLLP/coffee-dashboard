@@ -6,6 +6,7 @@
         "@/components/*": ["src/components/*"],
         "@/utilities/*": ["src/utilities/*"],
         "@/helpers/*": ["src/helpers/*"],
+        "@/blocks/*": ["src/blocks/*"],
       }
     },
     "exclude": ["node_modules", "out"]

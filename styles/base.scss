@@ -12,7 +12,7 @@ body {
   background: $color-bg;
   color: $color-text;
 
-  font-family: $font-family;
+  font-family: $font-family !important;
   font-size: $font-size;
   letter-spacing: $letter-spacing;
   line-height: $line-height;
@@ -58,6 +58,8 @@ button,
 label,
 input {
   -webkit-tap-highlight-color: transparent;
+  font-weight: 500;
+  color: $color-text;
 }
 
 //& Media

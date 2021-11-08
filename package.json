@@ -4,7 +4,6 @@
   "author": "Haspr",
   "private": true,
   "dependencies": {
-    "@chakra-ui/input": "^1.2.12",
     "@chakra-ui/react": "^1.6.12",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

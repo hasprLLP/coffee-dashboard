@@ -1098,7 +1098,7 @@
     "@chakra-ui/hooks" "1.6.2"
     "@chakra-ui/utils" "1.8.4"
 
-"@chakra-ui/input@1.2.12", "@chakra-ui/input@^1.2.12":
+"@chakra-ui/input@1.2.12":
   version "1.2.12"
   resolved "https://registry.yarnpkg.com/@chakra-ui/input/-/input-1.2.12.tgz#bc6f4cdcdb4bc7b135def1dadc6afb4b168a55ce"
   integrity sha512-eiYVXIDAWCzAUNaDfsbHcr3xLwyY3K8w1VIczjxlnEl/s9zPczKO44OuP3aM/zQ5JHio3YPkR2WLQ0/8jdBckw==

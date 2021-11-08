@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Scrollbar from "smooth-scrollbar";
 import EdgeDamping from "@/helpers/edgeDamping";
 import { ChakraProvider } from "@chakra-ui/react";
+import Drawer from "@/blocks/drawer";
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
@@ -58,7 +59,7 @@ export default function MyApp({ Component, pageProps }) {
 
       {/* //& Site Code */}
       {/* //$ Dashboard */}
-      <div style={{ width: "20vw", height: "100vh", position: "fixed", left: "0px", top: "0px", background: "lightgreen", }} />
+      <Drawer />
       {/* //$ App Entry Point */}
       <ChakraProvider>
         <Component {...pageProps} />
