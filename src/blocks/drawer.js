@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Accordion } from "@chakra-ui/react";
-import DrawerItem from "@/components/accordion/accordionItem";
+import DrawerItem from "@/components/accordionItem";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 

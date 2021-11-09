@@ -1,3 +1,4 @@
+//& Import [#IMPORTS#]
 import "../styles/main.scss";
 import Head from "next/head";
 import Header from "@/blocks/header";
@@ -7,14 +8,13 @@ import { useEffect } from "react";
 import Scrollbar from "smooth-scrollbar";
 import EdgeDamping from "@/helpers/edgeDamping";
 import { useRouter } from "next/router";
-
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, theme } from "@chakra-ui/react";
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  //$ Run on Page Load
+  //$ Run on Page Load - Scroll Jack
   useEffect(() => {
     const view = document.querySelector(".home"); //` Declare View Reference to be Jellyfied
     const settings = {
@@ -64,7 +64,7 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       {/* //& Site Code */}
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         {/* //$ Dashboard */}
         <Drawer />
         {/* //$ Header */}
