@@ -23,9 +23,9 @@ const DrawerItem = ({ icon, name, pages, active, setter }) => {
           </h2>
           <AccordionPanel pb={4}>
             {pages &&
-              pages.map((page) => {
+              pages.map((page, i) => {
                 return (
-                  <Box flex="1" key={page} onClick={() => setter(page)}>
+                  <Box flex="1" key={i} onClick={() => setter(page)}>
                     <div className="drawer-item">
                       <div className="drawer-item-row -left">
                         <div className="drawer-item-icon">
