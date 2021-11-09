@@ -1,0 +1,12 @@
+.input {
+  $root: &;
+
+  min-width: 320px;
+  max-width: 520px;
+
+  &-title {
+    font-family: "Gilroy";
+    font-size: $h6;
+    font-weight: 500;
+  }
+}

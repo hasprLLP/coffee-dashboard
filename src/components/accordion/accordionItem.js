@@ -14,7 +14,7 @@ const DrawerItem = ({ icon, name, pages, active, setter }) => {
                     <div className="drawer-item-icon">
                       <Image alt="owner" src={`/static/svg/${icon}-${isExpanded ? "on" : "off"}.svg`} layout="fill" size="1vw" objectFit="contain" />
                     </div>
-                    <div className={isExpanded ? "drawer-item-label-active" : "drawer-item-label"}>{name}</div>
+                    <h2 className={isExpanded ? "drawer-item-label-active" : "drawer-item-label"}>{name}</h2>
                   </div>
                 </div>
               </Box>
@@ -37,7 +37,7 @@ const DrawerItem = ({ icon, name, pages, active, setter }) => {
                             objectFit="contain"
                           />
                         </div>
-                        <div className={isExpanded && active === page ? "drawer-item-label-active" : "drawer-item-label"}>{page}</div>
+                        <h2 className={isExpanded && active === page ? "drawer-item-label-active" : "drawer-item-label"}>{page}</h2>
                       </div>
                     </div>
                   </Box>

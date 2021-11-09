@@ -1,0 +1,17 @@
+.driver {
+  $root: &;
+
+  &-title {
+    font-size: $h3;
+    font-weight: 500;
+    margin-bottom: 3.5vw;
+  }
+
+  &-form {
+    width: 70vw;
+    height: 40vh;
+    @include row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

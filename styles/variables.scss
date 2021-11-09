@@ -19,6 +19,8 @@ $color-danger: $color-error;
 $color-bg: $color-base;
 $color-text: #333333;
 $color-disabled: #8A92A6;
+$color-stroke: #4F4F4F;
+$color-bg-dark: #1E1E1E;
 $color-active: #38B2AC;
 $color-link: inherit;
 $color-link-hover: inherit;
@@ -29,9 +31,9 @@ $color-teal: #38B2AC;
 /* Fonts */
 $font-family: "Gilroy", sans-serif;
 $font-family-secondary: sans-serif;
-$h1: 7vw;
-$h2: 5vw;
-$h3: 3vw;
+$h1: 5vw;
+$h2: 3vw;
+$h3: 1.65vw;
 $h4: 1vw;
 $h5: 0.85vw;
 $h6: 0.7vw;
@@ -79,12 +81,10 @@ $screen-ul-min: $screen-ul;
 
 @mixin row {
   display: flex;
-  width: 100%;
   flex-direction: row;
 }
 
 @mixin column {
   display: flex;
-  width: 100%;
   flex-direction: column;
 }

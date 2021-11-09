@@ -4,19 +4,13 @@ import DrawerItem from "@/components/accordion/accordionItem";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-
 export default function Drawer() {
   const [activePage, setActivePage] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-
     if (activePage === "Create Driver") router.push("/driver");
-    return()=>{
-
-    }
-
-
+    return () => {};
   }, [activePage]);
 
   return (

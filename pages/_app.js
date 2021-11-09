@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }) {
       renderByPixels: true,
     }; //` Options
     Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
-    Scrollbar.init(view, settings);
+    view && Scrollbar.init(view, settings);
   }, [router]);
 
   return (
