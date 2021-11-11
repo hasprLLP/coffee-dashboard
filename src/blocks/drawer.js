@@ -14,7 +14,7 @@ export default function Drawer() {
   }, [activePage]);
 
   return (
-    <div className="drawer">
+    <div className="drawer fixed">
       <Image alt="logo" src="/static/svg/logo.svg" layout="responsive" width="14.5vw" height="4.5vw" objectFit="contain" />
       <div className="drawer-gap" />
       <Image alt="logo" src="/static/svg/dash-off.svg" layout="responsive" width="14.5vw" height="4.5vw" objectFit="contain" />

@@ -4,6 +4,8 @@ import Head from "next/head";
 import Header from "@/blocks/header";
 import Footer from "@/blocks/footer";
 import Drawer from "@/blocks/drawer";
+import Login from "@/page/login";
+import { Global } from "@/global/global";
 import { useEffect } from "react";
 import Scrollbar from "smooth-scrollbar";
 import EdgeDamping from "@/helpers/edgeDamping";
@@ -65,6 +67,8 @@ export default function MyApp({ Component, pageProps }) {
 
       {/* //& Site Code */}
       <ChakraProvider theme={theme}>
+        {/* //$ Global Context API */}
+        <Login />
         {/* //$ Dashboard */}
         <Drawer />
         {/* //$ Header */}
@@ -73,7 +77,9 @@ export default function MyApp({ Component, pageProps }) {
         <Footer />
         {/* //$ App Entry Point */}
         <div id="view-main">
-          <Component {...pageProps} />
+          <Global>
+            <Component {...pageProps} />
+          </Global>
         </div>
       </ChakraProvider>
     </>

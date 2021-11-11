@@ -8,6 +8,8 @@
         "@/helpers/*": ["src/helpers/*"],
         "@/blocks/*": ["src/blocks/*"],
         "@/pages/*": ["pages/*"],
+        "@/global/*": ["src/global/*"],
+        "@/page/*": ["src/page/*"],
       }
     },
     "exclude": ["node_modules", "out"]

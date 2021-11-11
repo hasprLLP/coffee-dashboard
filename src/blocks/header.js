@@ -8,7 +8,7 @@ export default function Header() {
   const [dark, setDark] = useState(false);
 
   return (
-    <div className="header">
+    <div className="header fixed">
       <div
         className="header-dark-mode"
         onClick={() => {
