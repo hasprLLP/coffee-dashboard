@@ -114,30 +114,3 @@ blockquote {
 em {
   font-style: normal;
 }
-
-.-dark-mode {
-  filter: invert(100%) !important;
-  transition: all 2s !important;
-  html {
-    filter: invert(1);
-  }
-}
-.-normalize-colors {
-  img,
-  video,
-  iframe,
-  Button,
-  Image,
-  svg,
-  h2 {
-    filter: invert(1);
-  }
-  Input {
-    filter: invert(1);
-    background: $color-bg-dark !important;
-    border-color: $color-stroke !important;
-  }
-}
-.-hue-fix {
-  filter: invert(1) hue-rotate(180deg);
-}
