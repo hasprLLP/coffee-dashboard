@@ -9,9 +9,10 @@
 
   &-form {
     width: 70vw;
-    height: 40vh;
+    height: auto;
     @include row;
     justify-content: space-between;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
 }

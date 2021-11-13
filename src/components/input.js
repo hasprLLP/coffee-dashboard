@@ -11,8 +11,8 @@ const TextField = ({ title, placeholder, value, setter }) => {
         size="md"
         bg="rgba(242, 242, 242, 0.4)"
         focusBorderColor="#38B2AC"
-        marginBottom="1vw"
-        marginTop="0.5vw"
+        marginBottom="2vw"
+        marginTop="1vw"
         placeholder={placeholder}
       />
     </div>
