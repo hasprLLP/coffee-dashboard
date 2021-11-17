@@ -18,14 +18,15 @@ import {
 
 export default function Login() {
   const router = useRouter();
+  //! Page is refreshing after receiving a token <on login>
   const login = async (e) => {
+    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
     let data = {
       method: 'POST',
       // credentials: 'include',
       // headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: 'luvvjeri@gmail.com', password: '1234' }),
     };
-    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
     const res = await fetch('http://localhost:8080/api/v1/authentication/sign_in', data);
     console.log(res);
   };
@@ -63,7 +64,7 @@ export default function Login() {
                     <Link>forgot password?</Link>
                   </FormHelperText>
                 </FormControl>
-                <Button borderRadius={0} type='submit' variant='solid' colorScheme='teal' width='full'>
+                <Button borderRadius={0} onClick={login} type='submit' variant='solid' colorScheme='teal' width='full'>
                   Login
                 </Button>
               </Stack>
