@@ -15,20 +15,25 @@ import {
   FormHelperText,
   InputRightElement,
 } from '@chakra-ui/react';
-
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 export default function Login() {
   const router = useRouter();
   //! Page is refreshing after receiving a token <on login>
   const login = async (e) => {
-    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
-    let data = {
-      method: 'POST',
-      // credentials: 'include',
-      // headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'luvvjeri@gmail.com', password: '1234' }),
-    };
-    const res = await fetch('http://localhost:8080/api/v1/authentication/sign_in', data);
-    console.log(res);
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/authentication/sign_in`, {
+        email: 'luvvjeri@gmail.com',
+        password: '1234',
+      });
+      if (response.status === 200) {
+        console.log('login successful');
+        router.pop('/login');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   const [showPassword, setShowPassword] = useState(false);
 
