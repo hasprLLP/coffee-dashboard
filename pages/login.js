@@ -23,13 +23,19 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8080/api/v1/authentication/sign_in`, {
-        email: 'luvvjeri@gmail.com',
-        password: '1234',
-      });
+      let data = {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ email: 'luvvjeri@gmail.com', password: '1234' }),
+        headers: {
+          'Content-Type': 'application/json', // Your headers
+        },
+      };
+      const response = await fetch(`http://localhost:8080/api/v1/authentication/sign_in`, data);
+      localStorage.setItem('user', response.data);
       if (response.status === 200) {
         console.log('login successful');
-        router.pop('/login');
+        router.push('/');
       }
     } catch (err) {
       console.log(err);

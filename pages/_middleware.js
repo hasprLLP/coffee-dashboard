@@ -4,20 +4,29 @@ import axios from 'axios';
 
 export async function middleware(req, res) {
   try {
+    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
     let data = {
       method: 'POST',
-      mode: 'no-cors', // It can be no-cors, cors, same-origin
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json', // Your headers
+        'Content-Type': 'application/json',
+        authorization: req.cookies.jwt,
       },
     };
-    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
-
     const { pathname } = req.nextUrl;
 
+    if (pathname === '/login') {
+      console.log('on Login page');
+      const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
+
+      if (is_auth.status === 200) {
+        return NextResponse.redirect('/');
+      } else {
+        return NextResponse.next();
+      }
+    }
+
     if (pathname === '/') {
-      console.log('verify needed', pathname);
       const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
 
       if (is_auth.status === 200) {
