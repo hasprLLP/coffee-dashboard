@@ -68,8 +68,6 @@ export default function MyApp({ Component, pageProps }) {
       {/* //& Site Code */}
       <ChakraProvider theme={theme}>
         {/* //$ Global Context API */}
-        {/* //? Login Page is shifted to the main pages */}
-        {/* <Login /> */}
         {/* //$ Dashboard */}
         <Drawer />
         {/* //$ Header */}

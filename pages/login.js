@@ -19,14 +19,17 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 export default function Login() {
   const router = useRouter();
-  //! Page is refreshing after receiving a token <on login>
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const login = async (e) => {
     e.preventDefault();
     try {
       let data = {
         method: 'POST',
         credentials: 'include',
-        body: JSON.stringify({ email: 'luvvjeri@gmail.com', password: '1234' }),
+        body: JSON.stringify({ email, password }),
         headers: {
           'Content-Type': 'application/json', // Your headers
         },
@@ -41,7 +44,6 @@ export default function Login() {
       console.log(err);
     }
   };
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
@@ -58,13 +60,27 @@ export default function Login() {
               <Stack spacing={4} p='1rem'>
                 <FormControl>
                   <InputGroup>
-                    <InputLeftAddon>+91</InputLeftAddon>
-                    <Input focusBorderColor='#38B2AC' type='tel' placeholder='Email address' />
+                    <InputLeftAddon>@</InputLeftAddon>
+                    <Input
+                      focusBorderColor='#38B2AC'
+                      type='tel'
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      placeholder='Email address'
+                    />
                   </InputGroup>
                 </FormControl>
                 <FormControl>
                   <InputGroup>
-                    <Input focusBorderColor='#38B2AC' type={showPassword ? 'text' : 'password'} placeholder='Password' />
+                    <Input
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                      focusBorderColor='#38B2AC'
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder='Password'
+                    />
                     <InputRightElement width='4.5rem'>
                       <Button h='1.75rem' size='sm' onClick={handleShowClick}>
                         {showPassword ? 'Hide' : 'Show'}
