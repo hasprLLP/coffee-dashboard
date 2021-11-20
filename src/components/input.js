@@ -1,11 +1,11 @@
 import { Input } from "@chakra-ui/react";
 import useSize from "@/utilities/useSize";
 
-const TextField = ({ title, placeholder, value, setter }) => {
+const TextField = ({ title, placeholder, value, setter, type }) => {
   const size = useSize();
   return (
-    <div className="input">
-      <div className="input-title">{title}</div>
+    <div className='input'>
+      <div className='input-title'>{title}</div>
       <Input
         value={value}
         onChange={(e) => setter(e.target.value)}
