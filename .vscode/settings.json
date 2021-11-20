@@ -1,4 +1,5 @@
 {
+  "editor.codeLens": true,
   "workbench.editor.enablePreview": false,
   "workbench.editor.highlightModifiedTabs": true,
   "editor.cursorBlinking": "smooth",
@@ -8,7 +9,6 @@
   "prettier.printWidth": 150,
   "typescript.disableAutomaticTypeAcquisition": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "editor.codeLens": false,
   "tabnine.experimentalAutoImports": true,
   "editor.linkedEditing": true,
   "editor.formatOnSave": true,
