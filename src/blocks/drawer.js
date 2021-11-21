@@ -10,8 +10,7 @@ export default function Drawer() {
   // #Function to navigate to a page and pass sub pages as a query string
   const navigate = (page) => {
     router.push({
-      pathname: '/operator',
-      query: { page },
+      pathname: page,
     });
     // Setting current active page
     setActivePage(page);
@@ -24,11 +23,22 @@ export default function Drawer() {
       <Image alt='logo' src='/static/svg/report-off.svg' layout='responsive' width='14.5vw' height='4.5vw' objectFit='contain' />
       <div className='drawer-gap' />
       <Accordion allowToggle>
-        <DrawerItem icon='owner' name='Owner' pages={['User Profile', 'Create Driver', 'Drivers List']} active={activePage} setter={setActivePage} />
-        <DrawerItem icon='route' name='Route' pages={['Bus Profile', 'Create Bus', 'Bus List']} active={activePage} setter={setActivePage} />
+        <DrawerItem
+          icon='bus'
+          heading='Bus'
+          pages={[
+            { name: 'View', path: '/bus' },
+            { name: 'Add Buses', path: '/bus/add' },
+            { name: 'Locate', path: '/bus/locate' },
+          ]}
+          active={activePage}
+          setter={setActivePage}
+          fun={navigate}
+        />
+
         <DrawerItem
           icon='driver'
-          name='Driver'
+          heading='Driver'
           pages={[
             { name: 'User Profile', path: 'profile' },
             { name: 'Create Driver', path: 'create' },
@@ -38,11 +48,19 @@ export default function Drawer() {
           setter={setActivePage}
           fun={navigate}
         />
-        <DrawerItem icon='bus' name='Bus' pages={['User Profile', 'Create Driver', 'Drivers List']} active={activePage} setter={setActivePage} />
-        <DrawerItem icon='user' name='User' pages={['User Profile', 'Create Driver', 'Drivers List']} active={activePage} setter={setActivePage} />
+        <DrawerItem icon='route' heading='Route' pages={['Bus Profile', 'Create Bus', 'Bus List']} active={activePage} setter={setActivePage} />
+
+        <DrawerItem icon='user' heading='User' pages={['User Profile', 'Create Driver', 'Drivers List']} active={activePage} setter={setActivePage} />
         <DrawerItem
           icon='redeem'
-          name='Redeem'
+          heading='Redeem'
+          pages={['User Profile', 'Create Driver', 'Drivers List']}
+          active={activePage}
+          setter={setActivePage}
+        />
+        <DrawerItem
+          icon='owner'
+          heading='Owner'
           pages={['User Profile', 'Create Driver', 'Drivers List']}
           active={activePage}
           setter={setActivePage}

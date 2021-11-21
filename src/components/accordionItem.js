@@ -1,7 +1,7 @@
 import { AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react';
 import Image from 'next/image';
 
-const DrawerItem = ({ icon, name, pages, active, setter, fun }) => {
+const DrawerItem = ({ icon, heading, pages, active, setter, fun }) => {
   return (
     <AccordionItem style={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
       {({ isExpanded }) => (
@@ -14,7 +14,7 @@ const DrawerItem = ({ icon, name, pages, active, setter, fun }) => {
                     <div className='drawer-item-icon'>
                       <Image alt='owner' src={`/static/svg/${icon}-${isExpanded ? 'on' : 'off'}.svg`} layout='fill' size='1vw' objectFit='contain' />
                     </div>
-                    <h2 className={isExpanded ? 'drawer-item-label-active' : 'drawer-item-label'}>{name}</h2>
+                    <h2 className={isExpanded ? 'drawer-item-label-active' : 'drawer-item-label'}>{heading}</h2>
                   </div>
                 </div>
               </Box>
