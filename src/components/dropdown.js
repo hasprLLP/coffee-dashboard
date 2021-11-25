@@ -9,6 +9,9 @@ const DropDown = ({ title, options, value, setter }) => {
         bg="rgba(242, 242, 242, 0.4)"
         focusBorderColor="#38B2AC"
         value={value}
+        marginTop="1vw"
+        marginBottom="2vw"
+        pr={3}
         onChange={(select) => setter(select.target.value)}
       >
         {options.map((option, i) => {

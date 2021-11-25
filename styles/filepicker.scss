@@ -1,3 +1,7 @@
+.file-picker {
+  width: 520px !important;
+  padding-top: 5px;
+}
 .file-picker::-webkit-file-upload-button {
   visibility: hidden;
 }
@@ -8,10 +12,11 @@
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
-  border-right: 1px solid;
+  padding-right: 1vw;
+  border-right: 1px solid $color-smooth;
 }
 .file-picker:hover::before {
-  border-color: black;
+  border-color: $color-teal;
 }
 .file-picker:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);

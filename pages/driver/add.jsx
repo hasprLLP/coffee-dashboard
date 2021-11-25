@@ -32,7 +32,7 @@ export default function Create() {
     <div className="home">
       <div className="driver">
         <div className="driver-title">Add Bus</div>
-        <div className="driver-form"  style={{ justifyContent: "flex-start" }}>
+        <div className="driver-form">
           {fields.map((item, i) => {
             return <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />;
           })}

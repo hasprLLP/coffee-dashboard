@@ -1,12 +1,26 @@
-//& Create & Export Driver [#FUNCTION#]
-export default function locate() {
-  // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
-  //& Return UI [#RETURN#]
+import DropDown from "@/components/dropdown";
+import GoogleMapReact from "google-map-react";
+import { useState } from "react";
+
+export default function Locate() {
+  const [bus, setBus] = useState("");
   return (
-    <div className='home'>
-      <div className='driver'>
-        <div className='driver-title'>Locate Bus</div>
-        <div className='driver-form'></div>
+    <div className="home">
+      <div className="driver">
+        <DropDown title={"Select Bus"} options={["D 0 1", "D 0 2", "D  0 3 "]} value={bus} setter={setBus} />
+        <div className="driver-form" style={{ height: "75%", width: "95%", borderRadius: "var(--chakra-radii-md)",overflow: "hidden" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA" }}
+            defaultCenter={{
+              lat: 59.95,
+              lng: 30.33,
+            }}
+            defaultZoom={11}
+            yesIWantToUseGoogleMapApiInternals={true}
+          >
+            <div style={{fontSize: "2vw",color: "white"}}>Apni Bus here</div>
+          </GoogleMapReact>
+        </div>
       </div>
     </div>
   );

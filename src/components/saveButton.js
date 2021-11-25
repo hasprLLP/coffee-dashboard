@@ -1,21 +1,29 @@
-import { Button } from '@chakra-ui/react';
-import axios from 'axios';
+import { Button } from "@chakra-ui/react";
+import Notification from "@/components/notification";
+import axios from "axios";
+import { useState } from "react";
+
 axios.defaults.withCredentials = true;
+
 const SaveButton = ({ collection, data }) => {
+  const [status, setStatus] = useState(null);
+
   const onSave = async () => {
-    const response = await axios.post(`${process.env.SERVER_URL}${collection}`, data);
-    console.log('response', response);
-    if (response.status === 201) {
-      alert('saved');
-    } else {
-      alert('Not Saved');
-    }
+    setStatus("success");
+    // const response = await axios.post(`${process.env.SERVER_URL}${collection}`, data);
+    // console.log("response", response);
+    // if (response.status === 201) {
+    //   setStatus("success");
+    // } else {
+    //   setStatus("error");
+    // }
   };
   return (
-    <div className='button'>
-      <Button onClick={onSave} colorScheme='teal' size='md' isFullWidth>
+    <div className="button">
+      <Button onClick={onSave} colorScheme="teal" size="md" isFullWidth>
         Save
       </Button>
+      <Notification type={status} />
     </div>
   );
 };
