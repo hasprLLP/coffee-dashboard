@@ -10,6 +10,7 @@ export default function Home() {
       <div style={{ marginTop: "5vw" }}>Home Page or Default Something</div>
       <DropDown title={"Help Plix"} options={["Pudi Sabji", "Dahi Raita", "Cream Roll"]} value={dropdown} setter={setDropdown} />
       <div>Item Selected is : {dropdown}</div>
+      <input type="file" className="file-picker css-13vuage" id="avatar" name="avatar" accept="image/png, image/jpeg" />
       <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "7.5vw" }}>
         <Table />
       </div>
