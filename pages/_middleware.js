@@ -1,10 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-import axios from 'axios';
-
 export async function middleware(req, res) {
   try {
-    // FIXME: This is a temporary workaround for since axios throws an error with "adapter is not a funtion"
     let data = {
       method: 'POST',
       credentials: 'include',
@@ -15,24 +12,23 @@ export async function middleware(req, res) {
     };
     const { pathname } = req.nextUrl;
 
-    if (pathname === '/login') {
-      console.log('on Login page');
-      const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
-
-      if (is_auth.status === 200) {
-        return NextResponse.redirect('/');
-      } else {
-        return NextResponse.next();
-      }
-    }
-
-    if (pathname === '/') {
+    if (pathname !== '/login') {
       const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
 
       if (is_auth.status === 200) {
         return NextResponse.next();
       } else {
         return NextResponse.redirect('/login');
+      }
+    }
+
+    if (pathname === '/login') {
+      const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
+
+      if (is_auth.status === 200) {
+        return NextResponse.redirect('/');
+      } else {
+        return NextResponse.next();
       }
     }
   } catch (error) {
