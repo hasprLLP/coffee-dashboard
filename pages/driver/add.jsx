@@ -39,7 +39,7 @@ export default function Create() {
             return item.type === "dropdown" ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : item.type === "upload" ? (
-              <FilePicker title={item.title} />
+              <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
             );
