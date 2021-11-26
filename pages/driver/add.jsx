@@ -1,29 +1,32 @@
 //& Input Components [#IMPORTS#]
 import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
+import FilePicker from "@/components/filepicker";
 import SaveButton from "@/components/saveButton";
 import { useState } from "react";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [no, setNo] = useState("");
+
   const [name, setName] = useState("");
-  const [owner, setOwner] = useState("");
-  const [capacity, setCapacity] = useState(8);
+  const [age, setAge] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phone2, setPhone2] = useState("");
   const [school, setSchool] = useState("");
-  const [route, setRoute] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [sign, setSign] = useState("");
+  const [dl, setDl] = useState("");
 
   //$ States and Hooks [#STATES#]
   const fields = [
-    { title: "Bus No (RC)", placeholder: "Provide RC No", value: no, setter: setNo },
-    { title: "Bus Name", placeholder: "Enter a name for the bus", value: name, setter: setName },
-    { title: "Owner Name", placeholder: "Bus Owner", value: owner, setter: setOwner },
-    { title: "Student Capacity", placeholder: "Capacity Information", type: "number", value: capacity, setter: setCapacity },
-  ];
-
-  const dropdowns = [
-    { title: "School Name", options: ["DMA", "St Mary", "Joseph"], value: school, setter: setSchool },
-    { title: "Route", options: ["Makronia to DMA", "Church to Home"], value: route, setter: setRoute },
+    { title: "Driver Name", placeholder: "Bus Operator Name", value: name, setter: setName },
+    { title: "Date of Birth", placeholder: "ex 09/11/2021", value: age, setter: setAge },
+    { title: "Mobile No", placeholder: "Operator Phone no", type: "number", value: phone, setter: setPhone },
+    { title: "Landline (Optional)", placeholder: "Additional Contact no", value: phone2, setter: setPhone2 },
+    { title: "School Name", options: ["DMA", "St Mary", "Joseph"], value: school, setter: setSchool, type: "dropdown" },
+    { title: "Upload Passport Photo", value: photo, setter: setPhoto, type: "upload" },
+    { title: "Upload Signature", value: sign, setter: setSign, type: "upload" },
+    { title: "Upload Driving License", value: dl, setter: setDl, type: "upload" },
   ];
 
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
@@ -31,13 +34,15 @@ export default function Create() {
   return (
     <div className="home">
       <div className="driver">
-        <div className="driver-title">Add Bus</div>
-        <div className="driver-form">
+        <div className="driver-form" style={{ justifyContent: "flex-start" }}>
           {fields.map((item, i) => {
-            return <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />;
-          })}
-          {dropdowns.map((item, i) => {
-            return <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />;
+            return item.type === "dropdown" ? (
+              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+            ) : item.type === "upload" ? (
+              <FilePicker title={item.title} />
+            ) : (
+              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
+            );
           })}
         </div>
         <SaveButton

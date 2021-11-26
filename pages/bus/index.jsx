@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function ViewBus() {
-  const [student, setStudent] = useState("");
+  const [busName, setBusName] = useState("");
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -46,7 +46,7 @@ export default function ViewBus() {
   return (
     <div className="home" style={{ backgroundColor: "var(--chakra-colors-gray-100)" }}>
       <div className="driver">
-        <TextField title={"Search Bus No"} placeholder={"Type Bus No"} value={student} setter={setStudent} color={"white"} />
+        <TextField title={"Search Bus No"} placeholder={"Type Bus No"} value={busName} setter={setBusName} color={"white"} />
         <div className="driver-form" style={{ justifyContent: "flex-start" }}>
           {fields.map((item, i) => {
             return <SimpleCard key={i} name={item.name} id={item.id} start={item.start} end={item.end} type={item.type} />;

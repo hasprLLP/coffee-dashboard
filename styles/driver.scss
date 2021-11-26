@@ -8,6 +8,15 @@
   }
 
   &-form {
+    width: 100%;
+    height: auto;
+    @include row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  &-edit-row {
     width: 97%;
     height: auto;
     @include row;

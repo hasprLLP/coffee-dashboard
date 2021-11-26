@@ -1,6 +1,7 @@
 //& Input Components [#IMPORTS#]
 import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
+import FilePicker from "@/components/filepicker";
 import SaveButton from "@/components/saveButton";
 import { useState } from "react";
 
@@ -13,12 +14,14 @@ export default function Create() {
   const [phone, setPhone] = useState("");
   const [phone2, setPhone2] = useState("");
   const [address, setAddress] = useState("");
+  const [boarding, setBoarding] = useState("");
   const [classs, setClasss] = useState("");
   const [section, setSection] = useState("");
   const [school, setSchool] = useState("");
   const [bus, setBus] = useState("");
   const [route, setRoute] = useState("");
   const [fee, setFee] = useState("");
+  const [photo, setPhoto] = useState("");
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -29,12 +32,14 @@ export default function Create() {
     { title: "Guardian Mobile", placeholder: "Parent Contact No", value: phone, setter: setPhone, type: "tel", prefix: "+91" },
     { title: "Guardian Landline (Optional)", placeholder: "Guardian Landline no", value: phone2, setter: setPhone2, type: "tel" },
     { title: "Guardian Address", placeholder: "Full Address", value: address, setter: setAddress },
+    { title: "Boarding Point", placeholder: "Bus Boarding Point", value: boarding, setter: setBoarding },
     { title: "Student Class", placeholder: "Current Standard", value: classs, setter: setClasss },
     { title: "Student Section", placeholder: "Section if any", value: section, setter: setSection },
     { title: "School", options: ["School Some", "School More"], value: school, setter: setSchool, type: "dropdown" },
     { title: "Bus", options: ["Bus Some", "Bus More"], value: bus, setter: setBus, type: "dropdown" },
     { title: "Route", options: ["Route Some", "Route More"], type: "number", value: route, setter: setRoute, type: "dropdown" },
     { title: "Monthly Fee", placeholder: "Student Fee Monthly", type: "number", value: fee, setter: setFee, prefix: "₹" },
+    { title: "Upload Student Photo", value: photo, setter: setPhoto, type: "upload" },
   ];
 
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
@@ -43,12 +48,14 @@ export default function Create() {
     <div className="home">
       <div className="driver">
         <div className="driver-title">Add Student</div>
-        <div className="driver-form">
+        <div className="driver-form" style={{ justifyContent: "flex-start" }}>
           {fields.map((item, i) => {
-            return item.type !== "dropdown" ? (
-              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
-            ) : (
+            return item.type === "dropdown" ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+            ) : item.type === "upload" ? (
+              <FilePicker title={item.title} />
+            ) : (
+              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
             );
           })}
         </div>

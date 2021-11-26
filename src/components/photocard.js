@@ -1,14 +1,24 @@
 import { Heading, Avatar, Box, Text, Stack, Button, useColorModeValue } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export default function PhotoCard({ photo, name, fee, details }) {
+
+  const router = useRouter();
+
+  const viewDetails = () => {
+    router.push({
+      pathname: "/student/1",
+    });
+  }
+
   return (
     <Box
-      maxW={"300px"}
-      mb={4}
-      mr={4}
+      maxW={"280px"}
+      mb={6}
+      mr={6}
       w={"full"}
       bg={useColorModeValue("white", "gray.900")}
-      rounded={"lg"}
+      rounded={"xl"}
       p={6}
       textAlign={"center"}
     >
@@ -34,7 +44,7 @@ export default function PhotoCard({ photo, name, fee, details }) {
         {name}
       </Heading>
       <Text fontWeight={600} color={"gray.500"} mb={4}>
-        {fee}
+      Monthly Fee - ₹ {fee}
       </Text>
       <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
        {details}
@@ -44,7 +54,7 @@ export default function PhotoCard({ photo, name, fee, details }) {
         <Button
           flex={1}
           fontSize={"sm"}
-          rounded={"full"}
+          onClick={viewDetails}
           _focus={{
             bg: "gray.200",
           }}
@@ -54,7 +64,7 @@ export default function PhotoCard({ photo, name, fee, details }) {
         <Button
           flex={1}
           fontSize={"sm"}
-          rounded={"full"}
+  
           bg={"teal"}
           color={"white"}
           boxShadow={"0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"}

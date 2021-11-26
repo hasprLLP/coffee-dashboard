@@ -4,13 +4,14 @@ import axios from "axios";
 import { useState } from "react";
 axios.defaults.withCredentials = true;
 
-export default function Home() {
+export default function Report() {
   const [report, setReport] = useState("");
 
   return (
     <div className="home">
       <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "5vw" }}>
-      Dashboard
+        <DropDown title={"Select Report"} options={["Monthly Report", "Fee Report", "More Adding"]} value={report} setter={setReport} />
+        <Table />
       </div>
     </div>
   );

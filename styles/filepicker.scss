@@ -1,19 +1,20 @@
 .file-picker {
-  width: 520px !important;
+  width: 300px !important;
+  max-width: 520px !important;
   padding-top: 5px;
 }
 .file-picker::-webkit-file-upload-button {
   visibility: hidden;
 }
 .file-picker::before {
-  content: "Upload File";
+  content: "Upload";
   display: inline-block;
+  color: $color-gray;
   outline: none;
   white-space: nowrap;
   -webkit-user-select: none;
+  margin-right: -3.5vw;
   cursor: pointer;
-  padding-right: 1vw;
-  border-right: 1px solid $color-smooth;
 }
 .file-picker:hover::before {
   border-color: $color-teal;

@@ -1,8 +1,8 @@
 .input {
   $root: &;
 
-  min-width: 320px;
-  max-width: 520px;
+  min-width: 320px !important;
+  max-width: 520px !important;
 
   &-title {
     font-family: "Gilroy";
