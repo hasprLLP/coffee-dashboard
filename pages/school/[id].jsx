@@ -1,6 +1,7 @@
 //& Input Components [#IMPORTS#]
 import TextField from '@/components/input';
 import DropDown from '@/components/dropdown';
+import GoBack from "@/helpers/goback";
 import UpdateButton from '@/components/updateButton';
 import DeleteButton from '@/components/deleteButton';
 import { useState } from 'react';
@@ -34,7 +35,7 @@ export default function EditSchool() {
   return (
     <div className='home'>
       <div className='driver'>
-        <div className='driver-title'>Modify Bus Details</div>
+        <div className='driver-title'><GoBack />Modify School Details</div>
         <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
           {fields.map((item, i) => {
             return <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />;

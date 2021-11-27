@@ -4,6 +4,7 @@ import DropDown from '@/components/dropdown';
 import UpdateButton from '@/components/updateButton';
 import DeleteButton from '@/components/deleteButton';
 import { LoadScript } from '@react-google-maps/api';
+import GoBack from "@/helpers/goback";
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -107,7 +108,7 @@ export default function EditRoute() {
   return (
     <div className='home'>
       <div className='driver'>
-        <div className='passenger-title'>Add Route</div>
+        <div className='passenger-title'><GoBack />Modify Route</div>
         <div className='passenger-sub-title'>Timing Details</div>
         <div className='driver-form'>
           {timing.map((item, i) => {
