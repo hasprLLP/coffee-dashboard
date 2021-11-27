@@ -4,6 +4,7 @@ import DropDown from "@/components/dropdown";
 import FilePicker from "@/components/filepicker";
 import UpdateButton from "@/components/updateButton";
 import DeleteButton from "@/components/deleteButton";
+import GoBack from "@/helpers/goback";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -39,7 +40,7 @@ export default function EditBus() {
   return (
     <div className="home">
       <div className="driver">
-        <div className="driver-title">Modify Driver Details</div>
+        <div className="driver-title"><GoBack />Modify Driver Details</div>
         <div className="driver-form" style={{ justifyContent: "flex-start" }}>
           {fields.map((item, i) => {
             return item.type === "dropdown" ? (
