@@ -26,18 +26,14 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      let data = {
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-        headers: {
-          'Content-Type': 'application/json', // Your headers
-        },
-      };
-      const response = await fetch(`http://localhost:8080/api/v1/authentication/sign_in`, data);
-      localStorage.setItem('user', response.data);
+      const response = await axios.post('http://localhost:8080/api/v1/admin/authentication/sign_in', {
+        email,
+        password,
+      });
+
+      localStorage.setItem('user', response);
+
       if (response.status === 200) {
-        console.log('login successful');
         router.push('/');
       }
     } catch (err) {

@@ -3,37 +3,26 @@ import TextField from '@/components/input';
 import DropDown from '@/components/dropdown';
 import SaveButton from '@/components/saveButton';
 import { useState } from 'react';
-//import server from '@/functions/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [busNumber, setBusNumber] = useState('');
-  const [RCNumber, setRCNumber] = useState();
   const [name, setName] = useState('');
-  const [owner, setOwner] = useState('');
-  const [capacity, setCapacity] = useState(8);
+  const [city, setCity] = useState();
+  const [address, setAddress] = useState();
+  const [zip, setZip] = useState();
+  const [phone, setPhone] = useState();
+  const [location, setLocation] = useState();
 
   //$ States and Hooks [#STATES#]
   const fields = [
-    { title: 'Bus No (RC)', placeholder: 'Provide RC No', value: busNumber, setter: setBusNumber },
-    { title: 'Bus No ', placeholder: 'Provide', value: RCNumber, setter: setRCNumber },
-    { title: 'Bus Name', placeholder: 'Enter a name for the bus', value: name, setter: setName },
-    { title: 'Owner Name', placeholder: 'Bus Owner', value: owner, setter: setOwner },
-    { title: 'Capacity', placeholder: 'Capacity Information', type: 'number', value: capacity, setter: setCapacity },
+    { title: 'School Name', placeholder: 'Enter School Name', value: name, setter: setName },
+    { title: 'City', placeholder: 'City of the school', value: city, setter: setCity },
+    { title: 'Address', placeholder: 'Address of the school', value: address, setter: setAddress },
+    { title: 'Zip Code', type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
+    { title: 'Phone', placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
+    { title: 'Location', placeholder: 'Locate the School', value: location, setter: setLocation },
   ];
 
-  // const save = () => {
-  //   server('/bus', {
-  //     method: 'POST',
-  //     body: {
-  //       busNumber,
-  //       RCNumber,
-  //       name,
-  //       owner,
-  //       capacity,
-  //     },
-  //   });
-  // };
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
@@ -46,13 +35,14 @@ export default function Create() {
           })}
         </div>
         <SaveButton
-          collection={'bus'}
+          collection={'school'}
           data={{
-            busNumber,
-            RCNumber,
             name,
-            owner,
-            capacity,
+            city,
+            address,
+            zip,
+            phone,
+            location,
           }}
         />
       </div>

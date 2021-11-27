@@ -1,5 +1,5 @@
 //& Input Components [#IMPORTS#]
-import BusCard from '@/components/busCard';
+import SchoolCard from '@/components/schoolCard';
 import { useState, useEffect } from 'react';
 import server from 'functions/server';
 import TextField from '@/components/input';
@@ -13,7 +13,7 @@ export default function ViewBus() {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await server.get(`/bus`);
+      const { data } = await server.get(`/school`);
       setData(data.data);
     };
 
@@ -21,10 +21,10 @@ export default function ViewBus() {
   }, []);
 
   const onEdit = (id, data) => {
-    router.push({ pathname: `/bus/${id}`, query: { data: JSON.stringify(data) } });
+    router.push({ pathname: `/school/${id}`, query: { data: JSON.stringify(data) } });
   };
   const onDetails = (id, data) => {
-    router.push({ pathname: `/bus/details/${id}`, query: { data: JSON.stringify(data) } });
+    router.push({ pathname: `/school/details/${id}`, query: { data: JSON.stringify(data) } });
   };
   //$ States and Hooks [#STATES#]
 
@@ -36,18 +36,7 @@ export default function ViewBus() {
         <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
           {data &&
             data.map((item, i) => {
-              return (
-                <BusCard
-                  key={i}
-                  name={item.name}
-                  id={item._id}
-                  data={item}
-                  number={item.busNumber}
-                  RCNumber={item.RCNumber || ''}
-                  onEdit={onEdit}
-                  onDetails={onDetails}
-                />
-              );
+              return <SchoolCard key={i} id={item._id} name={item.name} data={item} phone={item.busNumber} onEdit={onEdit} onDetail={onDetails} />;
             })}
         </div>
       </div>

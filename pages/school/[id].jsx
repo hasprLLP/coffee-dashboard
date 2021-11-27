@@ -7,24 +7,26 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
-export default function EditBus() {
+export default function EditSchool() {
   const router = useRouter();
   const { id } = router.query;
   const data = JSON.parse(router.query.data);
 
-  const [busNumber, setBusNumber] = useState(data.busNumber);
-  const [RCNumber, setRCNumber] = useState(data.RCNumber);
   const [name, setName] = useState(data.name);
-  const [owner, setOwner] = useState(data.owner);
-  const [capacity, setCapacity] = useState(data.capacity);
+  const [city, setCity] = useState(data.city);
+  const [address, setAddress] = useState(data.address);
+  const [zip, setZip] = useState(data.zip);
+  const [phone, setPhone] = useState(data.phone);
+  const [location, setLocation] = useState(data.location);
 
   //$ States and Hooks [#STATES#]
   const fields = [
-    { title: 'Bus No (RC)', placeholder: 'Provide RC No', value: busNumber, setter: setBusNumber },
-    { title: 'Bus No ', placeholder: 'Provide', value: RCNumber, setter: setRCNumber },
-    { title: 'Bus Name', placeholder: 'Enter a name for the bus', value: name, setter: setName },
-    { title: 'Owner Name', placeholder: 'Bus Owner', value: owner, setter: setOwner },
-    { title: 'Capacity', placeholder: 'Capacity Information', type: 'number', value: capacity, setter: setCapacity },
+    { title: 'School Name', placeholder: 'Enter School Name', value: name, setter: setName },
+    { title: 'City', placeholder: 'City of the school', value: city, setter: setCity },
+    { title: 'Address', placeholder: 'Address of the school', value: address, setter: setAddress },
+    { title: 'Zip Code', type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
+    { title: 'Phone', placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
+    { title: 'Location', placeholder: 'Locate the School', value: location, setter: setLocation },
   ];
 
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'

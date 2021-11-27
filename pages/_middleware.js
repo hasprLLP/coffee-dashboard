@@ -13,7 +13,7 @@ export async function middleware(req, res) {
     const { pathname } = req.nextUrl;
 
     if (pathname !== '/login') {
-      const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
+      const is_auth = await fetch('http://localhost:8080/api/v1/admin/authentication/verify', data);
 
       if (is_auth.status === 200) {
         return NextResponse.next();
@@ -23,8 +23,8 @@ export async function middleware(req, res) {
     }
 
     if (pathname === '/login') {
-      const is_auth = await fetch('http://localhost:8080/api/v1/authentication/verify', data);
-
+      const is_auth = await fetch('http://localhost:8080/api/v1/admin/authentication/verify', data);
+      console.log(is_auth);
       if (is_auth.status === 200) {
         return NextResponse.redirect('/');
       } else {
