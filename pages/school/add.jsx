@@ -20,7 +20,6 @@ export default function Create() {
     { title: 'Address', placeholder: 'Address of the school', value: address, setter: setAddress },
     { title: 'Zip Code', type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
     { title: 'Phone', placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
-    { title: 'Location', placeholder: 'Locate the School', value: location, setter: setLocation },
   ];
 
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
@@ -28,10 +27,20 @@ export default function Create() {
   return (
     <div className='home'>
       <div className='driver'>
-        <div className='driver-title'>Add Bus</div>
+        <div className='driver-title'>Add School</div>
         <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
           {fields.map((item, i) => {
-            return <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />;
+            return (
+              <TextField
+                type={item.type}
+                prefix={item.prefix}
+                key={i}
+                title={item.title}
+                placeholder={item.placeholder}
+                value={item.value}
+                setter={item.setter}
+              />
+            );
           })}
         </div>
         <SaveButton
@@ -39,10 +48,13 @@ export default function Create() {
           data={{
             name,
             city,
-            address,
             zip,
             phone,
-            location,
+            location: {
+              type: 'Point',
+              coordinates: [23.854080641497234, 78.7799817655712],
+              address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
+            },
           }}
         />
       </div>

@@ -1,7 +1,7 @@
 //& Input Components [#IMPORTS#]
 import BusCard from '@/components/busCard';
 import { useState, useEffect } from 'react';
-import server from 'functions/server';
+import server from '@/functions/server';
 import TextField from '@/components/input';
 import { useRouter } from 'next/router';
 
