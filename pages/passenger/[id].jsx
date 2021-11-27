@@ -1,81 +1,198 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import UpdateButton from "@/components/updateButton";
-import DeleteButton from "@/components/deleteButton";
-import FilePicker from "@/components/filepicker";
-import GoBack from "@/helpers/goback";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import FilePicker from '@/components/filepicker';
+import UpdateButton from '@/components/updateButton';
+import DeleteButton from '@/components/deleteButton';
+import { Switch } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import server from '@/functions/server';
+import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
-export default function EditBus() {
+export default function EditPassenger() {
   const router = useRouter();
   const { id } = router.query;
-  // const data = JSON.parse(router.query.data);
+  const data = JSON.parse(router.query.data);
 
-  const [name, setName] = useState("Pintu Raj");
-  const [dob, setDob] = useState("02/07/1998");
-  const [join, setJoin] = useState("21/10/2021");
-  const [guardian, setGuardian] = useState("Anju Raj");
-  const [phone, setPhone] = useState("7887458565");
-  const [phone2, setPhone2] = useState("07582-262021");
-  const [address, setAddress] = useState("MIG 170, Gaur Nagar, Makronia, Sagar");
-  const [boarding, setBoarding] = useState("MIG 170, Gaur Nagar, Makronia, Sagar");
-  const [classs, setClasss] = useState("11");
-  const [section, setSection] = useState("A");
-  const [school, setSchool] = useState("DMA");
-  const [bus, setBus] = useState("Bus Some");
-  const [route, setRoute] = useState("Route Some");
-  const [fee, setFee] = useState("6520");
-  const [photo, setPhoto] = useState("");
+  const [name, setName] = useState(data.name);
+  const [isStudent, setIsStudent] = useState(data.isStudent);
+  const [DOB, setDOB] = useState(data.DOB);
+  const [joiningDate, setJoiningDate] = useState(data.joiningDate);
+  const [guardian, setGuardian] = useState();
+  const [phone, setPhone] = useState(data.phone);
+  const [landline, setLandline] = useState();
+  const [guardianPhone, setGuardianPhone] = useState();
+  const [address, setAddress] = useState('');
+  const [guardianAddress, setGuardianAddress] = useState('');
+  const [location, setLocation] = useState('');
+  const [schools, setSchools] = useState('');
+  const [school, setSchool] = useState('');
+  const [routes, setRoutes] = useState();
+  const [route, setRoute] = useState();
+  const [fee, setFee] = useState(data.fee);
+  const [photo, setPhoto] = useState('');
+  const [bus, setBus] = useState();
+  const [cls, setCls] = useState('');
+  const [section, setSection] = useState('');
+
+  const [schoolNames, setSchoolNames] = useState([]);
+  const [routeNames, setRouteNames] = useState([]);
+
+  const setSchoolID = (name) => {
+    // get the object with name = school from array of schools
+    const schoolObj = schools?.find((school) => school.name === name);
+    setSchool(schoolObj.id);
+  };
+  const setRouteID = (name) => {
+    // get the object with name = school from array of schools
+    const routeObj = routes?.find((bus) => bus.name === name);
+    setRoute(routeObj.id);
+  };
 
   //$ States and Hooks [#STATES#]
-  const fields = [
-    { title: "Student Name", placeholder: "Enter Passenger name", value: name, setter: setName },
-    { title: "Date of Birth", placeholder: "eg 02/07/2003", value: dob, setter: setDob },
-    { title: "Joining Date", placeholder: "eg 21/09/2021", value: join, setter: setJoin },
-    { title: "Guardian Name", placeholder: "Father/Mother etc", value: guardian, setter: setGuardian },
-    { title: "Guardian Mobile", placeholder: "Parent Contact No", value: phone, setter: setPhone, type: "tel", prefix: "+91" },
-    { title: "Guardian Landline (Optional)", placeholder: "Guardian Landline no", value: phone2, setter: setPhone2, type: "tel" },
-    { title: "Guardian Address", placeholder: "Full Address", value: address, setter: setAddress },
-    { title: "Boarding Point", placeholder: "Bus Boarding Point", value: boarding, setter: setBoarding },
-    { title: "Student Class", placeholder: "Current Standard", value: classs, setter: setClasss },
-    { title: "Student Section", placeholder: "Section if any", value: section, setter: setSection },
-    { title: "School", options: ["School Some", "School More"], value: school, setter: setSchool, type: "dropdown" },
-    { title: "Bus", options: ["Bus Some", "Bus More"], value: bus, setter: setBus, type: "dropdown" },
-    { title: "Route", options: ["Route Some", "Route More"], type: "number", value: route, setter: setRoute, type: "dropdown" },
-    { title: "Monthly Fee", placeholder: "Student Fee Monthly", type: "number", value: fee, setter: setFee, prefix: "₹" },
-    { title: "Upload Student Photo", value: photo, setter: setPhoto, type: "upload" },
+  const basicFields = [
+    { title: 'Name', placeholder: 'Enter Passenger name', value: name, setter: setName },
+    { title: 'Mobile', placeholder: 'Contact No', value: phone, setter: setPhone, type: 'tel', prefix: '+91' },
+    { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
+    { title: 'Join Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
   ];
+
+  const guardianDetails = [
+    { title: 'Guardian Name', placeholder: 'Father/Mother etc', value: guardian, setter: setGuardian },
+    { title: 'Guardian Mobile', placeholder: 'Parent Contact No', value: guardianPhone, setter: setGuardianPhone, type: 'tel', prefix: '+91' },
+    { title: 'Guardian Landline (Optional)', placeholder: 'Guardian Landline no', value: landline, setter: setLandline, type: 'tel' },
+    { title: 'Guardian Address', placeholder: 'Full Address', value: guardianAddress, setter: setGuardianAddress },
+  ];
+
+  const boardingDetails = [
+    { title: 'School', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
+    { title: 'Address', placeholder: 'Address', value: address, setter: setAddress },
+    { title: 'Route', options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
+  ];
+  const feeDetails = [{ title: 'Monthly Fee', placeholder: 'Fee Monthly', type: 'number', value: fee, setter: setFee, prefix: '₹' }];
+
+  const getSchool = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      setSchools(response.data.data);
+      const tempSchoolName = [];
+      response.data.data.map((school) => {
+        tempSchoolName.push(school.name);
+      });
+      setSchoolNames(tempSchoolName);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const getRoutes = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}route${school ? `?school=${school}` : ''}`);
+      setRoutes(response.data.data);
+      const tempSchoolName = [];
+      response.data.data.map((school) => {
+        tempSchoolName.push(school.name);
+      });
+      setRouteNames(tempSchoolName);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    getSchool();
+  }, []);
+  useEffect(() => {
+    getRoutes();
+  }, [school]);
 
   // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="driver">
-        <div className="driver-title">
-        <GoBack />
-          Modify Student Details
+    <div className='home'>
+      <div className='driver'>
+        <div className='passenger-title'>Add Passenger</div>
+        <div className='passenger-head'>
+          <h1>Student ? </h1>
+          <Switch
+            onChange={(e) => {
+              setIsStudent(e.target.checked);
+            }}
+            value={isStudent}
+            size='md'
+            defaultIsChecked={true}
+          />
         </div>
-        <div className="driver-form" style={{ justifyContent: "flex-start" }}>
-          {fields.map((item, i) => {
-            return item.type === "dropdown" ? (
+        <div className='passenger-sub-title'>Basic Details</div>
+        <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
+          {basicFields.map((item, i) => {
+            return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-            ) : item.type === "upload" ? (
+            ) : item.type === 'upload' ? (
+              <FilePicker title={item.title} value={item.value} setter={item.setter} />
+            ) : (
+              <TextField
+                type={item.type}
+                key={i}
+                title={item.title}
+                placeholder={item.placeholder}
+                value={item.value}
+                setter={item.setter}
+                prefix={item.prefix}
+              />
+            );
+          })}
+        </div>
+        {isStudent ? (
+          <>
+            {' '}
+            <div className='passenger-sub-title'>Guardian Details</div>
+            <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
+              {guardianDetails.map((item, i) => {
+                return item.type === 'dropdown' ? (
+                  <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+                ) : item.type === 'upload' ? (
+                  <FilePicker title={item.title} value={item.value} setter={item.setter} />
+                ) : (
+                  <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
+                );
+              })}
+            </div>
+          </>
+        ) : null}
+        <div className='passenger-sub-title'>Boarding Details</div>
+        <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
+          {boardingDetails.map((item, i) => {
+            return item.type === 'dropdown' ? (
+              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
             );
           })}
         </div>
-        <div className="driver-edit-row">
+        <div className='passenger-sub-title'>Fee Details</div>
+        <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
+          {feeDetails.map((item, i) => {
+            return item.type === 'dropdown' ? (
+              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+            ) : item.type === 'upload' ? (
+              <FilePicker title={item.title} value={item.value} setter={item.setter} />
+            ) : (
+              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
+            );
+          })}
+        </div>
+        <div className='driver-edit-row'>
           <UpdateButton
-            collection={"bus"}
+            collection={'bus'}
             // data={{ name, busNumber, capacity }}
           />
           <DeleteButton
-            collection={"bus"}
+            collection={'bus'}
             // data={{ name, busNumber, capacity }}
           />
         </div>
