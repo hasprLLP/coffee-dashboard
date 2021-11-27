@@ -7,11 +7,6 @@ import { LoadScript } from '@react-google-maps/api';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
 import server from '@/functions/server';
-// const server = axios.create({
-//   baseURL: `${process.env.SERVER_URL}`,
-//   timeout: 10000,
-//   withCredentials: true,
-// });
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {

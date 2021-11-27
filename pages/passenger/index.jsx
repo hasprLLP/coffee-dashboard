@@ -1,5 +1,5 @@
 //& Input Components [#IMPORTS#]
-import PhotoCard from '@/components/photocard';
+import PassengerCard from '@/components/passengerCard';
 import { useState, useEffect } from 'react';
 import server from 'functions/server';
 import TextField from '@/components/input';
@@ -10,122 +10,23 @@ export default function Passenger() {
   const [student, setStudent] = useState('');
 
   const router = useRouter();
-  const [data, setData] = useState([]);
+  const [passengers, setPassengers] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      try {
-        const { data } = await server.get(`/passenger`);
-        // setData(data.data);
-        console.log(data);
-      } catch (error) {
-        console.log('error', error);
-      }
+      const { data } = await server.get(`/passenger?populate=route`);
+      setPassengers(data.data);
     };
 
     fetch();
   }, []);
 
   //$ States and Hooks [#STATES#]
-  const fields = [
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-    {
-      name: 'Pavan Chand Gupta',
-      fee: '875',
-      details: 'Guardian Name ,Address and all other details here',
-      photo:
-        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-    },
-  ];
+  const onEdit = (id, data) => {
+    router.push({ pathname: `/passenger/${id}`, query: { data: JSON.stringify(data) } });
+  };
+  const onDetail = (id, data) => {
+    router.push({ pathname: `/passenger/details/${id}`, query: { data: JSON.stringify(data) } });
+  };
 
   //& Return UI [#RETURN#]
   return (
@@ -133,8 +34,8 @@ export default function Passenger() {
       <div className='driver'>
         <TextField title={'Search Student Name'} placeholder={'Type student name'} value={student} setter={setStudent} color={'white'} />
         <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
-          {fields.map((item, i) => {
-            return <PhotoCard key={i} name={item.name} photo={item.photo} fee={item.fee} details={item.details} />;
+          {passengers.map((passenger, i) => {
+            return <PassengerCard key={i} id={passenger.id} onEdit={onEdit} onDetail={onDetail} passenger={passenger} />;
           })}
         </div>
       </div>
