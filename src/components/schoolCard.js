@@ -19,7 +19,7 @@ export default function SchoolCard({ name, location, phone, address, data, onDet
             <Stack direction={'row'} justify={'space-between'} align={'end'}>
               <Text fontWeight={600}>Phone</Text>
               <Text fontSize={'sm'} color={'gray.500'} align={'left'}>
-                {phone}
+                {phone || 'No Phone'}
               </Text>
             </Stack>
           </Stack>
@@ -27,7 +27,7 @@ export default function SchoolCard({ name, location, phone, address, data, onDet
             <Stack direction={'row'} justify={'space-between'} align={'end'}>
               <Text fontWeight={600}>Address</Text>
               <Text fontSize={'sm'} color={'gray.500'} align={'left'}>
-                {address}
+                {address || 'No Address'}
               </Text>
             </Stack>
           </Stack>

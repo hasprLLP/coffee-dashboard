@@ -36,7 +36,18 @@ export default function ViewBus() {
         <div className='driver-form' style={{ justifyContent: 'flex-start' }}>
           {data &&
             data.map((item, i) => {
-              return <SchoolCard key={i} id={item._id} name={item.name} data={item} phone={item.busNumber} onEdit={onEdit} onDetail={onDetails} />;
+              return (
+                <SchoolCard
+                  key={i}
+                  id={item._id}
+                  name={item.name}
+                  data={item}
+                  phone={item.phone}
+                  address={item.address}
+                  onEdit={onEdit}
+                  onDetail={onDetails}
+                />
+              );
             })}
         </div>
       </div>
