@@ -8,6 +8,7 @@
 @import "print";
 @import "scrollbar";
 @import "darkmode";
+@import "report";
 
 //@ Components
 @import "input";
@@ -23,6 +24,6 @@
 @import "footer";
 
 //@ Pages
+@import "layout";
 @import "passenger";
-@import "driver";
 @import "login";

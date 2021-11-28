@@ -2,19 +2,26 @@
 import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
 import FilePicker from "@/components/filepicker";
-import SaveButton from "@/components/saveButton";
+import UpdateButton from "@/components/updateButton";
+import DeleteButton from "@/components/deleteButton";
+import GoBack from "@/helpers/goback";
 import { Switch } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import server from "@/functions/server";
+import { useRouter } from "next/router";
 
 //& Create & Export Driver [#FUNCTION#]
-export default function Create() {
-  const [name, setName] = useState("");
-  const [isStudent, setIsStudent] = useState(true);
-  const [DOB, setDOB] = useState("");
-  const [joiningDate, setJoiningDate] = useState("");
-  const [guardian, setGuardian] = useState("");
-  const [phone, setPhone] = useState();
+export default function EditPassenger() {
+  const router = useRouter();
+  const { id } = router.query;
+  const data = JSON.parse(router.query.data);
+
+  const [name, setName] = useState(data.name);
+  const [isStudent, setIsStudent] = useState(data.isStudent);
+  const [DOB, setDOB] = useState(data.DOB);
+  const [joiningDate, setJoiningDate] = useState(data.joiningDate);
+  const [guardian, setGuardian] = useState();
+  const [phone, setPhone] = useState(data.phone);
   const [landline, setLandline] = useState();
   const [guardianPhone, setGuardianPhone] = useState();
   const [address, setAddress] = useState("");
@@ -24,8 +31,8 @@ export default function Create() {
   const [school, setSchool] = useState("");
   const [routes, setRoutes] = useState();
   const [route, setRoute] = useState();
-  const [feeDuration, setFeeDuration] = useState("");
-  const [fee, setFee] = useState("");
+  const [feeDuration, setFeeDuration] = useState("")
+  const [fee, setFee] = useState(data.fee);
   const [photo, setPhoto] = useState("");
   const [bus, setBus] = useState();
   const [cls, setCls] = useState("");
@@ -118,13 +125,12 @@ export default function Create() {
     getRoutes();
   }, [school]);
 
-  // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
     <div className="home">
       <div className="home-shift">
-        <div className="layout-title">Add {isStudent ? "Student" : "Teacher"}</div>
-        <div className="layout-sub-title">{isStudent ? "Student" : "Teacher"} Details</div>
+      <div className="layout-title"><GoBack />Modify {isStudent ? "Student" : "Teacher"}</div>
+        <div className="layout-sub-title">Basic Details</div>
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {basicFields.map((item, i) => {
             return item.type === "dropdown" ? (
@@ -189,37 +195,23 @@ export default function Create() {
           <h1>Adding Teacher/Passenger ?</h1>
           <Switch
             onChange={(e) => {
-              setIsStudent(!e.target.checked);
+              setIsStudent(!isStudent);
             }}
             value={!isStudent}
             size="md"
             defaultIsChecked={false}
           />
         </div>
-        <SaveButton
-          collection={"admin/passenger"}
-          data={{
-            name,
-            phone,
-            photo,
-            DOB,
-            joiningDate,
-            guardian: {
-              name: guardian,
-              phone: guardianPhone,
-              landline: landline,
-              address: guardianAddress,
-            },
-            route,
-            location: {
-              type: "Point",
-              coordinates: [23.861998, 78.803366],
-              address: "MIG 71, Gour Nagar , Makronia , Sagar",
-            },
-            fee,
-            isStudent,
-          }}
-        />
+        <div className="layout-edit-row">
+          <UpdateButton
+            collection={"bus"}
+            // data={{ name, busNumber, capacity }}
+          />
+          <DeleteButton
+            collection={"bus"}
+            // data={{ name, busNumber, capacity }}
+          />
+        </div>
       </div>
     </div>
   );

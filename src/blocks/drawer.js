@@ -62,7 +62,7 @@ export default function Drawer() {
       <Accordion allowToggle>
         <DrawerItem
           icon='user'
-          heading='Passengers'
+          heading='Student'
           pages={[
             { name: 'View', path: '/passenger' },
             { name: 'Add', path: '/passenger/add' },

@@ -1,11 +1,12 @@
-import { Select } from '@chakra-ui/react';
+import { Select, FormControl, FormLabel } from '@chakra-ui/react';
 import useSize from '@/utilities/useSize';
 
-const DropDown = ({ title, options, value, setter }) => {
+const DropDown = ({ title, options, value, setter, isRequired }) => {
   const size = useSize();
   return (
     <div className='dropdown' style={{ marginRight: '1vw' }}>
-      <div className='dropdown-title'>{title}</div>
+      <FormControl isRequired={isRequired || false}>
+      <FormLabel>{title}</FormLabel>
       <Select
         placeholder='Select option'
         bg='rgba(242, 242, 242, 0.4)'
@@ -25,6 +26,7 @@ const DropDown = ({ title, options, value, setter }) => {
           );
         })}
       </Select>
+      </FormControl>
     </div>
   );
 };

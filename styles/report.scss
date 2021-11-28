@@ -1,0 +1,44 @@
+table {
+    width: 95% !important;
+    table-layout: auto !important;
+    // border-collapse: collapse !important;
+    padding: 1vw !important;
+    font-size: $h5 !important;
+    // min-width: 400px !important;
+    background: #fff !important;
+    // border: 1px solid $color-muted !important;
+    border-radius: var(--chakra-radii-xl) !important;
+    margin-bottom: 3vw !important;
+  }
+  
+  table thead tr {
+    background-color: #009879 !important;
+    color: #ffffff !important;
+    text-align: left !important;
+    border: 1px solid $color-muted !important;
+    border-radius: 20px !important;
+  }
+  
+  table th,
+  table td {
+    padding: 1vw !important;
+    border: 1px solid $color-muted !important;
+    border-radius: 20px !important;
+    font-weight: bold !important;
+  }
+  
+  table tbody tr {
+    border-bottom: 1px solid #dddddd !important;
+  }
+  
+  table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879 !important;
+  }
+  
+  table tbody tr.active-row {
+    font-weight: bold !important;
+    color: #009879 !important;
+    border: 1px solid $color-muted !important;
+    border-radius: 20px !important;
+  }
+  

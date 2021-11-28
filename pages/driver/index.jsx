@@ -1,7 +1,8 @@
 //& Input Components [#IMPORTS#]
-import SimpleCard from "@/components/simplecard";
+import SimpleCard from "@/components/simpleCard";
 import TextField from "@/components/input";
 import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 import server from "functions/server";
 import { useRouter } from "next/router";
 
@@ -10,70 +11,64 @@ export default function ViewDriver() {
   const [driverName, setDriverName] = useState("");
   const router = useRouter();
   const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     const { data } = await server.get(`/driver`);
-  //     setData(data.data);
-  //   };
 
-  //   fetch();
-  // }, []);
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await server.get(`/operator`);
+      setData(data.data);
+    };
 
-  //$ States and Hooks [#STATES#]
-  const fields = [
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-    { name: "Pavan Chand Gupta", id: "Driver ID Here", start: "DMA School", end: "Makronia to DMA", type: "driver" },
-  ];
+    fetch();
+  }, []);
+
+  const onEdit = (id, data) => {
+    router.push({ pathname: `/operator/edit/${id}`, query: { data: JSON.stringify(data) } });
+  };
+  const onDetails = (id, data) => {
+    router.push({ pathname: `/operator/report/${id}`, query: { data: JSON.stringify(data) } });
+  };
+
+  //& Fuse JS [#FUSE#]
+  //$ New Fuse Instance with Settings
+  const fuse = new Fuse(data, {
+    isCaseSensitive: false,
+    includeScore: false,
+    shouldSort: true,
+    includeMatches: true,
+    findAllMatches: true,
+    minMatchCharLength: 0,
+    keys: ["name", "owner", "RCNumber"],
+  });
+
+  const result = driverName !== "" && fuse.search(driverName);
+  const resultFilter = result && result.map((result) => result.item);
+  const searchResultDisplay = resultFilter || data;
 
   //& Return UI [#RETURN#]
   return (
     <div className="home" style={{ backgroundColor: "var(--chakra-colors-gray-100)" }}>
-      <div className="driver">
+      <div className="home-shift">
         <TextField title={"Search Driver Name"} placeholder={"Type Driver name"} value={driverName} setter={setDriverName} color={"white"} />
-        <div className="driver-form" style={{ justifyContent: "flex-start" }}>
-          {fields.map((item, i) => {
-            return <SimpleCard key={i} name={item.name} id={item.id} start={item.start} end={item.end} type={item.type} />;
+        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+          {searchResultDisplay.map((item, i) => {
+            return (
+              <SimpleCard
+                key={i}
+                name={item.name}
+                id={item.id}
+                heading={["DL", "Phone"]}
+                info={[item.dl, item.phone]}
+                data={item}
+                start={item.start}
+                end={item.end}
+                type={item.type}
+                onEdit={onEdit}
+                onDetail={onDetails}
+              />
+            );
           })}
         </div>
       </div>
     </div>
   );
-  // return (
-  //   <div className='home'>
-  //     <h1 style={{ fontSize: '40px' }}>List Of all Bus</h1>
-  //     <div style={{ display: 'flex', flexDirection: 'column' }}>
-  //       {data.map((driver, index) => {
-  //         return (
-  //           <button
-  //             key={index}
-  //             onClick={() => {
-  //               router.push({ pathname: `/driver/${driver.id}`, query: { data: JSON.stringify(driver) } });
-  //             }}
-  //           >
-  //             {driver.name}
-  //           </button>
-  //         );
-  //       })}
-  //     </div>
-  //   </div>
-  // );
 }

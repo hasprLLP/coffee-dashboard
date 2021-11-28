@@ -31,6 +31,9 @@ export default function Login() {
         password,
       });
 
+      console.log("response",response);
+      
+
       localStorage.setItem('user', response);
 
       if (response.status === 200) {

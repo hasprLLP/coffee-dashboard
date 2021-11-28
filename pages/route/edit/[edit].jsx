@@ -1,14 +1,14 @@
 //& Input Components [#IMPORTS#]
-import TextField from '@/components/input';
-import DropDown from '@/components/dropdown';
-import UpdateButton from '@/components/updateButton';
-import DeleteButton from '@/components/deleteButton';
-import { LoadScript } from '@react-google-maps/api';
+import TextField from "@/components/input";
+import DropDown from "@/components/dropdown";
+import UpdateButton from "@/components/updateButton";
+import DeleteButton from "@/components/deleteButton";
+import { LoadScript } from "@react-google-maps/api";
 import GoBack from "@/helpers/goback";
-import Map from '@/utilities/map';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import server from '@/functions/server';
+import Map from "@/utilities/map";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import server from "@/functions/server";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditRoute() {
@@ -16,8 +16,8 @@ export default function EditRoute() {
   const { id } = router.query;
   const data = JSON.parse(router.query.data);
 
-  const lib = ['places'];
-  const key = 'AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA';
+  const lib = ["places"];
+  const key = "AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA";
   const getSchool = async () => {
     try {
       const response = await server.get(`${process.env.SERVER_URL}school/`);
@@ -28,7 +28,7 @@ export default function EditRoute() {
       });
       setSchoolNames(tempSchoolName);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
 
@@ -42,7 +42,7 @@ export default function EditRoute() {
       });
       setBusNames(tempSchoolName);
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
 
@@ -73,56 +73,58 @@ export default function EditRoute() {
   const [busNames, setBusNames] = useState([]);
 
   //$ States and Hooks [#STATES#]
-  const details = [
-    { title: 'Name', placeholder: 'Route Name', value: name, setter: setName },
-    { title: 'School Name', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
-    { title: 'Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
-    { title: 'Note', placeholder: 'Anything to remember ?', value: note, setter: setNote },
-  ];
-
   const timing = [
     {
-      title: 'Morning Departure Time',
-      type: 'time',
-      placeholder: 'Time of departure in morning',
+      title: "Bus Starts (Morning)",
+      type: "time",
+      placeholder: "Time of departure in morning",
       value: morningDeparture,
       setter: setMorningDeparture,
     },
     {
-      title: 'Morning Arrival Time',
-      type: 'time',
-      placeholder: 'Time of arrival at school in morning',
+      title: "Bus Reaches School (Morning)",
+      type: "time",
+      placeholder: "Time of arrival at school in morning",
       value: morningArrival,
       setter: setMorningArrival,
     },
     {
-      title: 'Evening Departure Time',
-      type: 'time',
-      placeholder: 'Time of departure in evening',
+      title: "Bus Leaves School (Evening)",
+      type: "time",
+      placeholder: "Time of departure in evening",
       value: eveningDeparture,
       setter: setEveningDeparture,
     },
   ];
-  // FIXME:className 'driver', 'driver-form' & 'driver-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
+  const details = [
+    { title: "Name", placeholder: "Route Name", value: name, setter: setName },
+    { title: "Starts from", placeholder: "Starting Point Address", value: name, setter: setName },
+    { title: "Destination (School)", options: schoolNames, value: school?.name, setter: setSchoolID, type: "dropdown" },
+    { title: "Assign Bus", options: busNames, value: bus?.name, setter: setBusID, type: "dropdown" },
+  ];
+
   //& Return UI [#RETURN#]
   return (
-    <div className='home'>
-      <div className='driver'>
-        <div className='passenger-title'><GoBack />Modify Route</div>
-        <div className='passenger-sub-title'>Timing Details</div>
-        <div className='driver-form'>
+    <div className="home">
+      <div className="home-shift">
+        <div className="layout-title">
+          <GoBack />
+          Modify Route
+        </div>
+        <div className="layout-sub-title">Timing Details</div>
+        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {timing.map((item, i) => {
-            return item.type === 'dropdown' ? (
+            return item.type === "dropdown" ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField type={item.type} key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
             );
           })}
         </div>
-        <div className='passenger-sub-title'>Basic Details</div>
-        <div className='driver-form'>
+        <div className="layout-sub-title">Basic Details</div>
+        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {details.map((item, i) => {
-            return item.type === 'dropdown' ? (
+            return item.type === "dropdown" ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField type={item.type} key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
@@ -132,13 +134,13 @@ export default function EditRoute() {
         <LoadScript googleMapsApiKey={key} libraries={lib}>
           <Map />
         </LoadScript>
-        <div className='driver-edit-row'>
+        <div className="layout-edit-row">
           <UpdateButton
-            collection={'bus'}
+            collection={"bus"}
             // data={{ name, busNumber, capacity }}
           />
           <DeleteButton
-            collection={'bus'}
+            collection={"bus"}
             // data={{ name, busNumber, capacity }}
           />
         </div>

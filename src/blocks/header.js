@@ -38,7 +38,8 @@ export default function Header() {
         />
       </div>
       <div className="header-logo">
-        <Image alt="header" src="/static/svg/tmpLogo.svg" layout="fill" objectFit="contain" />
+        <div style={{ fontSize: "1vw", fontWeight: "bold", textAlign: "right" }}>Admin panel</div>
+        <div style={{ fontSize: "0.7vw", fontWeight: "bold", textAlign: "right",color: "gray" }}>Schoolbus Karo</div>
       </div>
     </div>
   );

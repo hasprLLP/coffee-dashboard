@@ -4,10 +4,10 @@
   position: fixed;
   z-index: 5000;
 
-  width: 100vw;
+  max-width: 15vw;
   height: 4.5vw;
 
-  left: 0px;
+  right: 0px;
   top: 0px;
 
   display: flex;
@@ -28,5 +28,6 @@
     position: relative;
     width: 8vw;
     height: 50%;
+    margin-right: 2vw;
   }
 }

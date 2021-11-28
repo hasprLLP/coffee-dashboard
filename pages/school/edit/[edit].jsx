@@ -1,20 +1,27 @@
 //& Input Components [#IMPORTS#]
 import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
-import SaveButton from "@/components/saveButton";
+import GoBack from "@/helpers/goback";
+import UpdateButton from "@/components/updateButton";
+import DeleteButton from "@/components/deleteButton";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 //& Create & Export Driver [#FUNCTION#]
-export default function Create() {
-  const [name, setName] = useState("");
-  const [city, setCity] = useState();
-  const [address, setAddress] = useState();
-  const [zip, setZip] = useState();
-  const [phone, setPhone] = useState();
-  const [location, setLocation] = useState();
+export default function EditSchool() {
+  const router = useRouter();
+  const { id } = router.query;
+  const data = JSON.parse(router.query.data);
 
-  //$ States and Hooks [#STATES#]
-  const fields = [
+  const [name, setName] = useState(data.name);
+  const [city, setCity] = useState(data.city);
+  const [address, setAddress] = useState(data.address);
+  const [zip, setZip] = useState(data.zip);
+  const [phone, setPhone] = useState(data.phone);
+  const [location, setLocation] = useState(data.location);
+
+   //$ States and Hooks [#STATES#]
+   const fields = [
     { title: "School Name", isRequired: true,placeholder: "Enter School Name", value: name, setter: setName },
     { title: "City", isRequired: true,placeholder: "City of the school", value: city, setter: setCity },
     { title: "Address",isRequired: true, placeholder: "Address of the school", value: address, setter: setAddress },
@@ -26,7 +33,10 @@ export default function Create() {
   return (
     <div className="home">
       <div className="home-shift">
-        <div className="layout-title">Add School</div>
+        <div className="layout-title">
+          <GoBack />
+          Modify School Details
+        </div>
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
         {fields.map((item, i) => {
             return item.type === "dropdown" ? (
@@ -45,20 +55,16 @@ export default function Create() {
             );
           })}
         </div>
-        <SaveButton
-          collection={"school"}
-          data={{
-            name,
-            city,
-            zip,
-            phone,
-            location: {
-              type: "Point",
-              coordinates: [23.854080641497234, 78.7799817655712],
-              address: "Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001",
-            },
-          }}
-        />
+        <div className="layout-edit-row">
+          <UpdateButton
+            collection={"bus"}
+            // data={{ name, busNumber, capacity }}
+          />
+          <DeleteButton
+            collection={"bus"}
+            // data={{ name, busNumber, capacity }}
+          />
+        </div>
       </div>
     </div>
   );
