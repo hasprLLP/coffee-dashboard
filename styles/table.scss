@@ -8,7 +8,7 @@
 }
 .MuiPaper-elevation2 {
   // filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.025)) !important;
-  border: 2px solid $color-muted;
+  border: 2px solid $color-muted !important;
   box-shadow: none !important;
 }
 .MuiInput-underline:after {

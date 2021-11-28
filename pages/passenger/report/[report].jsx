@@ -16,7 +16,7 @@ export default function Details() {
           <GoBack />
           Details{" "}
         </div>
-        <div style={{ textTransform: "capitalize" }}>
+        <div style={{ textTransform: "capitalize" }} className="table-report">
           <JSONToHTMLTable data={data} />
         </div>
         <br />

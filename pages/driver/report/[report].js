@@ -13,7 +13,7 @@ export default function Details() {
     <div className="home">
       <div className="home-shift">
         <div className="layout-title"><GoBack />Details </div>
-        <div style={{ textTransform: "capitalize" }}>
+        <div style={{ textTransform: "capitalize" }} className="table-report">
           <JSONToHTMLTable data={data} />
         </div>
         <br />

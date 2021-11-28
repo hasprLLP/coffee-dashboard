@@ -11,7 +11,7 @@ export default function Report() {
     <div className="home">
       <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "5vw" }}>
         <DropDown title={"Select Report"} options={["Monthly Report", "Fee Report", "More Adding"]} value={report} setter={setReport} />
-        <Table />
+        <div style={{paddingBottom: "2vw"}}><Table /></div>
       </div>
     </div>
   );
