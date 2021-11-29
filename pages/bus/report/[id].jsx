@@ -33,7 +33,7 @@ export default function Details() {
           Details{' '}
         </div>
         <div style={{ textTransform: 'capitalize' }} className='table-report'>
-          {data ? <JSONToHTMLTable data={data} /> : null}
+          {data && <JSONToHTMLTable data={data} />}
         </div>
         <br />
       </div>

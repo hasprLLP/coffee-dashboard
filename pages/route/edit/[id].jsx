@@ -24,7 +24,7 @@ export default function EditRoute() {
       setSchool(response.data.data);
       const tempSchoolName = [];
       response.data.data.map((school) => {
-        tempSchoolName.push(school.name);
+        tempSchoolName.push(school?.name);
       });
       setSchoolNames(tempSchoolName);
     } catch (error) {
@@ -38,7 +38,7 @@ export default function EditRoute() {
       setBus(response.data.data);
       const tempSchoolName = [];
       response.data.data.map((school) => {
-        tempSchoolName.push(school.name);
+        tempSchoolName.push(school?.name);
       });
       setBusNames(tempSchoolName);
     } catch (error) {
@@ -48,12 +48,12 @@ export default function EditRoute() {
 
   const setSchoolID = (name) => {
     // get the object with name = school from array of schools
-    const schoolObj = school?.find((school) => school.name === name);
+    const schoolObj = school?.find((school) => school?.name === name);
     setSchool(schoolObj.id);
   };
   const setBusID = (name) => {
     // get the object with name = school from array of schools
-    const busObj = bus?.find((bus) => bus.name === name);
+    const busObj = bus?.find((bus) => bus?.name === name);
     setBus(busObj.id);
   };
 
@@ -62,18 +62,18 @@ export default function EditRoute() {
     getBus();
   }, []);
 
-  const [name, setName] = useState(data.name);
-  const [morningDeparture, setMorningDeparture] = useState(data.morningDeparture);
-  const [morningArrival, setMorningArrival] = useState(data.morningArrival);
-  const [eveningDeparture, setEveningDeparture] = useState(data.eveningDeparture);
-  const [note, setNote] = useState(data.not);
+  const [name, setName] = useState(data?.name);
+  const [morningDeparture, setMorningDeparture] = useState(data?.morningDeparture);
+  const [morningArrival, setMorningArrival] = useState(data?.morningArrival);
+  const [eveningDeparture, setEveningDeparture] = useState(data?.eveningDeparture);
+  const [note, setNote] = useState(data?.not);
   const [school, setSchool] = useState();
   const [schoolNames, setSchoolNames] = useState([]);
   const [bus, setBus] = useState();
   const [busNames, setBusNames] = useState([]);
 
   useEffect(() => {
-    setName(data.name);
+    setName(data?.name);
     setMorningDeparture(data.morningDeparture);
     setMorningArrival(data.morningArrival);
     setEveningDeparture(data.eveningDeparture);

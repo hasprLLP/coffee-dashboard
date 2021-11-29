@@ -59,15 +59,16 @@ const Table = () => {
         draggable: true,
       }}
       columns={[
-        { title: "Columns 1", field: "name" },
-        { title: "Columns 2", field: "surname" },
-        { title: "Columns 3", field: "birthYear", type: "numeric" },
-        { title: "Columns 4", field: "birthCity", lookup: { 34: "Pakistan", 63: "Sagar" } },
+        { title: "Name", field: "name" },
+        { title: "Address", field: "address" },
+        { title: "Phone", field: "phone", type: "numeric" },
+        { title: "DOB", field: "dob" },
       ]}
       data={[
-        { name: "Abhay", surname: "Rohit", birthYear: 1964, birthCity: 63 },
-        { name: "Anaconda", surname: "Boy", birthYear: 2200, birthCity: 34 },
-        { name: "Powepuff", surname: "Ganja", birthYear: 3500, birthCity: 63 },
+        { name: "Abhay", address: "Sagar MP", phone: 7987751603, dob: "02/07/1998" },
+        { name: "Anshul", address: "Sagar MP", phone: 7987751603, dob: "02/07/1998" },
+        { name: "Bhola", address: "Sagar MP", phone: 7987751603, dob: "02/07/1998" },
+        { name: "Dinesh", address: "Sagar MP", phone: 7987751603, dob: "02/07/1998" },
       ]}
       title="Good Table"
     />
