@@ -1,45 +1,57 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import GoBack from "@/helpers/goback";
-import UpdateButton from "@/components/updateButton";
-import DeleteButton from "@/components/deleteButton";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import GoBack from '@/helpers/goback';
+import UpdateButton from '@/components/updateButton';
+import DeleteButton from '@/components/deleteButton';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditSchool() {
   const router = useRouter();
   const { id } = router.query;
-  const data = JSON.parse(router.query.data);
+  const [data, setData] = useState();
 
-  const [name, setName] = useState(data.name);
-  const [city, setCity] = useState(data.city);
-  const [address, setAddress] = useState(data.address);
-  const [zip, setZip] = useState(data.zip);
-  const [phone, setPhone] = useState(data.phone);
-  const [location, setLocation] = useState(data.location);
+  const [name, setName] = useState();
+  const [city, setCity] = useState();
+  const [address, setAddress] = useState();
+  const [zip, setZip] = useState();
+  const [phone, setPhone] = useState();
+  const [location, setLocation] = useState();
 
-   //$ States and Hooks [#STATES#]
-   const fields = [
-    { title: "School Name", isRequired: true,placeholder: "Enter School Name", value: name, setter: setName },
-    { title: "City", isRequired: true,placeholder: "City of the school", value: city, setter: setCity },
-    { title: "Address",isRequired: true, placeholder: "Address of the school", value: address, setter: setAddress },
-    { title: "Zip Code",isRequired: true, type: "number", placeholder: "Enter Zip Code", value: zip, setter: setZip },
-    { title: "Phone", placeholder: "School Contact Number", type: "tel", prefix: "+91", value: phone, setter: setPhone },
+  useEffect(() => {
+    if (router?.query?.data) {
+      setData(JSON.parse(router?.query?.data));
+      setName(data?.name);
+      setCity(data?.city);
+      setAddress(data?.address);
+      setZip(data?.zip);
+      setPhone(data?.phone);
+      setLocation(data?.location);
+    }
+  }, [router.query.data, data]);
+
+  //$ States and Hooks [#STATES#]
+  const fields = [
+    { title: 'School Name', isRequired: true, placeholder: 'Enter School Name', value: name, setter: setName },
+    { title: 'City', isRequired: true, placeholder: 'City of the school', value: city, setter: setCity },
+    { title: 'Address', isRequired: true, placeholder: 'Address of the school', value: address, setter: setAddress },
+    { title: 'Zip Code', isRequired: true, type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
+    { title: 'Phone', placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
   ];
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="home-shift">
-        <div className="layout-title">
+    <div className='home'>
+      <div className='home-shift'>
+        <div className='layout-title'>
           <GoBack />
           Modify School Details
         </div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-        {fields.map((item, i) => {
-            return item.type === "dropdown" ? (
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+          {fields.map((item, i) => {
+            return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -55,13 +67,13 @@ export default function EditSchool() {
             );
           })}
         </div>
-        <div className="layout-edit-row">
+        <div className='layout-edit-row'>
           <UpdateButton
-            collection={"bus"}
+            collection={'bus'}
             // data={{ name, busNumber, capacity }}
           />
           <DeleteButton
-            collection={"bus"}
+            collection={'bus'}
             // data={{ name, busNumber, capacity }}
           />
         </div>
