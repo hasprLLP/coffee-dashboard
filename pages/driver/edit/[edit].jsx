@@ -13,22 +13,21 @@ export default function EditBus() {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState();
-
-  useEffect(() => {
-    router.query.data ? setData(JSON.parse(router.query.data)) : null;
-    setName(data?.name);
-    setPhone(data?.phone);
-    setPin(data?.pin);
-  }, [router.query.data, data]);
-
   const [name, setName] = useState();
-
   const [phone, setPhone] = useState();
   const [pin, setPin] = useState();
-
   const [photo, setPhoto] = useState('');
   const [sign, setSign] = useState('');
   const [drivingLicense, setDrivingLicense] = useState('');
+
+  useEffect(() => {
+    if (router?.query?.data) {
+      setData(JSON.parse(router?.query?.data));
+      setName(data?.name);
+      setPhone(data?.phone);
+      setPin(data?.pin);
+    }
+  }, [router.query.data, data]);
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -51,7 +50,6 @@ export default function EditBus() {
     { title: 'Upload Driving License', value: drivingLicense, setter: setDrivingLicense, type: 'upload' },
   ];
 
-  // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
     <div className='home'>
