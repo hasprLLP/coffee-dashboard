@@ -42,16 +42,23 @@ export default function EditPassenger() {
   const [routeNames, setRouteNames] = useState([]);
 
   useEffect(() => {
-    if (router?.query?.data) {
-      setData(JSON.parse(router.query.data));
-      setName(data?.name);
-      setIsStudent(data?.isStudent);
-      setDOB(data?.joiningDate);
-      setPhone(data?.phone);
-      setFee(data?.fee);
-    }
-  }, [router.query.data, data]);
+    const fetch = async (id) => {
+      if (id) {
+        const { data } = await server.get(`/passenger/${id}`);
+        setData(data.data);
+      }
+    };
 
+    fetch(id);
+  }, [id]);
+
+  useEffect(() => {
+    setName(data?.name);
+    setIsStudent(data?.isStudent);
+    setDOB(data?.joiningDate);
+    setPhone(data?.phone);
+    setFee(data?.fee);
+  }, [data]);
   const setSchoolID = (name) => {
     // get the object with name = school from array of schools
     const schoolObj = schools?.find((school) => school.name === name);
