@@ -26,6 +26,7 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
+      console.log('process.env.SERVER_URL', process.env.SERVER_URL);
       const response = await server.post('admin/authentication/sign_in', {
         email,
         password,
