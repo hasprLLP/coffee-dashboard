@@ -11,7 +11,6 @@ export default function Home() {
       <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "5vw" }}>
         Dashboard
         <FilePicker value={photo} setter={setPhoto} />
-        <img src={photo} alt="picked" style={{ width: "20vw", height: "100%" }} />
       </div>
     </div>
   );
