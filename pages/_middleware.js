@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function middleware(req, res) {
-  const is_auth = await fetch('https://jsonplaceholder.typicode.com/posts/1', { method: 'GET' });
+export function middleware(req, res) {
+  const is_auth = fetch('https://jsonplaceholder.typicode.com/posts/1', { method: 'GET' });
   console.log(is_auth.status);
   const { pathname } = req.nextUrl;
   if (pathname !== '/login') {
