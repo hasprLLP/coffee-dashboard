@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import GoBack from '@/helpers/goback';
 import { JSONToHTMLTable } from '@kevincobain2000/json-to-html-table';
-
+import { useState, useEffect } from 'react';
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
   const router = useRouter();

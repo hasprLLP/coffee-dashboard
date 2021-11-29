@@ -62,24 +62,35 @@ export default function EditRoute() {
     getBus();
   }, []);
 
-  const [name, setName] = useState(data?.name);
-  const [morningDeparture, setMorningDeparture] = useState(data?.morningDeparture);
-  const [morningArrival, setMorningArrival] = useState(data?.morningArrival);
-  const [eveningDeparture, setEveningDeparture] = useState(data?.eveningDeparture);
-  const [note, setNote] = useState(data?.not);
+  const [name, setName] = useState();
+  const [morningDeparture, setMorningDeparture] = useState();
+  const [morningArrival, setMorningArrival] = useState();
+  const [eveningDeparture, setEveningDeparture] = useState();
+  const [note, setNote] = useState();
   const [school, setSchool] = useState();
   const [schoolNames, setSchoolNames] = useState([]);
   const [bus, setBus] = useState();
   const [busNames, setBusNames] = useState([]);
 
   useEffect(() => {
+    const fetch = async (id) => {
+      if (id) {
+        const { data } = await server.get(`/route/${id}`);
+        setData(data.data);
+      }
+    };
+
+    fetch(id);
+  }, [id]);
+
+  useEffect(() => {
     setName(data?.name);
-    setMorningDeparture(data.morningDeparture);
-    setMorningArrival(data.morningArrival);
-    setEveningDeparture(data.eveningDeparture);
-    setNote(data.note);
-    setSchool(data.school);
-    setBus(data.bus);
+    setMorningDeparture(data?.morningDeparture);
+    setMorningArrival(data?.morningArrival);
+    setEveningDeparture(data?.eveningDeparture);
+    setNote(data?.note);
+    setSchool(data?.school);
+    setBus(data?.bus);
   }, [data]);
 
   //$ States and Hooks [#STATES#]
