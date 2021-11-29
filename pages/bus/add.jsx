@@ -86,8 +86,6 @@ export default function Create() {
         <SaveButton
           collection={'bus'}
           data={{
-            busNumber,
-            RCNumber,
             name,
             ownerName,
             ownerPhone,

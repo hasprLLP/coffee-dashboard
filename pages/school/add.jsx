@@ -50,6 +50,7 @@ export default function Create() {
           data={{
             name,
             city,
+            address,
             zip,
             phone,
             location: {
