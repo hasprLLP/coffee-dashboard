@@ -11,6 +11,7 @@ export function middleware(req, res) {
       return NextResponse.redirect('/login');
     }
   }
+  NextResponse.next();
   // try {
   //   let data = {
   //     method: 'POST',
