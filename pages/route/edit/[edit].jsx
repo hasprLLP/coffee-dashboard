@@ -63,10 +63,10 @@ export default function EditRoute() {
   }, []);
 
   const [name, setName] = useState(data?.name);
-  const [morningDeparture, setMorningDeparture] = useState(data.morningDeparture);
-  const [morningArrival, setMorningArrival] = useState(data.morningArrival);
-  const [eveningDeparture, setEveningDeparture] = useState(data.eveningDeparture);
-  const [note, setNote] = useState(data.not);
+  const [morningDeparture, setMorningDeparture] = useState(data?.morningDeparture);
+  const [morningArrival, setMorningArrival] = useState(data?.morningArrival);
+  const [eveningDeparture, setEveningDeparture] = useState(data?.eveningDeparture);
+  const [note, setNote] = useState(data?.not);
   const [school, setSchool] = useState();
   const [schoolNames, setSchoolNames] = useState([]);
   const [bus, setBus] = useState();
