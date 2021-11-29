@@ -1,17 +1,15 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-export function middleware(req, res) {
-  const is_auth = fetch('https://jsonplaceholder.typicode.com/posts/1', { method: 'GET' });
-  console.log(is_auth.status);
+export async function middleware(req, res) {
   const { pathname } = req.nextUrl;
   if (pathname !== '/login') {
-    if (is_auth.status !== 200) {
+    if (req.cookies.authorization) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect('/login');
     }
   }
-  NextResponse.next();
+
   // try {
   //   let data = {
   //     method: 'POST',
@@ -24,6 +22,8 @@ export function middleware(req, res) {
   //   const { pathname } = req.nextUrl;
 
   //   if (pathname !== '/login') {
+  //     const is_auth = await fetch(process.env.SERVER_URL + 'admin/authentication/verify', data);
+
   //     if (is_auth.status === 200) {
   //       return NextResponse.next();
   //     } else {
