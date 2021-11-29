@@ -16,7 +16,7 @@ export async function middleware(req, res) {
   //     return NextResponse.next();
   //   }
   // }
-  return NextResponse.next();
+  return new Response('Hello, world!');
 
   // try {
   //   let data = {
