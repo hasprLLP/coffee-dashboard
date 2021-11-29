@@ -26,7 +26,7 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/admin/authentication/sign_in', {
+      const response = await axios.post(process.env.SERVER_URL+'admin/authentication/sign_in', {
         email,
         password,
       });
