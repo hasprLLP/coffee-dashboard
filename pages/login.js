@@ -16,8 +16,7 @@ import {
   FormHelperText,
   InputRightElement,
 } from '@chakra-ui/react';
-import axios from 'axios';
-axios.defaults.withCredentials = true;
+import server from '@/functions/server';
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -27,12 +26,10 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(process.env.SERVER_URL + 'admin/authentication/sign_in', {
+      const response = await server.post('admin/authentication/sign_in', {
         email,
         password,
       });
-
-      localStorage.setItem('user', response);
 
       if (response.status === 200) {
         router.push('/');

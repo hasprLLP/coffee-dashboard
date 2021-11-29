@@ -11,7 +11,8 @@ import Scrollbar from 'smooth-scrollbar';
 import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
-
+import { CookiesProvider } from 'react-cookie';
+import server from '@/functions/server';
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -26,7 +27,35 @@ export default function MyApp({ Component, pageProps }) {
     Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
     view && Scrollbar.init(view, settings);
   }, [router]);
-
+  const authCheck = async () => {
+    if (router.pathname !== '/login') {
+      try {
+        const response = await server.get(`admin/authentication/verify`);
+        const { status } = response;
+        if (status !== 200) {
+          router.push('/login');
+        }
+      } catch (err) {
+        router.push('/login');
+        console.log(err);
+      }
+    }
+    if (router.pathname === '/login') {
+      try {
+        const response = await server.get(`admin/authentication/verify`);
+        const { status } = response;
+        if (status === 200) {
+          router.push('/');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+  // `Authorization Check
+  useEffect(() => {
+    authCheck();
+  }, [router.pathname]);
   return (
     <>
       {/* //& Head & Meta Tags */}
@@ -64,7 +93,6 @@ export default function MyApp({ Component, pageProps }) {
         <link rel='preload' href='/static/fonts/Gilroy-Medium.woff2' as='font' type='font/woff2' crossOrigin='' />
         <link rel='preload' href='/static/fonts/Gilroy-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='' />
       </Head>
-
       {/* //& Site Code */}
       <ChakraProvider theme={theme}>
         {/* //$ Global Context API */}
@@ -80,7 +108,7 @@ export default function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
           </Global>
         </div>
-      </ChakraProvider>
+      </ChakraProvider>{' '}
     </>
   );
 }
