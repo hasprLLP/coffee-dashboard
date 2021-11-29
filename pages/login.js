@@ -26,12 +26,10 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://bus-karo-server.herokuapp.com/api/v1/admin/authentication/sign_in', {
+      const response = await axios.post(process.env.SERVER_URL + 'admin/authentication/sign_in', {
         email,
         password,
       });
-
-      console.log('response', response);
 
       localStorage.setItem('user', response);
 
