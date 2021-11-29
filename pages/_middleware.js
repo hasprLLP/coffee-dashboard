@@ -2,13 +2,21 @@ import { NextResponse, NextRequest } from 'next/server';
 
 export async function middleware(req, res) {
   const { pathname } = req.nextUrl;
-  if (pathname !== '/login') {
-    if (req.cookies.authorization) {
-      return NextResponse.next();
-    } else {
-      return NextResponse.redirect('/login');
-    }
-  }
+  // if (pathname !== '/login') {
+  //   if (req.cookies.authorization) {
+  //     return NextResponse.next();
+  //   } else {
+  //     return NextResponse.redirect('/login');
+  //   }
+  // }
+  // if (pathname === '/login') {
+  //   if (req.cookies.authorization) {
+  //     return NextResponse.redirect('/');
+  //   } else {
+  //     return NextResponse.next();
+  //   }
+  // }
+  return NextResponse.next();
 
   // try {
   //   let data = {
