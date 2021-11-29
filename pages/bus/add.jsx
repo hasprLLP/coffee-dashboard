@@ -7,9 +7,8 @@ import { useState } from "react";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [busNumber, setBusNumber] = useState("");
-  const [RCNumber, setRCNumber] = useState();
   const [name, setName] = useState("");
+  const [RCNumber, setRCNumber] = useState();
   const [owner, setOwner] = useState("");
   const [ownerPhone, setOwnerPhone] = useState("");
   const [capacity, setCapacity] = useState(20);
@@ -20,7 +19,7 @@ export default function Create() {
     { title: "Bus Name (or ID)", isRequired: true, placeholder: "Bus Name for Reference", value: name, setter: setName },
     { title: "Bus No (RC)", isRequired: true, placeholder: "Provide Registration No", value: RCNumber, setter: setRCNumber },
     { title: "Owner Name", placeholder: "Bus Owner Name", value: owner, setter: setOwner },
-    { title: "Owner Phone", placeholder: "Bus Owner Phone", value: ownerPhone, setter: setOwnerPhone },
+    { title: "Owner Phone", placeholder: "Bus Owner Phone", value: ownerPhone, setter: setOwnerPhone,prefix: "+91" },
     { title: "Capacity", placeholder: "Bus Seating Capacity", type: "number", value: capacity, setter: setCapacity },
     { title: "Vehicle Type", options: ["Bus", "Mini-Bus", "Van"], value: vehicleType, setter: setVehicleType, type: "dropdown" },
   ];
@@ -51,11 +50,12 @@ export default function Create() {
         <SaveButton
           collection={"bus"}
           data={{
-            busNumber,
-            RCNumber,
             name,
+            RCNumber,
             owner,
+            ownerPhone,
             capacity,
+            vehicleType
           }}
         />
       </div>
