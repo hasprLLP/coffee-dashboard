@@ -1,14 +1,14 @@
 //& Input Components [#IMPORTS#]
-import SimpleCard from "@/components/simpleCard";
-import TextField from "@/components/input";
-import { useState, useEffect } from "react";
-import Fuse from "fuse.js";
-import server from "functions/server";
-import { useRouter } from "next/router";
+import SimpleCard from '@/components/simpleCard';
+import TextField from '@/components/input';
+import { useState, useEffect } from 'react';
+import Fuse from 'fuse.js';
+import server from 'functions/server';
+import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function ViewDriver() {
-  const [driverName, setDriverName] = useState("");
+  const [driverName, setDriverName] = useState('');
   const router = useRouter();
   const [data, setData] = useState([]);
 
@@ -22,10 +22,10 @@ export default function ViewDriver() {
   }, []);
 
   const onEdit = (id, data) => {
-    router.push({ pathname: `/operator/edit/${id}`, query: { data: JSON.stringify(data) } });
+    router.push({ pathname: `/driver/edit/${id}`, query: { data: JSON.stringify(data) } });
   };
   const onDetails = (id, data) => {
-    router.push({ pathname: `/operator/report/${id}`, query: { data: JSON.stringify(data) } });
+    router.push({ pathname: `/driver/report/${id}`, query: { data: JSON.stringify(data) } });
   };
 
   //& Fuse JS [#FUSE#]
@@ -37,26 +37,26 @@ export default function ViewDriver() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ["name", "owner", "RCNumber"],
+    keys: ['name', 'owner', 'RCNumber'],
   });
 
-  const result = driverName !== "" && fuse.search(driverName);
+  const result = driverName !== '' && fuse.search(driverName);
   const resultFilter = result && result.map((result) => result.item);
   const searchResultDisplay = resultFilter || data;
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home" style={{ backgroundColor: "var(--chakra-colors-gray-100)" }}>
-      <div className="home-shift">
-        <TextField title={"Search Driver Name"} placeholder={"Type Driver name"} value={driverName} setter={setDriverName} color={"white"} />
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+    <div className='home' style={{ backgroundColor: 'var(--chakra-colors-gray-100)' }}>
+      <div className='home-shift'>
+        <TextField title={'Search Driver Name'} placeholder={'Type Driver name'} value={driverName} setter={setDriverName} color={'white'} />
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {searchResultDisplay.map((item, i) => {
             return (
               <SimpleCard
                 key={i}
                 name={item.name}
                 id={item.id}
-                heading={["DL", "Phone"]}
+                heading={['DL', 'Phone']}
                 info={[item.dl, item.phone]}
                 data={item}
                 start={item.start}
