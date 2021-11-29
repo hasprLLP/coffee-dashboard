@@ -63,7 +63,7 @@ export default function ViewDriver() {
                 end={item.end}
                 type={item.type}
                 onEdit={onEdit}
-                onDetail={onDetails}
+                onDetails={onDetails}
               />
             );
           })}

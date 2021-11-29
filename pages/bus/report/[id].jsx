@@ -1,8 +1,14 @@
 import { useRouter } from 'next/router';
 import GoBack from '@/helpers/goback';
 import { JSONToHTMLTable } from '@kevincobain2000/json-to-html-table';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
+const server = axios.create({
+  baseURL: `${process.env.SERVER_URL}`,
+  timeout: 10000,
+  withCredentials: true,
+});
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
   const router = useRouter();
@@ -10,12 +16,14 @@ export default function Details() {
   const [data, setData] = useState();
 
   useEffect(() => {
-    if (router?.query?.data) {
-      setData(JSON.parse(router.query.data));
-    }
-  }, [router.query.data, data]);
+    const fetch = async () => {
+      const { data } = await server.get(`/bus/${id}?populate=owner`);
+      setData(data.data);
+    };
 
-  // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
+    fetch();
+  }, [id]);
+
   //& Return UI [#RETURN#]
   return (
     <div className='home'>
@@ -25,7 +33,7 @@ export default function Details() {
           Details{' '}
         </div>
         <div style={{ textTransform: 'capitalize' }} className='table-report'>
-          <JSONToHTMLTable data={data} />
+          {data ? <JSONToHTMLTable data={data} /> : null}
         </div>
         <br />
       </div>
