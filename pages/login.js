@@ -17,6 +17,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import server from '@/functions/server';
+var ls = require('local-storage');
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -31,10 +32,12 @@ export default function Login() {
         email,
         password,
       });
-
+      console.log('response: ' + JSON.stringify(response.data.token));
+      ls('jwt', JSON.stringify(response.data.token));
       if (response.status === 200) {
         router.push('/');
       }
+      localStorage.setItem('jwt', response.data.token);
     } catch (err) {
       console.log(err);
     }
