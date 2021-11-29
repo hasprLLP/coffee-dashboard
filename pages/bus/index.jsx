@@ -14,7 +14,7 @@ export default function ViewBus() {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await server.get(`/bus?populate=["owner"]`);
+      const { data } = await server.get(`/bus`);
       setData(data.data);
     };
 
