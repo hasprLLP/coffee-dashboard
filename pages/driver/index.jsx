@@ -50,6 +50,7 @@ export default function ViewDriver() {
       <div className='home-shift'>
         <TextField title={'Search Driver Name'} placeholder={'Type Driver name'} value={driverName} setter={setDriverName} color={'white'} />
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        {!searchResultDisplay.length && <div className="home-empty">No Drivers Added</div>}
           {searchResultDisplay.map((item, i) => {
             return (
               <SimpleCard
