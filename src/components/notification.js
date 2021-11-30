@@ -5,10 +5,10 @@ import { useEffect } from "react";
 const Notification = ({ type }) => {
   const push = (type) => {
     type === "success"
-      ? toast.success("Success Notification !", {
+      ? toast.success("Saved Successfully !", {
           position: toast.POSITION.BOTTOM_RIGHT,
         })
-      : toast.error("Error !", {
+      : toast.error("Please Check Details !", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
   };
