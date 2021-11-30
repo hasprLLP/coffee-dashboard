@@ -8,6 +8,7 @@
         "@/utilities/*": ["src/utilities/*"],
         "@/helpers/*": ["src/helpers/*"],
         "@/blocks/*": ["src/blocks/*"],
+        "@/tables/*": ["src/tables/*"],
         "@/pages/*": ["pages/*"],
         "@/global/*": ["src/global/*"],
         "@/page/*": ["src/page/*"],
