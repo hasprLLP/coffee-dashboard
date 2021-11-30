@@ -84,7 +84,7 @@ export default function Drawer() {
           fun={navigate}
         />
         <DrawerItem
-          icon='bus'
+          icon='school'
           heading='School'
           pages={[
             { name: 'View', path: '/school' },
