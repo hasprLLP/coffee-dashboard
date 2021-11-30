@@ -6,16 +6,19 @@ import Footer from '@/blocks/footer';
 import Drawer from '@/blocks/drawer';
 import Login from '@/pages/login';
 import { Global } from '@/global/global';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Scrollbar from 'smooth-scrollbar';
 import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
-import server from 'src/backend/node/server';
+import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
+var ls = require('local-storage');
+
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
-
+  const [isVerified, setIsVerified] = useState(false);
   //$ Run on Page Load - Scroll Jack
   useEffect(() => {
     const view = document.querySelector('.home'); //` Declare View Reference to be Jellyfied
@@ -26,17 +29,18 @@ export default function MyApp({ Component, pageProps }) {
     Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
     view && Scrollbar.init(view, settings);
   }, [router]);
-  const authCheck = async () => {};
+
   // `Authorization Check
-  // useEffect(() => {
-  //   const auth = jwt_verify();
-  //   console.log(auth);
-  //   if (auth) {
-  //     router.push('/');
-  //   } else {
-  //     router.push('/login');
-  //   }
-  // }, [router.pathname]);
+  useEffect(() => {
+    let authorization = Cookies.get('authorization') || ls.get('authorization');
+
+    if (!authorization) {
+      router.push('/login');
+    } else {
+      router.pathname === '/login' && router.push('/');
+    }
+  }, [router.pathname]);
+
   return (
     <>
       {/* //& Head & Meta Tags */}
@@ -75,21 +79,23 @@ export default function MyApp({ Component, pageProps }) {
         <link rel='preload' href='/static/fonts/Gilroy-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='' />
       </Head>
       {/* //& Site Code */}
-      <ChakraProvider theme={theme}>
-        {/* //$ Global Context API */}
-        {/* //$ Dashboard */}
-        <Drawer />
-        {/* //$ Header */}
-        <Header />
-        {/* //$ Footer */}
-        <Footer />
-        {/* //$ App Entry Point */}
-        <div id='view-main'>
-          <Global>
-            <Component {...pageProps} />
-          </Global>
-        </div>
-      </ChakraProvider>{' '}
+      {
+        <ChakraProvider theme={theme}>
+          {/* //$ Global Context API */}
+          {/* //$ Dashboard */}
+          <Drawer />
+          {/* //$ Header */}
+          <Header />
+          {/* //$ Footer */}
+          <Footer />
+          {/* //$ App Entry Point */}
+          <div id='view-main'>
+            <Global>
+              <Component {...pageProps} />
+            </Global>
+          </div>
+        </ChakraProvider>
+      }
     </>
   );
 }
