@@ -28,9 +28,16 @@ export default function Create() {
   const [fee, setFee] = useState("");
   const [discount, setDiscount] = useState("");
   const [photo, setPhoto] = useState("");
+  const [finalAmount, setFinalAmount] = useState((fee && discount && fee - discount) || 0);
   const [bus, setBus] = useState();
   const [cls, setCls] = useState("");
   const [section, setSection] = useState("");
+
+  useEffect(() => {
+    if (fee && discount) {
+      setFinalAmount(fee - discount);
+    }
+  }, [fee, discount]);
 
   const [schoolNames, setSchoolNames] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
@@ -83,6 +90,7 @@ export default function Create() {
     },
     { title: "Fee Amount", placeholder: "Fee for Selected Duration", type: "number", value: fee, setter: setFee, prefix: "₹" },
     { title: "Discount", placeholder: "Discount on Fee", type: "number", value: discount, setter: setDiscount, prefix: "₹" },
+    { title: "Final Amount", placeholder: "Final AMount", type: "fix", value: finalAmount, setter: setFinalAmount, prefix: "₹" },
   ];
 
   const getSchool = async () => {
@@ -109,7 +117,7 @@ export default function Create() {
       });
       setRouteNames(tempSchoolName);
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.response.data);
     }
   };
 
@@ -200,7 +208,15 @@ export default function Create() {
             ) : item.type === "upload" ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
-              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
+              <TextField
+                key={i}
+                title={item.title}
+                placeholder={item.placeholder}
+                value={item.value}
+                setter={item.setter}
+                prefix={item.prefix}
+                type={item.type}
+              />
             );
           })}
         </div>
