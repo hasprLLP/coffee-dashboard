@@ -1,54 +1,18 @@
 import { NextResponse, NextRequest } from 'next/server';
-
+//import jwt from 'express-jwt';
 export async function middleware(req, res) {
-  //   const { pathname } = req.nextUrl;
-  //   const jwt = ls('jwt');
-  //   if (pathname !== '/login') {
-  //     if (true) {
-  //       return NextResponse.next();
-  //     } else {
-  //       return NextResponse.redirect('/login');
-  //     }
-  //   }
-  //   const authorized = jwt_verify();
-  //   if (authorized) {
-  //     if (pathname !== '/login') {
-  //       if (authorized.id) {
-  //         return NextResponse.next();
-  //       } else {
-  //         return NextResponse.redirect('/login');
-  //       }
-  //     }
-  //   }
-  //   try {
-  //     let data = {
-  //       method: 'POST',
-  //       credentials: 'include',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         authorization: req.cookies.jwt,
-  //       },
-  //     };
-  //     const { pathname } = req.nextUrl;
-  //     if (pathname !== '/login') {
-  //       const is_auth = await fetch('http://localhost:8080/api/v1/admin/authentication/verify', data);
-  //       if (is_auth.status === 200) {
-  //         return NextResponse.next();
-  //       } else {
-  //         return NextResponse.redirect('/login');
-  //       }
-  //     }
-  //     if (pathname === '/login') {
-  //       const is_auth = await fetch('http://localhost:8080/api/v1/admin/authentication/verify', data);
-  //       console.log(is_auth);
-  //       if (is_auth.status === 200) {
-  //         return NextResponse.redirect('/');
-  //       } else {
-  //         return NextResponse.next();
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     return NextResponse.next();
-  //   }
+  const { pathname } = req.nextUrl;
+  const { cookies } = req;
+  if (cookies.authorization) {
+    //const authorized = jwt({ secret: process.env.JWT_SECRET, algorithms: ['RS256'], requestProperty: 'id' });
+    if (pathname === '/login') {
+      return NextResponse.redirect('/');
+    }
+  } else {
+    if (pathname !== '/login') {
+      return NextResponse.redirect('/login');
+    }
+  }
+
+  return NextResponse.next();
 }

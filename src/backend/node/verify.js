@@ -1,10 +1,8 @@
-var ls = require('local-storage');
-
-const jwt_verify = () => {
-  const jwt = ls.get('jwt');
+import jwt from 'jsonwebtoken';
+const jwt_verify = (token) => {
   let authorized;
-  if (jwt) {
-    authorized = require('jsonwebtoken').verify(jwt, process.env.JWT_SECRET);
+  if (token) {
+    authorized = jwt.verify(token, process.env.JWT_SECRET);
   }
   return authorized;
 };

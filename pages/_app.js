@@ -28,15 +28,15 @@ export default function MyApp({ Component, pageProps }) {
   }, [router]);
   const authCheck = async () => {};
   // `Authorization Check
-  useEffect(() => {
-    const auth = jwt_verify();
-    console.log(auth);
-    if (auth) {
-      router.push('/');
-    } else {
-      router.push('/login');
-    }
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   const auth = jwt_verify();
+  //   console.log(auth);
+  //   if (auth) {
+  //     router.push('/');
+  //   } else {
+  //     router.push('/login');
+  //   }
+  // }, [router.pathname]);
   return (
     <>
       {/* //& Head & Meta Tags */}

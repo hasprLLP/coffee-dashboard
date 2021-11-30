@@ -16,6 +16,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import server from 'src/backend/node/server';
+import Cookies from 'js-cookie';
 var ls = require('local-storage');
 
 export default function Login() {
@@ -29,17 +30,19 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('admin/authentication/sign_in', {
+      const response = await server.post('admin/authentication/sign_in', {
         email,
         password,
       });
-      ls('jwt', response.data.token);
-      // Cookies.set('coffee', response.data.token);
+      Cookies.set('authorization', response.data.token);
+      ls.set('authorization', response.data.token);
+
       if (response.status === 200) {
         router.push('/');
+        setLoading(false);
       }
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err);
       setLoading(false);
     }
   };
