@@ -11,8 +11,7 @@ import Scrollbar from 'smooth-scrollbar';
 import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
-import server from '@/functions/server';
-import jwt_verify from '@/functions/verify';
+import server from 'src/backend/node/server';
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();

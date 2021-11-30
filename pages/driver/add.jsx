@@ -1,10 +1,11 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import FilePicker from "@/components/filepicker";
-import SaveButton from "@/components/saveButton";
-import { useState } from "react";
-import server from "@/functions/server";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import FilePicker from '@/components/filepicker';
+import SaveButton from '@/components/saveButton';
+import { useState } from 'react';
+import server from 'src/backend/node/server';
+
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
   const [name, setName] = useState();
@@ -15,6 +16,8 @@ export default function Create() {
   const [drivingLicense, setDrivingLicense] = useState();
   const [aadharFront, setAadharFront] = useState();
   const [aadharBack, setAadharBack] = useState();
+
+  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack];
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -63,7 +66,7 @@ export default function Create() {
             );
           })}
         </div>
-        <SaveButton collection={"admin/operator"} data={{ name, phone, pin, sign, photo, drivingLicense }} />
+        <SaveButton reset={setterArray} collection={"admin/operator"} data={{ name, phone, pin, sign, photo, drivingLicense }} />
       </div>
     </div>
   );

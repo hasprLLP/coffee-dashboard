@@ -8,10 +8,12 @@
         "@/utilities/*": ["src/utilities/*"],
         "@/helpers/*": ["src/helpers/*"],
         "@/blocks/*": ["src/blocks/*"],
+        "@/tables/*": ["src/tables/*"],
         "@/pages/*": ["pages/*"],
         "@/global/*": ["src/global/*"],
         "@/page/*": ["src/page/*"],
-        "@/functions/*": ["functions/*"],
+        "@/functions/*": ["src/backend/node/*"],
+        "@/firebase/*": ["src/backend/firebase/*"],
       }
     },
     "exclude": ["node_modules", "out"]

@@ -3,23 +3,29 @@ import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
 import SaveButton from "@/components/saveButton";
 import FilePicker from "@/components/filepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@chakra-ui/react";
 //import server from '@/functions/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
   const [RCNumber, setRCNumber] = useState();
-  const [name, setName] = useState("");
-  const [ownerName, setOwnerName] = useState("");
-  const [ownerPhone, setOwnerPhone] = useState("");
+  const [name, setName] = useState();
+  const [ownerName, setOwnerName] = useState();
+  const [ownerPhone, setOwnerPhone] = useState();
   const [capacity, setCapacity] = useState(40);
   const [commission, setCommission] = useState(10);
   const [vehicleType, setVehicleType] = useState("Bus");
   const [selfOwn, setSelfOwn] = useState(false);
-  const [RCPhoto, setRCPhoto] = useState("");
-  const [permitPhoto, setPermitPhoto] = useState("");
-  const [pucPhoto, setPucPhoto] = useState("");
+  const [RCPhoto, setRCPhoto] = useState();
+  const [permitPhoto, setPermitPhoto] = useState();
+  const [pucPhoto, setPucPhoto] = useState();
+
+  const setterArray = [setRCNumber, setName, setOwnerName, setOwnerPhone, setRCPhoto, setPermitPhoto, pucPhoto];
+  useEffect(() => {
+    console.log("RCPhoto",RCPhoto);
+  }, [RCPhoto]);
+  
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
@@ -93,6 +99,7 @@ export default function Create() {
         </div>
         <SaveButton
           collection={"bus"}
+          reset={setterArray}
           data={{
             name,
             RCNumber,

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { useRouter } from 'next/router';
 import {
   Flex,
@@ -16,18 +15,19 @@ import {
   FormHelperText,
   InputRightElement,
 } from '@chakra-ui/react';
-import axios from 'axios';
+import server from 'src/backend/node/server';
 var ls = require('local-storage');
-import Cookies from 'js-cookie';
 
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const login = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post('admin/authentication/sign_in', {
         email,
@@ -40,6 +40,7 @@ export default function Login() {
       }
     } catch (err) {
       console.log(err.response.data);
+      setLoading(false);
     }
   };
 
@@ -89,7 +90,17 @@ export default function Login() {
                     <Link>forgot password?</Link>
                   </FormHelperText>
                 </FormControl>
-                <Button borderRadius={0} onClick={login} type='submit' variant='solid' colorScheme='teal' width='full'>
+                <Button
+                  rounded='md'
+                  borderRadius={0}
+                  onClick={login}
+                  isLoading={loading}
+                  loadingText='Logging you in...'
+                  type='submit'
+                  variant='solid'
+                  colorScheme='teal'
+                  width='full'
+                >
                   Login
                 </Button>
               </Stack>

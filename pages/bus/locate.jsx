@@ -12,13 +12,15 @@ export default function Locate() {
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA" }}
             defaultCenter={{
-              lat: 59.95,
-              lng: 30.33,
+              lat: 23.854,
+              lng: 78.7799,
             }}
-            defaultZoom={11}
+            defaultZoom={16}
             yesIWantToUseGoogleMapApiInternals={true}
           >
-            <div style={{ fontSize: "2vw", color: "white" }}>Apni Bus here</div>
+            <div lat={23.854} lng={78.7799} text="OK">
+              <img alt="tracking" style={{ width: "2.5vw", height: "100%" }} src={"/static/svg/tracking.svg"} />
+            </div>
           </GoogleMapReact>
         </div>
       </div>

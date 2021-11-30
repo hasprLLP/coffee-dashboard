@@ -5,38 +5,57 @@ import FilePicker from "@/components/filepicker";
 import SaveButton from "@/components/saveButton";
 import { Switch } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import server from "@/functions/server";
+import server from "src/backend/node/server";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
-  const [DOB, setDOB] = useState("");
-  const [joiningDate, setJoiningDate] = useState("");
-  const [guardian, setGuardian] = useState("");
+  const [DOB, setDOB] = useState();
+  const [guardian, setGuardian] = useState();
   const [phone, setPhone] = useState();
   const [landline, setLandline] = useState();
   const [guardianPhone, setGuardianPhone] = useState();
-  const [address, setAddress] = useState("");
-  const [guardianAddress, setGuardianAddress] = useState("");
-  const [location, setLocation] = useState("");
-  const [schools, setSchools] = useState("");
-  const [school, setSchool] = useState("");
+  const [address, setAddress] = useState();
+  const [location, setLocation] = useState();
+  const [schools, setSchools] = useState();
+  const [school, setSchool] = useState();
   const [routes, setRoutes] = useState();
   const [route, setRoute] = useState();
-  const [feeDuration, setFeeDuration] = useState("");
-  const [fee, setFee] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [feeDuration, setFeeDuration] = useState();
+  const [fee, setFee] = useState();
+  const [discount, setDiscount] = useState();
+  const [photo, setPhoto] = useState();
   const [finalAmount, setFinalAmount] = useState((fee && discount && fee - discount) || 0);
   const [bus, setBus] = useState();
-  const [cls, setCls] = useState("");
-  const [section, setSection] = useState("");
+  const [cls, setCls] = useState();
+  const [section, setSection] = useState();
+
+  const setterArray = [
+    setName,
+    setDOB,
+    setGuardian,
+    setPhone,
+    setLandline,
+    setGuardianPhone,
+    setAddress,
+    setLocation,
+    setSchool,
+    setRoute,
+    setFeeDuration,
+    setFee,
+    setDiscount,
+    setPhoto,
+    setFinalAmount,
+    setBus,
+    setSection,
+    setCls
+  ];
 
   useEffect(() => {
     if (fee && discount) {
       setFinalAmount(fee - discount);
-    }
+    } else setFinalAmount(0);
   }, [fee, discount]);
 
   const [schoolNames, setSchoolNames] = useState([]);
@@ -233,17 +252,16 @@ export default function Create() {
         </div>
         <SaveButton
           collection={"admin/passenger"}
+          reset={setterArray}
           data={{
             name,
             phone,
             photo,
             DOB,
-            joiningDate,
             guardian: {
               name: guardian,
               phone: guardianPhone,
               landline: landline,
-              address: guardianAddress,
             },
             route,
             location: {
