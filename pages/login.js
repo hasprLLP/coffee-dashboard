@@ -34,9 +34,11 @@ export default function Login() {
         email,
         password,
       });
+
       Cookies.set('authorization', response.data.token);
       ls.set('authorization', response.data.token);
 
+      server.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
       if (response.status === 200) {
         router.push('/');
         setLoading(false);
