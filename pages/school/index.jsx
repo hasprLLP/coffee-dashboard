@@ -50,6 +50,7 @@ export default function ViewBus() {
       <div className="home-shift">
         <TextField title={"Search School Name"} placeholder={"Type School Details"} value={schoolName} setter={setSchoolName} color={"white"} />
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        {!searchResultDisplay.length && <div className="home-empty">No Schools Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((item, i) => {
               return (

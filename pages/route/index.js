@@ -51,6 +51,7 @@ export default function ViewRoute() {
       <div className='home-shift'>
         <TextField title={'Search Route Name'} placeholder={'Type Route Details'} value={routeName} setter={setRouteName} color={'white'} />
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        {!searchResultDisplay.length && <div className="home-empty">No Routes Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((route, i) => {
               return (
