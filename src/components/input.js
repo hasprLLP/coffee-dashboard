@@ -17,7 +17,7 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
           )}
           <Input
             value={value}
-            onBlur={() => !value && setInvalid(true)}
+            onBlur={() => !value ? setInvalid(true) : setInvalid(false)}
             isInvalid={invalid}
             onChange={(e) => setter(e.target.value)}
             bg={color ? "white" : "rgba(242, 242, 242, 0.4)"}
