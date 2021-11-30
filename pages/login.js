@@ -16,7 +16,7 @@ import {
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
-import server from "@/functions/server";
+import server from "src/functions/server";
 var ls = require("local-storage");
 export default function Login() {
   const router = useRouter();

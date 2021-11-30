@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react';
 import Notification from '@/components/notification';
 import axios from 'axios';
 import { useState } from 'react';
-import server from '@/functions/server';
+import server from 'src/functions/server';
 
 const SaveButton = ({ collection, data }) => {
   const [status, setStatus] = useState(null);

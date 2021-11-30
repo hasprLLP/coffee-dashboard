@@ -1,7 +1,7 @@
 //& Input Components [#IMPORTS#]
 import SimpleCard from '@/components/simpleCard';
 import TextField from '@/components/input';
-import server from '@/functions/server';
+import server from 'src/functions/server';
 import Fuse from 'fuse.js';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';

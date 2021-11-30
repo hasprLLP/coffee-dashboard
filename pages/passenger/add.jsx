@@ -5,7 +5,7 @@ import FilePicker from "@/components/filepicker";
 import SaveButton from "@/components/saveButton";
 import { Switch } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import server from "@/functions/server";
+import server from "src/functions/server";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {

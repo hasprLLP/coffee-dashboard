@@ -6,7 +6,7 @@ import axios from 'axios';
 import { LoadScript } from '@react-google-maps/api';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
-import server from '@/functions/server';
+import server from 'src/functions/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {

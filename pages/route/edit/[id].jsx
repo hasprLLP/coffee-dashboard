@@ -8,7 +8,7 @@ import GoBack from '@/helpers/goback';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import server from '@/functions/server';
+import server from 'src/functions/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditRoute() {

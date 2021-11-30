@@ -7,7 +7,7 @@ import DeleteButton from '@/components/deleteButton';
 import GoBack from '@/helpers/goback';
 import { Switch } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import server from '@/functions/server';
+import server from 'src/functions/server';
 import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]

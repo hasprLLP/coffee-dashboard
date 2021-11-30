@@ -3,7 +3,7 @@ import SimpleCard from '@/components/simpleCard';
 import TextField from '@/components/input';
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
-import server from 'functions/server';
+import server from 'src/functions/server';
 import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
