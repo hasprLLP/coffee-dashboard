@@ -3,7 +3,7 @@ import TextField from "@/components/input";
 import DropDown from "@/components/dropdown";
 import SaveButton from "@/components/saveButton";
 import FilePicker from "@/components/filepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "@chakra-ui/react";
 //import server from '@/functions/server';
 
@@ -22,6 +22,10 @@ export default function Create() {
   const [pucPhoto, setPucPhoto] = useState("");
 
   const setterArray = [setRCNumber, setName, setOwnerName, setOwnerPhone, setRCPhoto, setPermitPhoto, pucPhoto];
+  useEffect(() => {
+    console.log("RCPhoto",RCPhoto);
+  }, [RCPhoto]);
+  
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
