@@ -21,6 +21,8 @@ export default function Create() {
   const [permitPhoto, setPermitPhoto] = useState("");
   const [pucPhoto, setPucPhoto] = useState("");
 
+  const setterArray = [setRCNumber, setName, setOwnerName, setOwnerPhone, setRCPhoto, setPermitPhoto, pucPhoto];
+
   //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: "Bus Name (or ID)", isRequired: true, placeholder: "Bus Name for Reference", value: name, setter: setName },
@@ -93,6 +95,7 @@ export default function Create() {
         </div>
         <SaveButton
           collection={"bus"}
+          reset={setterArray}
           data={{
             name,
             RCNumber,

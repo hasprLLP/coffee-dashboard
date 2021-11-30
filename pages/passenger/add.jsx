@@ -12,13 +12,11 @@ export default function Create() {
   const [name, setName] = useState("");
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState("");
-  const [joiningDate, setJoiningDate] = useState("");
   const [guardian, setGuardian] = useState("");
   const [phone, setPhone] = useState();
   const [landline, setLandline] = useState();
   const [guardianPhone, setGuardianPhone] = useState();
   const [address, setAddress] = useState("");
-  const [guardianAddress, setGuardianAddress] = useState("");
   const [location, setLocation] = useState("");
   const [schools, setSchools] = useState("");
   const [school, setSchool] = useState("");
@@ -33,10 +31,31 @@ export default function Create() {
   const [cls, setCls] = useState("");
   const [section, setSection] = useState("");
 
+  const setterArray = [
+    setName,
+    setDOB,
+    setGuardian,
+    setPhone,
+    setLandline,
+    setGuardianPhone,
+    setAddress,
+    setLocation,
+    setSchool,
+    setRoute,
+    setFeeDuration,
+    setFee,
+    setDiscount,
+    setPhoto,
+    setFinalAmount,
+    setBus,
+    setSection,
+    setCls
+  ];
+
   useEffect(() => {
     if (fee && discount) {
       setFinalAmount(fee - discount);
-    }
+    } else setFinalAmount(0);
   }, [fee, discount]);
 
   const [schoolNames, setSchoolNames] = useState([]);
@@ -233,17 +252,16 @@ export default function Create() {
         </div>
         <SaveButton
           collection={"admin/passenger"}
+          reset={setterArray}
           data={{
             name,
             phone,
             photo,
             DOB,
-            joiningDate,
             guardian: {
               name: guardian,
               phone: guardianPhone,
               landline: landline,
-              address: guardianAddress,
             },
             route,
             location: {

@@ -13,12 +13,14 @@ export default function Create() {
   const [phone, setPhone] = useState();
   const [location, setLocation] = useState();
 
+  const setterArray = [setName, setCity, setAddress, setZip, setPhone, setLocation];
+
   //$ States and Hooks [#STATES#]
   const fields = [
-    { title: "School Name", isRequired: true,placeholder: "Enter School Name", value: name, setter: setName },
-    { title: "City", isRequired: true,placeholder: "City of the school", value: city, setter: setCity },
-    { title: "Address",isRequired: true, placeholder: "Address of the school", value: address, setter: setAddress },
-    { title: "Zip Code",isRequired: true, type: "number", placeholder: "Enter Zip Code", value: zip, setter: setZip },
+    { title: "School Name", isRequired: true, placeholder: "Enter School Name", value: name, setter: setName },
+    { title: "City", isRequired: true, placeholder: "City of the school", value: city, setter: setCity },
+    { title: "Address", isRequired: true, placeholder: "Address of the school", value: address, setter: setAddress },
+    { title: "Zip Code", isRequired: true, type: "number", placeholder: "Enter Zip Code", value: zip, setter: setZip },
     { title: "Phone", placeholder: "School Contact Number", type: "tel", prefix: "+91", value: phone, setter: setPhone },
   ];
 
@@ -28,7 +30,7 @@ export default function Create() {
       <div className="home-shift">
         <div className="layout-title">Add School</div>
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-        {fields.map((item, i) => {
+          {fields.map((item, i) => {
             return item.type === "dropdown" ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
@@ -47,6 +49,7 @@ export default function Create() {
         </div>
         <SaveButton
           collection={"school"}
+          reset={setterArray}
           data={{
             name,
             city,

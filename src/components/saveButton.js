@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import server from 'src/functions/server';
 
-const SaveButton = ({ collection, data }) => {
+const SaveButton = ({ collection, data, reset }) => {
   const [status, setStatus] = useState(null);
 
   const onSave = async () => {
@@ -13,12 +13,11 @@ const SaveButton = ({ collection, data }) => {
       console.log('response', response);
       if (response.status === 201) {
         setStatus('success');
+        reset.map(setter => setter(""));
       } else {
         setStatus('error');
       }
     } catch (error) {
-      console.log(error.response.data);
-      
       setStatus('error');
     }
   };
