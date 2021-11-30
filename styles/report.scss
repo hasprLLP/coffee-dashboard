@@ -11,29 +11,27 @@
   
   table thead tr {
     background-color: #009879 !important;
-    color: #ffffff !important;
+    color: #ffffff !important;  
     text-align: left !important;
     border: 1px solid #ecf0f3 !important;
   }
   
   table th,
   table td {
-    padding: 1vw !important;
+    padding: 1vw !important;    
     border: 1px solid #ecf0f3 !important;
-    font-weight: 500 !important;
   }
   
   table tbody tr {
-    border-bottom: 1px solid #dddddd !important;
+    border-bottom: 1px solid #dddddd !important;    
   }
   
   table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879 !important;
+    border-bottom: 2px solid #009879 !important;  
   }
   
   table tbody tr.active-row {
-    font-weight: 500 !important;
-    color: #009879 !important;
+  
     border: 1px solid #ecf0f3 !important;
   }
   

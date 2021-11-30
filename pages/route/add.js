@@ -31,11 +31,11 @@ export default function AddRoute() {
     try {
       const response = await server.get(`${process.env.SERVER_URL}bus/`);
       setBus(response.data.data);
-      const tempSchoolName = [];
-      response.data.data.map((school) => {
-        tempSchoolName.push(school.name);
+      const tempBusName = [];
+      response.data.data.map((bus) => {
+        tempBusName.push(bus.RCNumber);
       });
-      setBusNames(tempSchoolName);
+      setBusNames(tempBusName);
     } catch (error) {
       console.log('error', error);
     }

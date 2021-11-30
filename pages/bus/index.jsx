@@ -34,8 +34,8 @@ export default function ViewBus() {
     isCaseSensitive: false,
     includeScore: false,
     shouldSort: true,
-    includeMatches: true,
-    findAllMatches: true,
+    includeMatches: false,
+    findAllMatches: false,
     minMatchCharLength: 0,
     keys: ['name', 'owner', 'RCNumber'],
   });
