@@ -43,13 +43,13 @@ export default function AddRoute() {
 
   const setSchoolID = (name) => {
     // get the object with name = school from array of schools
-    const schoolObj = school?.find((school) => school.name === name);
-    setSchool(schoolObj.id);
+    const schoolObj = school?.find((school) => school?.name === name);
+    setSchool(schoolObj?.id);
   };
   const setBusID = (name) => {
     // get the object with name = school from array of schools
-    const busObj = bus?.find((bus) => bus.name === name);
-    setBus(busObj.id);
+    const busObj = bus?.find((bus) => bus?.RCNumber === name);
+    setBus(busObj?.id);
   };
 
   useEffect(() => {
