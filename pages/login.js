@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import {
   Flex,
   Heading,
@@ -15,29 +15,29 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
-} from "@chakra-ui/react";
-import server from "@/functions/server";
-var ls = require("local-storage");
+} from '@chakra-ui/react';
+import axios from 'axios';
+var ls = require('local-storage');
+import Cookies from 'js-cookie';
+
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const login = async (e) => {
     e.preventDefault();
     try {
-      console.log("process.env.SERVER_URL", process.env.SERVER_URL);
-      const response = await server.post("admin/authentication/sign_in", {
+      const response = await axios.post('admin/authentication/sign_in', {
         email,
         password,
       });
-      console.log("response: " + JSON.stringify(response.data.token));
-      ls("jwt", JSON.stringify(response.data.token));
+      ls('jwt', response.data.token);
+      // Cookies.set('coffee', response.data.token);
       if (response.status === 200) {
-        router.push("/");
+        router.push('/');
       }
-      localStorage.setItem("jwt", response.data.token);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -46,26 +46,26 @@ export default function Login() {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   return (
-    <div className="login fixed">
-      <Flex flexDirection="column" width="100wh" height="100vh" backgroundColor="white" justifyContent="center" alignItems="center">
-        <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
-          <Avatar bg="teal.500" />
-          <Heading color="teal.400" style={{ fontFamily: "Gilroy" }}>
+    <div className='login fixed'>
+      <Flex flexDirection='column' width='100wh' height='100vh' backgroundColor='white' justifyContent='center' alignItems='center'>
+        <Stack flexDir='column' mb='2' justifyContent='center' alignItems='center'>
+          <Avatar bg='teal.500' />
+          <Heading color='teal.400' style={{ fontFamily: 'Gilroy' }}>
             Welcome
           </Heading>
-          <Box minW={{ base: "90%", md: "468px" }}>
+          <Box minW={{ base: '90%', md: '468px' }}>
             <form>
-              <Stack spacing={4} p="1rem">
+              <Stack spacing={4} p='1rem'>
                 <FormControl>
                   <InputGroup>
                     <InputLeftAddon>@</InputLeftAddon>
                     <Input
-                      focusBorderColor="#38B2AC"
-                      type="tel"
+                      focusBorderColor='#38B2AC'
+                      type='tel'
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
-                      placeholder="Email address"
+                      placeholder='Email address'
                     />
                   </InputGroup>
                 </FormControl>
@@ -75,21 +75,21 @@ export default function Login() {
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
-                      focusBorderColor="#38B2AC"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
+                      focusBorderColor='#38B2AC'
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder='Password'
                     />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                        {showPassword ? "Hide" : "Show"}
+                    <InputRightElement width='4.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={handleShowClick}>
+                        {showPassword ? 'Hide' : 'Show'}
                       </Button>
                     </InputRightElement>
                   </InputGroup>
-                  <FormHelperText textAlign="right">
+                  <FormHelperText textAlign='right'>
                     <Link>forgot password?</Link>
                   </FormHelperText>
                 </FormControl>
-                <Button borderRadius={0} onClick={login} type="submit" variant="solid" colorScheme="teal" width="full">
+                <Button borderRadius={0} onClick={login} type='submit' variant='solid' colorScheme='teal' width='full'>
                   Login
                 </Button>
               </Stack>
@@ -97,8 +97,8 @@ export default function Login() {
           </Box>
         </Stack>
         <Box>
-          Don{"'"}t have an Account ?{" "}
-          <Link color="teal.500" href="#">
+          Don{"'"}t have an Account ?{' '}
+          <Link color='teal.500' href='#'>
             Sign Up
           </Link>
         </Box>

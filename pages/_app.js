@@ -12,6 +12,7 @@ import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import server from '@/functions/server';
+import jwt_verify from '@/functions/verify';
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -26,34 +27,16 @@ export default function MyApp({ Component, pageProps }) {
     Scrollbar.use(EdgeDamping); //` EDGE DAMPING VENDOR PLUGIN
     view && Scrollbar.init(view, settings);
   }, [router]);
-  const authCheck = async () => {
-    if (router.pathname !== '/login') {
-      try {
-        const response = await server.get(`admin/authentication/verify`);
-        const { status } = response;
-        if (status !== 200) {
-          router.push('/login');
-        }
-      } catch (err) {
-        router.push('/login');
-        console.log(err.response.data);
-      }
-    }
-    if (router.pathname === '/login') {
-      try {
-        const response = await server.get(`admin/authentication/verify`);
-        const { status } = response;
-        if (status === 200) {
-          router.push('/');
-        }
-      } catch (err) {
-        console.log(err.response.data);
-      }
-    }
-  };
+  const authCheck = async () => {};
   // `Authorization Check
   useEffect(() => {
-    authCheck();
+    const auth = jwt_verify();
+    console.log(auth);
+    if (auth) {
+      router.push('/');
+    } else {
+      router.push('/login');
+    }
   }, [router.pathname]);
   return (
     <>
