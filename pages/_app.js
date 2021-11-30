@@ -36,7 +36,7 @@ export default function MyApp({ Component, pageProps }) {
         }
       } catch (err) {
         router.push('/login');
-        console.log(err);
+        console.log(err.response.data);
       }
     }
     if (router.pathname === '/login') {
@@ -47,7 +47,7 @@ export default function MyApp({ Component, pageProps }) {
           router.push('/');
         }
       } catch (err) {
-        console.log(err);
+        console.log(err.response.data);
       }
     }
   };

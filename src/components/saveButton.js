@@ -17,6 +17,8 @@ const SaveButton = ({ collection, data }) => {
         setStatus('error');
       }
     } catch (error) {
+      console.log(error.response.data);
+      
       setStatus('error');
     }
   };
