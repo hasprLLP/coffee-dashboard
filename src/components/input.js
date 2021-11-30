@@ -1,7 +1,9 @@
 import { Input, InputGroup, InputLeftAddon, FormControl, FormLabel } from "@chakra-ui/react";
 import useSize from "@/utilities/useSize";
+import { useState } from "react";
 
 const TextField = ({ title, placeholder, value, setter, type, prefix, color, isRequired }) => {
+  const [invalid, setInvalid] = useState(false);
   const size = useSize();
   return (
     <div className="input">
@@ -15,6 +17,8 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
           )}
           <Input
             value={value}
+            onBlur={() => !value && setInvalid(true)}
+            isInvalid={invalid}
             onChange={(e) => setter(e.target.value)}
             bg={color ? "white" : "rgba(242, 242, 242, 0.4)"}
             focusBorderColor="#38B2AC"

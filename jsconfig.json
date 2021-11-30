@@ -12,7 +12,8 @@
         "@/pages/*": ["pages/*"],
         "@/global/*": ["src/global/*"],
         "@/page/*": ["src/page/*"],
-        "@/functions/*": ["src/functions/*"],
+        "@/functions/*": ["src/backend/node/*"],
+        "@/firebase/*": ["src/backend/firebase/*"],
       }
     },
     "exclude": ["node_modules", "out"]

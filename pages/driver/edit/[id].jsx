@@ -7,7 +7,7 @@ import DeleteButton from '@/components/deleteButton';
 import GoBack from '@/helpers/goback';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import server from 'src/functions/server';
+import server from 'src/backend/node/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditBus() {

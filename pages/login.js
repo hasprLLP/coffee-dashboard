@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { useRouter } from "next/router";
 import {
   Flex,
@@ -16,16 +15,19 @@ import {
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
-import server from "src/functions/server";
+import server from "src/backend/node/server";
 var ls = require("local-storage");
+
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const login = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       console.log("process.env.SERVER_URL", process.env.SERVER_URL);
       const response = await server.post("admin/authentication/sign_in", {
@@ -40,6 +42,7 @@ export default function Login() {
       localStorage.setItem("jwt", response.data.token);
     } catch (err) {
       console.log(err.response.data);
+      setLoading(false);
     }
   };
 
@@ -89,7 +92,17 @@ export default function Login() {
                     <Link>forgot password?</Link>
                   </FormHelperText>
                 </FormControl>
-                <Button borderRadius={0} onClick={login} type="submit" variant="solid" colorScheme="teal" width="full">
+                <Button
+                  rounded="md"
+                  borderRadius={0}
+                  onClick={login}
+                  isLoading={loading}
+                  loadingText="Logging you in..."
+                  type="submit"
+                  variant="solid"
+                  colorScheme="teal"
+                  width="full"
+                >
                   Login
                 </Button>
               </Stack>

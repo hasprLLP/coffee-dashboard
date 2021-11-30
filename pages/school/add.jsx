@@ -6,7 +6,7 @@ import { useState } from "react";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState();
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
   const [zip, setZip] = useState();

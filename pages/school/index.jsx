@@ -1,14 +1,16 @@
 //& Input Components [#IMPORTS#]
 import SimpleCard from "@/components/simpleCard";
 import { useState, useEffect } from "react";
-import server from "src/functions/server";
+import server from "src/backend/node/server";
 import Fuse from "fuse.js"
+import Filler from "@/components/filler";
 import TextField from "@/components/input";
 import { useRouter } from "next/router";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function ViewBus() {
   const [schoolName, setSchoolName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -16,6 +18,7 @@ export default function ViewBus() {
     const fetch = async () => {
       const { data } = await server.get(`/school`);
       setData(data.data);
+      setLoading(true);
     };
 
     fetch();
@@ -50,7 +53,8 @@ export default function ViewBus() {
       <div className="home-shift">
         <TextField title={"Search School Name"} placeholder={"Type School Details"} value={schoolName} setter={setSchoolName} color={"white"} />
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-        {!searchResultDisplay.length && <div className="home-empty">No Schools Added</div>}
+        {!loading && <Filler cards={4} />}
+          {!searchResultDisplay.length && loading && <div className="home-empty">No Schools Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((item, i) => {
               return (

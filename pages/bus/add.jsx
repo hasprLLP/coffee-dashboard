@@ -10,16 +10,16 @@ import { Switch } from "@chakra-ui/react";
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
   const [RCNumber, setRCNumber] = useState();
-  const [name, setName] = useState("");
-  const [ownerName, setOwnerName] = useState("");
-  const [ownerPhone, setOwnerPhone] = useState("");
+  const [name, setName] = useState();
+  const [ownerName, setOwnerName] = useState();
+  const [ownerPhone, setOwnerPhone] = useState();
   const [capacity, setCapacity] = useState(40);
   const [commission, setCommission] = useState(10);
   const [vehicleType, setVehicleType] = useState("Bus");
   const [selfOwn, setSelfOwn] = useState(false);
-  const [RCPhoto, setRCPhoto] = useState("");
-  const [permitPhoto, setPermitPhoto] = useState("");
-  const [pucPhoto, setPucPhoto] = useState("");
+  const [RCPhoto, setRCPhoto] = useState();
+  const [permitPhoto, setPermitPhoto] = useState();
+  const [pucPhoto, setPucPhoto] = useState();
 
   const setterArray = [setRCNumber, setName, setOwnerName, setOwnerPhone, setRCPhoto, setPermitPhoto, pucPhoto];
   useEffect(() => {

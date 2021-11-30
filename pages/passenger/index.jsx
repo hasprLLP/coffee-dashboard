@@ -1,14 +1,16 @@
 //& Input Components [#IMPORTS#]
 import PhotoCard from "@/components/photoCard";
 import { useState, useEffect } from "react";
-import server from "src/functions/server";
+import server from "src/backend/node/server";
 import TextField from "@/components/input";
+import Filler from "@/components/filler";
 import Fuse from "fuse.js";
 import { useRouter } from "next/router";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Passenger() {
   const [student, setStudent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const [passengers, setPassengers] = useState([]);
@@ -16,6 +18,7 @@ export default function Passenger() {
     const fetch = async () => {
       const { data } = await server.get(`/passenger`);
       setPassengers(data.data);
+      setLoading(true);
     };
 
     fetch();
@@ -51,7 +54,8 @@ export default function Passenger() {
       <div className="home-shift">
         <TextField title={"Search Student Name"} placeholder={"Type student name"} value={student} setter={setStudent} color={"white"} />
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-          {!searchResultDisplay.length && <div className="home-empty">No Students Added</div>}
+        {!loading && <Filler cards={4} />}
+          {!searchResultDisplay.length && loading && <div className="home-empty">No Passengers Added</div>}
           {searchResultDisplay.map((passenger, i) => {
             return <PhotoCard key={i} id={passenger.id} onEdit={onEdit} onDetail={onDetail} passenger={passenger} />;
           })}
