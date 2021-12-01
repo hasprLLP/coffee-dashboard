@@ -1,6 +1,16 @@
 .drawer {
   $root: &;
 
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+  &::-webkit-scrollbar {
+    /* WebKit */
+    width: 0;
+    height: 0;
+  }
+
   position: fixed;
   z-index: 5000;
   background: $color-bg;

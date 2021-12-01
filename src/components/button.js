@@ -1,13 +1,13 @@
 import { Button } from '@chakra-ui/react';
 
-const _Button = () => {
+const BasicButton = ({ title, func }) => {
   return (
     <div className='button'>
-      <Button colorScheme='teal' size='md' isFullWidth>
-        Save
+      <Button colorScheme='teal' size='md'  onClick={func}>
+        {title}
       </Button>
     </div>
   );
 };
 
-export default _Button;
+export default BasicButton;

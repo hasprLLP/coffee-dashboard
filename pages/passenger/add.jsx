@@ -175,6 +175,17 @@ export default function Create() {
             );
           })}
         </div>
+        <div className="layout-not-student">
+          <h1>Adding Teacher/Passenger ?</h1>
+          <Switch
+            onChange={(e) => {
+              setIsStudent(!e.target.checked);
+            }}
+            value={!isStudent}
+            size="md"
+            defaultIsChecked={false}
+          />
+        </div>
         {isStudent ? (
           <>
             <div className="layout-sub-title">Guardian Details</div>
@@ -238,17 +249,6 @@ export default function Create() {
               />
             );
           })}
-        </div>
-        <div className="layout-not-student">
-          <h1>Adding Teacher/Passenger ?</h1>
-          <Switch
-            onChange={(e) => {
-              setIsStudent(!e.target.checked);
-            }}
-            value={!isStudent}
-            size="md"
-            defaultIsChecked={false}
-          />
         </div>
         <SaveButton
           collection={"admin/passenger"}

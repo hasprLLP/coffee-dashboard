@@ -13,7 +13,7 @@ const DropDown = ({ title, options, value, setter, isRequired }) => {
         <Select
           placeholder="Select option"
           bg="rgba(242, 242, 242, 0.4)"
-          onBlur={() => !value && setInvalid(true)}
+          onBlur={() => !value && isRequired ? setInvalid(true) : setInvalid(false)}
           isInvalid={invalid}
           focusBorderColor="#38B2AC"
           value={value}

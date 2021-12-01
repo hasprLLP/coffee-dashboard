@@ -6,11 +6,11 @@ import server from "src/backend/node/server";
 
 const SaveButton = ({ collection, data, reset }) => {
   const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const onSave = async () => {
     setLoading(true);
-    
+
     try {
       const response = await server.post(`${process.env.SERVER_URL}${collection}/`, data);
       console.log("response", response);

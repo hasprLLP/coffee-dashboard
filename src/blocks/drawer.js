@@ -107,6 +107,17 @@ export default function Drawer() {
           fun={navigate}
         />
         <DrawerItem
+          icon='redeem'
+          heading='Package'
+          pages={[
+            { name: 'View', path: '/package' },
+            { name: 'Add', path: '/package/add' },
+          ]}
+          active={activePage}
+          setter={setActivePage}
+          fun={navigate}
+        />
+        <DrawerItem
           icon='route'
           heading='Route'
           pages={[
@@ -117,13 +128,12 @@ export default function Drawer() {
           setter={setActivePage}
           fun={navigate}
         />
-
         <DrawerItem
           icon='user'
           heading='User'
           pages={[
-            { name: 'View', path: 'profile' },
-            { name: 'Add', path: 'create' },
+            { name: 'View', path: '/route' },
+            { name: 'Add', path: '/route/add' },
           ]}
           active={activePage}
           setter={setActivePage}
@@ -131,9 +141,12 @@ export default function Drawer() {
         <DrawerItem
           icon='redeem'
           heading='Redeem'
-          pages={['User Profile', 'Create Driver', 'Drivers List']}
+          pages={[
+            { name: 'View', path: '/redeem' }
+          ]}
           active={activePage}
           setter={setActivePage}
+          fun={navigate}
         />
       </Accordion>
     </div>
