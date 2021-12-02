@@ -142,7 +142,8 @@ export default function Drawer() {
           icon='redeem'
           heading='Redeem'
           pages={[
-            { name: 'View', path: '/redeem' }
+            { name: 'View', path: '/redeem' },
+            { name: 'Add Owners', path: '/redeem/add' },
           ]}
           active={activePage}
           setter={setActivePage}

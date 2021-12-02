@@ -1,8 +1,8 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import SaveButton from "@/components/saveButton";
-import { useState } from "react";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import SaveButton from '@/components/saveButton';
+import { useState } from 'react';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
@@ -17,21 +17,21 @@ export default function Create() {
 
   //$ States and Hooks [#STATES#]
   const fields = [
-    { title: "School Name", isRequired: true, placeholder: "Enter School Name", value: name, setter: setName },
-    { title: "City", isRequired: true, placeholder: "City of the school", value: city, setter: setCity },
-    { title: "Address", isRequired: true, placeholder: "Address of the school", value: address, setter: setAddress },
-    { title: "Zip Code", isRequired: true, type: "number", placeholder: "Enter Zip Code", value: zip, setter: setZip },
-    { title: "Phone", placeholder: "School Contact Number", type: "tel", prefix: "+91", value: phone, setter: setPhone },
+    { title: 'School Name', isRequired: true, placeholder: 'Enter School Name', value: name, setter: setName },
+    { title: 'City', isRequired: true, placeholder: 'City of the school', value: city, setter: setCity },
+    { title: 'Address', isRequired: true, placeholder: 'Address of the school', value: address, setter: setAddress },
+    { title: 'Zip Code', type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
+    { title: 'Phone', isRequired: true, placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
   ];
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="home-shift">
-        <div className="layout-title">Add School</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+    <div className='home'>
+      <div className='home-shift'>
+        <div className='layout-title'>Add School</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {fields.map((item, i) => {
-            return item.type === "dropdown" ? (
+            return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -48,7 +48,7 @@ export default function Create() {
           })}
         </div>
         <SaveButton
-          collection={"school"}
+          collection={'school'}
           reset={setterArray}
           data={{
             name,
@@ -57,9 +57,9 @@ export default function Create() {
             zip,
             phone,
             location: {
-              type: "Point",
+              type: 'Point',
               coordinates: [23.854080641497234, 78.7799817655712],
-              address: "Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001",
+              address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
             },
           }}
         />

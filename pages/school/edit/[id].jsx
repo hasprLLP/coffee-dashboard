@@ -12,7 +12,6 @@ import server from 'src/backend/node/server';
 export default function EditSchool() {
   const router = useRouter();
   const { id } = router.query;
-  const [data, setData] = useState();
 
   const [name, setName] = useState();
   const [city, setCity] = useState();
@@ -22,21 +21,15 @@ export default function EditSchool() {
   const [location, setLocation] = useState();
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await server.get(`/school/${id}`);
-      setData(data.data);
-    };
-
-    fetch();
-  }, [id]);
-
-  useEffect(() => {
-    setName(data?.name);
-    setCity(data?.city);
-    setAddress(data?.address);
-    setPhone(data?.phone);
-    setZip(data?.phone);
-  }, [data]);
+    if (router.query.data) {
+      const data = JSON.parse(router.query.data);
+      setName(data?.name);
+      setCity(data?.city);
+      setAddress(data?.location?.address);
+      setPhone(data?.phone);
+      setZip(data?.zip);
+    }
+  }, [router.query.data]);
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -75,8 +68,19 @@ export default function EditSchool() {
         </div>
         <div className='layout-edit-row'>
           <UpdateButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
+            collection={`school/${id}`}
+            data={{
+              name,
+              city,
+              address,
+              zip,
+              phone,
+              location: {
+                type: 'Point',
+                coordinates: [23.854080641497234, 78.7799817655712],
+                address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
+              },
+            }}
           />
           <DeleteButton
             collection={'bus'}

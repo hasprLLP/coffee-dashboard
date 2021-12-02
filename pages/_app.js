@@ -11,7 +11,7 @@ import Scrollbar from 'smooth-scrollbar';
 import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
+import verify from '../src/backend/node/verify';
 import Cookies from 'js-cookie';
 var ls = require('local-storage');
 
@@ -37,7 +37,12 @@ export default function MyApp({ Component, pageProps }) {
     if (!authorization) {
       router.push('/login');
     } else {
-      router.pathname === '/login' && router.push('/');
+      const is_auth = verify(authorization);
+      if (is_auth.id) {
+        router.pathname === '/login' && router.push('/');
+      } else {
+        router.push('/login');
+      }
     }
   }, [router.pathname]);
 

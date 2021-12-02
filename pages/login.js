@@ -30,7 +30,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await server.post('admin/authentication/sign_in', {
+      const response = await server.post('authentication/sign_in', {
         email,
         password,
       });
