@@ -13,9 +13,7 @@ import server from 'src/backend/node/server';
 export default function EditBus() {
   const router = useRouter();
   const { id } = router.query;
-  const [data, setData] = useState();
 
-  const [busNumber, setBusNumber] = useState('');
   const [RCNumber, setRCNumber] = useState();
   const [name, setName] = useState('');
   const [ownerName, setOwnerName] = useState('');
@@ -26,36 +24,31 @@ export default function EditBus() {
   const [selfOwn, setSelfOwn] = useState();
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await server.get(`/bus/${id}?populate=owner`);
-      setData(data.data);
-    };
+    if (router.query.data) {
+      const data = JSON.parse(router.query.data);
+      setName(data?.name);
+      setOwnerPhone(data?.owner?.phone);
+      setCapacity(data?.capacity);
+      setVehicleType(data?.vehicleType);
+      setCommission(data?.commission);
+      setSelfOwn(data?.selfOwn);
+      setOwnerName(data?.owner.name);
+      setRCNumber(data?.RCNumber);
+    }
+  }, [router.query.data]);
 
-    fetch();
-  }, [id]);
-
-  useEffect(() => {
-    setName(data?.name);
-    setOwnerPhone(data?.owner?.phone);
-    setCapacity(data?.capacity);
-    setVehicleType(data?.vehicleType);
-    setCommission(data?.commission);
-    setSelfOwn(data?.selfOwn);
-    setOwnerName(data?.ownerName);
-    setBusNumber(data?.busNumber);
-  }, [data]);
   //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: 'Bus Name (or ID)', isRequired: true, placeholder: 'Bus Name for Reference', value: name, setter: setName },
     { title: 'Bus No (RC)', isRequired: true, placeholder: 'Provide Registration No', value: RCNumber, setter: setRCNumber },
-    { title: 'Bus No ', isRequired: true, placeholder: 'Provide Registration No', value: busNumber, setter: setBusNumber },
+
     { title: 'Capacity', placeholder: 'Bus Seating Capacity', type: 'number', value: capacity, setter: setCapacity },
-    { title: 'Commission', placeholder: 'Owner Commission', type: 'number', value: commission, setter: setCommission },
+    { title: 'Commission', type: 'fix', placeholder: 'Owner Commission', value: commission, setter: setCommission },
     { title: 'Vehicle Type', options: ['Bus', 'Mini-Bus', 'Van'], value: vehicleType, setter: setVehicleType, type: 'dropdown' },
   ];
   const ownerFields = [
-    { title: 'Owner Name', placeholder: 'Bus Owner Name', value: ownerName, setter: setOwnerName },
-    { title: 'Owner Phone', placeholder: 'Bus Owner Phone', value: ownerPhone, setter: setOwnerPhone },
+    { title: 'Owner Name', type: 'fix', placeholder: 'Bus Owner Name', value: ownerName, setter: setOwnerName },
+    { title: 'Owner Phone', type: 'fix', placeholder: 'Bus Owner Phone', value: ownerPhone, setter: setOwnerPhone },
   ];
 
   //& Return UI [#RETURN#]
@@ -102,22 +95,9 @@ export default function EditBus() {
               })
             : null}
         </div>
-        <div className='layout-not-student'>
-          <h1>Self Own Bus ?</h1>
-          <Switch
-            onChange={(e) => {
-              setSelfOwn(e.target.checked);
-            }}
-            value={selfOwn}
-            size='md'
-            defaultIsChecked={false}
-          />
-        </div>
+
         <div className='layout-edit-row'>
-          <UpdateButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
-          />
+          <UpdateButton collection={`bus/${id}`} data={{ name, RCNumber, capacity, vehicleType }} />
           <DeleteButton
             collection={'bus'}
             // data={{ name, busNumber, capacity }}

@@ -1,15 +1,15 @@
 //& Input Components [#IMPORTS#]
-import SimpleCard from "@/components/simpleCard";
-import { useState, useEffect } from "react";
-import server from "src/backend/node/server";
-import Fuse from "fuse.js"
-import Filler from "@/components/filler";
-import TextField from "@/components/input";
-import { useRouter } from "next/router";
+import SimpleCard from '@/components/simpleCard';
+import { useState, useEffect } from 'react';
+import server from 'src/backend/node/server';
+import Fuse from 'fuse.js';
+import Filler from '@/components/filler';
+import TextField from '@/components/input';
+import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function ViewBus() {
-  const [schoolName, setSchoolName] = useState("");
+  const [schoolName, setSchoolName] = useState('');
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -40,21 +40,21 @@ export default function ViewBus() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ["name", "guardian.name", "phone","DOB"],
+    keys: ['name', 'guardian.name', 'phone', 'DOB'],
   });
 
-  const result = schoolName !== "" && fuse.search(schoolName);
+  const result = schoolName !== '' && fuse.search(schoolName);
   const resultFilter = result && result.map((result) => result.item);
   const searchResultDisplay = resultFilter || data;
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home" style={{ backgroundColor: "var(--chakra-colors-gray-100)" }}>
-      <div className="home-shift">
-        <TextField title={"Search School Name"} placeholder={"Type School Details"} value={schoolName} setter={setSchoolName} color={"white"} />
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-        {!loading && <Filler cards={4} />}
-          {!searchResultDisplay.length && loading && <div className="home-empty">No Schools Added</div>}
+    <div className='home' style={{ backgroundColor: 'var(--chakra-colors-gray-100)' }}>
+      <div className='home-shift'>
+        <TextField title={'Search School Name'} placeholder={'Type School Details'} value={schoolName} setter={setSchoolName} color={'white'} />
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+          {!loading && <Filler cards={4} />}
+          {!searchResultDisplay.length && loading && <div className='home-empty'>No Schools Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((item, i) => {
               return (
@@ -62,8 +62,8 @@ export default function ViewBus() {
                   key={i}
                   id={item._id}
                   name={item.name}
-                  heading={["Phone", "Address"]}
-                  info={[item.phone, item.address]}
+                  heading={['Phone', 'Address']}
+                  info={[item.phone, item?.location?.address]}
                   data={item}
                   onEdit={onEdit}
                   onDetails={onDetails}

@@ -78,7 +78,7 @@ export default function EditSchool() {
               location: {
                 type: 'Point',
                 coordinates: [23.854080641497234, 78.7799817655712],
-                address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
+                address,
               },
             }}
           />
