@@ -3,6 +3,8 @@ import { Accordion } from '@chakra-ui/react';
 import DrawerItem from '@/components/accordionItem';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Logout from "@/utilities/logout";
+
 
 export default function Drawer() {
   const [activePage, setActivePage] = useState(null);

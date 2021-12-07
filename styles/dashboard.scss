@@ -1,0 +1,41 @@
+.dashboard {
+  $root: &;
+
+  margin-left: 2.5vw;
+  margin-top: 1.5vw;
+  width: 94%;
+  height: 100%;
+
+  &-title {
+    @include row;
+    font-size: $h3;
+    font-weight: 500;
+    margin-bottom: 2vw;
+  }
+
+  &-subtitle {
+    @include row;
+    font-size: $h4;
+    font-weight: 500;
+    margin-bottom: 0.5vw;
+  }
+
+  &-cards {
+    width: 100%;
+    height: auto;
+    @include row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 2vw;
+  }
+
+  &-verify {
+    width: 100%;
+    height: auto;
+    @include column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 2vw;
+  }
+}

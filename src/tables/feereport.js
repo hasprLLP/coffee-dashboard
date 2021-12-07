@@ -19,7 +19,25 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 
-const TotalFee = () => {
+const FeeReport = () => {
+  const data = [ { id: "ID0002", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, ];
+
+  const column = [
+    { title: "Student ID", field: "id" },
+    { title: "Student Name", field: "name" },
+    { title: "Package", field: "package" },
+    { title: "Fee Amount", field: "fee" },
+    { title: "Discount", field: "discount" },
+    { title: "Paid Amt", field: "paid" },
+    { title: "Due Amt", field: "due" },
+    { title: "School", field: "school" },
+    { title: "Father Name", field: "father" },
+    { title: "Phone", field: "phone" },
+    { title: "Address", field: "address" },
+    { title: "Bus", field: "bus" },
+    { title: "Route", field: "route" },
+  ];
+
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -43,6 +61,7 @@ const TotalFee = () => {
   return (
     <MaterialTable
       icons={tableIcons}
+      className="mat-table"
       options={{
         exportButton: true,
         filtering: true,
@@ -58,19 +77,11 @@ const TotalFee = () => {
         showTitle: true,
         draggable: true,
       }}
-      columns={[
-        { title: "Student Name", field: "name" },
-        { title: "School Name", field: "name" },
-        { title: "Address", field: "address" },
-        { title: "Phone", field: "phone"},
-        { title: "DOB", field: "dob" },
-      ]}
-      data={[
-        { name: "Abhay", address: "Sagar MP", phone: 7987751603, dob: "02/07/1998" },
-      ]}
-      title="Total Fees View"
+      columns={column}
+      data={data}
+      title="Fees Report"
     />
   );
 };
 
-export default TotalFee;
+export default FeeReport;

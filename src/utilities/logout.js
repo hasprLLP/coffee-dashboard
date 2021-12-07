@@ -11,10 +11,9 @@ export default function Logout() {
 
   return (
     <>
-      <Button colorScheme="red" onClick={() => setIsOpen(true)}>
+      <Button mt={4} mb={10} colorScheme="red" onClick={() => setIsOpen(true)}>
         Logout
       </Button>
-
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
