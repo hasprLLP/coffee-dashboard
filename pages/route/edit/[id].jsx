@@ -14,84 +14,101 @@ import server from 'src/backend/node/server';
 export default function EditRoute() {
   const router = useRouter();
   const { id } = router.query;
-  const [data, setData] = useState();
 
   const lib = ['places'];
   const key = 'AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA';
-  const getSchool = async () => {
-    try {
-      const response = await server.get(`${process.env.SERVER_URL}school/`);
-      setSchool(response.data.data);
-      const tempSchoolName = [];
-      response.data.data.map((school) => {
-        tempSchoolName.push(school?.name);
-      });
-      setSchoolNames(tempSchoolName);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const getBus = async () => {
-    try {
-      const response = await server.get(`${process.env.SERVER_URL}bus/`);
-      setBus(response.data.data);
-      const tempSchoolName = [];
-      response.data.data.map((school) => {
-        tempSchoolName.push(school?.name);
-      });
-      setBusNames(tempSchoolName);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const setSchoolID = (name) => {
-    // get the object with name = school from array of schools
-    const schoolObj = school?.find((school) => school?.name === name);
-    setSchool(schoolObj.id);
-  };
-  const setBusID = (name) => {
-    // get the object with name = school from array of schools
-    const busObj = bus?.find((bus) => bus?.name === name);
-    setBus(busObj.id);
-  };
-
-  useEffect(() => {
-    getSchool();
-    getBus();
-  }, []);
 
   const [name, setName] = useState();
   const [morningDeparture, setMorningDeparture] = useState();
   const [morningArrival, setMorningArrival] = useState();
   const [eveningDeparture, setEveningDeparture] = useState();
-  const [note, setNote] = useState();
-  const [school, setSchool] = useState();
+  const [startsFrom, setStartsFrom] = useState();
+  //` Added Underscore to avoid conflict with the name of the package
+  const [package_, setPackage] = useState({});
+  const [packages, setPackages] = useState([]);
+  const [packageNames, setPackageNames] = useState([]);
+  const [school, setSchool] = useState({});
+  const [schools, setSchools] = useState([]);
   const [schoolNames, setSchoolNames] = useState([]);
-  const [bus, setBus] = useState();
+  const [bus, setBus] = useState({});
+  const [buses, setBuses] = useState([]);
   const [busNames, setBusNames] = useState([]);
 
   useEffect(() => {
-    const fetch = async (id) => {
-      if (id) {
-        const { data } = await server.get(`/route/${id}`);
-        setData(data.data);
-      }
-    };
+    if (router.query.data) {
+      const data = JSON.parse(router.query.data);
 
-    fetch(id);
-  }, [id]);
+      setName(data.name);
+      setMorningDeparture(data.morningDeparture);
+      setMorningArrival(data.morningArrival);
+      setEveningDeparture(data.eveningDeparture);
+      setStartsFrom(data?.startsFrom?.address);
+      setPackage(data.package);
+      setSchool(data.school);
+      setBus(data.bus);
+    }
+  }, [router.query.data]);
+
+  const getPackages = async () => {
+    try {
+      const response = await server.get(`package`);
+      setPackages(response.data.data);
+      const tempPackageNames = [];
+      response.data.data.map((bus) => {
+        tempPackageNames.push(bus.name);
+      });
+      setPackageNames(tempPackageNames);
+    } catch (error) {
+      console.log('Error while fetching Packages: ', error);
+    }
+  };
+
+  const getSchools = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      setSchools(response.data.data);
+      const tempSchoolNames = [];
+      response.data.data.map((school) => {
+        tempSchoolNames.push(school.name);
+      });
+      setSchoolNames(tempSchoolNames);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const getBuses = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}bus/`);
+      setBuses(response.data.data);
+      const tempBusNames = [];
+      response.data.data.map((bus) => {
+        tempBusNames.push(bus.name);
+      });
+      setBusNames(tempBusNames);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const setBusID = (busName) => {
+    const busObj = buses?.find((bus) => bus?.name === busName);
+    setBus(busObj);
+  };
+  const setSchoolID = (schoolName) => {
+    const schoolObj = schools?.find((school) => school?.name === schoolName);
+    setSchool(schoolObj);
+  };
+  const setPackageID = (packageName) => {
+    const packageObj = packages?.find((_package) => _package?.name === packageName);
+    setPackage(packageObj);
+  };
 
   useEffect(() => {
-    setName(data?.name);
-    setMorningDeparture(data?.morningDeparture);
-    setMorningArrival(data?.morningArrival);
-    setEveningDeparture(data?.eveningDeparture);
-    setNote(data?.note);
-    setSchool(data?.school);
-    setBus(data?.bus);
-  }, [data]);
+    getPackages();
+    getSchools();
+    getBuses();
+  }, []);
 
   //$ States and Hooks [#STATES#]
   const timing = [
@@ -117,11 +134,13 @@ export default function EditRoute() {
       setter: setEveningDeparture,
     },
   ];
+
   const details = [
     { title: 'Name', placeholder: 'Route Name', value: name, setter: setName },
-    { title: 'Starts from', placeholder: 'Starting Point Address', value: name, setter: setName },
+    { title: 'Starts from', placeholder: 'Starting Point Address', value: startsFrom, setter: setStartsFrom },
     { title: 'Destination (School)', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
     { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
+    { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
   //& Return UI [#RETURN#]
@@ -157,8 +176,21 @@ export default function EditRoute() {
         </LoadScript>
         <div className='layout-edit-row'>
           <UpdateButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
+            collection={`route/${id}`}
+            data={{
+              name,
+              morningDeparture,
+              morningArrival,
+              eveningDeparture,
+              startsFrom: {
+                type: 'Point',
+                coordinates: [23.86135575696267, 78.80405223062922],
+                address: 'Gour Nagar, Makroniya, Madhya Pradesh 470001',
+              },
+              school: school?.id,
+              bus: bus?.id,
+              package: package_?.id,
+            }}
           />
           <DeleteButton
             collection={'bus'}

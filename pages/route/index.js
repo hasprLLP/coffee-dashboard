@@ -3,7 +3,7 @@ import SimpleCard from '@/components/simpleCard';
 import TextField from '@/components/input';
 import server from 'src/backend/node/server';
 import Fuse from 'fuse.js';
-import Filler from "@/components/filler";
+import Filler from '@/components/filler';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -17,7 +17,7 @@ export default function ViewRoute() {
   const [routes, setRoutes] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await server.get(`/route?populate=["school","bus"]`);
+      const { data } = await server.get(`/route?populate=["school","bus","package"]`);
       setRoutes(data.data);
       setLoading(true);
     };
@@ -54,8 +54,8 @@ export default function ViewRoute() {
       <div className='home-shift'>
         <TextField title={'Search Route Name'} placeholder={'Type Route Details'} value={routeName} setter={setRouteName} color={'white'} />
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-        {!loading && <Filler cards={4} />}
-          {!searchResultDisplay.length && loading && <div className="home-empty">No Routes Added</div>}
+          {!loading && <Filler cards={4} />}
+          {!searchResultDisplay.length && loading && <div className='home-empty'>No Routes Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((route, i) => {
               return (

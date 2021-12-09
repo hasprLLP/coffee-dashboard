@@ -32,7 +32,7 @@ export default function EditBus() {
       setVehicleType(data?.vehicleType);
       setCommission(data?.commission);
       setSelfOwn(data?.selfOwn);
-      setOwnerName(data?.owner.name);
+      setOwnerName(data?.owner?.name);
       setRCNumber(data?.RCNumber);
     }
   }, [router.query.data]);

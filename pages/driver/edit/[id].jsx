@@ -22,19 +22,16 @@ export default function EditBus() {
   const [drivingLicense, setDrivingLicense] = useState('');
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await server.get(`/operator/${id}`);
-      setData(data.data);
-    };
-
-    fetch();
-  }, [id]);
-
-  useEffect(() => {
-    setName(data?.name);
-    setPhone(data?.phone);
-    setPin(data?.pin);
-  }, [data]);
+    if (router.query.data) {
+      const data = JSON.parse(router.query.data);
+      setName(data?.name);
+      setPhone(data?.phone);
+      setPin(data?.pin);
+      setPhoto(data?.photo);
+      setSign(data?.sign);
+      setDrivingLicense(data?.drivingLicense);
+    }
+  }, [router.query.data]);
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -87,8 +84,15 @@ export default function EditBus() {
         </div>
         <div className='layout-edit-row'>
           <UpdateButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
+            collection={`operator/${id}`}
+            data={{
+              name,
+              phone,
+              pin,
+              photo,
+              sign,
+              drivingLicense,
+            }}
           />
           <DeleteButton
             collection={'bus'}
