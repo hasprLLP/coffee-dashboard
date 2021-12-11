@@ -9,6 +9,7 @@ import { Switch } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import server from 'src/backend/node/server';
 import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditPassenger() {
@@ -17,58 +18,93 @@ export default function EditPassenger() {
   const [data, setData] = useState();
 
   const [name, setName] = useState();
-  const [isStudent, setIsStudent] = useState();
+  const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
   const [joiningDate, setJoiningDate] = useState();
+  const [dueDate, setDueDate] = useState();
   const [guardian, setGuardian] = useState();
   const [phone, setPhone] = useState();
   const [landline, setLandline] = useState();
   const [guardianPhone, setGuardianPhone] = useState();
-  const [address, setAddress] = useState('');
-  const [guardianAddress, setGuardianAddress] = useState('');
-  const [location, setLocation] = useState('');
-  const [schools, setSchools] = useState('');
-  const [school, setSchool] = useState('');
-  const [routes, setRoutes] = useState();
-  const [route, setRoute] = useState();
-  const [feeDuration, setFeeDuration] = useState('');
-  const [fee, setFee] = useState();
-  const [photo, setPhoto] = useState('');
-  const [bus, setBus] = useState();
-  const [cls, setCls] = useState('');
-  const [section, setSection] = useState('');
-
+  const [address, setAddress] = useState();
+  const [location, setLocation] = useState();
+  const [school, setSchool] = useState({});
+  const [schools, setSchools] = useState([]);
   const [schoolNames, setSchoolNames] = useState([]);
+  const [route, setRoute] = useState({});
+  const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
+  const [photo, setPhoto] = useState();
+  const [amount, setAmount] = useState();
+  const [cls, setCls] = useState();
 
   useEffect(() => {
-    const fetch = async (id) => {
-      if (id) {
-        const { data } = await server.get(`/passenger/${id}`);
-        setData(data.data);
-      }
-    };
+    if (router.query.data) {
+      const data = JSON.parse(router.query.data);
+      const [DOB, TDOB] = data.DOB.split('T');
+      const [joiningDate, TjoiningDate] = data.joiningDate.split('T');
+      const [dueDate, TdueDate] = data.dueDate.split('T');
+      setIsStudent(data?.isStudent);
+      setDOB(DOB);
+      setName(data?.name);
+      setJoiningDate(joiningDate);
+      setDueDate(dueDate);
+      setGuardian(data?.guardian?.name);
+      setPhone(data?.user?.phone);
+      setLandline(data?.guardian.landline);
+      setGuardianPhone(data?.guardian.phone);
+      setAddress(data?.location?.address);
+      setSchool(data?.route?.school);
+      setRoute(data?.route);
+      setPhoto(data?.photo);
+      setAmount(data?.lastTransaction.amount);
+      setCls(data?.cls);
+    }
+  }, [router.query.data]);
 
-    fetch(id);
-  }, [id]);
+  const getSchools = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      setSchools(response.data.data);
+      const tempSchoolNames = [];
+      response.data.data.map((school) => {
+        tempSchoolNames.push(school.name);
+      });
+      setSchoolNames(tempSchoolNames);
+    } catch (error) {
+      console.log('School Error', error);
+    }
+  };
+  const getRoutes = async () => {
+    try {
+      const response = await server.get(`${process.env.SERVER_URL}route${school.id ? `?school=${school?.id}` : ''}`);
+      setRoutes(response.data.data);
+      const tempRoutesName = [];
+      response.data.data.map((route) => {
+        tempRoutesName.push(route.name);
+      });
+      setRouteNames(tempRoutesName);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const setSchoolID = (schoolName) => {
+    const schoolObj = schools?.find((school) => school?.name === schoolName);
+    setSchool(schoolObj);
+  };
+  const setRouteID = (routeName) => {
+    const routeObj = routes?.find((route) => route?.name === routeName);
+    setRoute(routeObj);
+  };
 
   useEffect(() => {
-    setName(data?.name);
-    setIsStudent(data?.isStudent);
-    setDOB(data?.joiningDate);
-    setPhone(data?.phone);
-    setFee(data?.fee);
-  }, [data]);
-  const setSchoolID = (name) => {
-    // get the object with name = school from array of schools
-    const schoolObj = schools?.find((school) => school.name === name);
-    setSchool(schoolObj.id);
-  };
-  const setRouteID = (name) => {
-    // get the object with name = school from array of schools
-    const routeObj = routes?.find((bus) => bus.name === name);
-    setRoute(routeObj.id);
-  };
+    getSchools();
+  }, []);
+
+  useEffect(() => {
+    getRoutes();
+  }, [school]);
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
@@ -98,60 +134,17 @@ export default function EditPassenger() {
     { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
-    {
-      title: 'Fee Duration',
-      options: ['Monthly (1 Month)', 'Quarterly (3 Months)', 'Half-Yearly (6 Months)', 'Anually (12 Months)'],
-      value: feeDuration,
-      setter: setFeeDuration,
-      type: 'dropdown',
-    },
-    { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: fee, setter: setFee, prefix: '₹' },
+    { title: 'Joining Date', type: 'fix', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
+    { title: 'Due Date', type: 'fix', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
+    { title: 'Fee Amount', type: 'fix', placeholder: 'Fee for Selected Duration', value: amount, setter: setAmount, prefix: '₹' },
   ];
-
-  const getSchool = async () => {
-    try {
-      const response = await server.get(`${process.env.SERVER_URL}school/`);
-      setSchools(response.data.data);
-      const tempSchoolName = [];
-      response.data.data.map((school) => {
-        tempSchoolName.push(school.name);
-      });
-      setSchoolNames(tempSchoolName);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const getRoutes = async () => {
-    try {
-      const response = await server.get(`${process.env.SERVER_URL}route${school ? `?school=${school}` : ''}`);
-      setRoutes(response.data.data);
-      const tempSchoolName = [];
-      response.data.data.map((school) => {
-        tempSchoolName.push(school.name);
-      });
-      setRouteNames(tempSchoolName);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  useEffect(() => {
-    getSchool();
-  }, []);
-  useEffect(() => {
-    getRoutes();
-  }, [school]);
 
   //& Return UI [#RETURN#]
   return (
     <div className='home'>
       <div className='home-shift'>
-        <div className='layout-title'>
-          <GoBack />
-          Modify {isStudent ? 'Student' : 'Teacher'}
-        </div>
-        <div className='layout-sub-title'>Basic Details</div>
+        <div className='layout-title'>Add {isStudent ? 'Student' : 'Teacher'}</div>
+        <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {basicFields.map((item, i) => {
             return item.type === 'dropdown' ? (
@@ -171,6 +164,17 @@ export default function EditPassenger() {
               />
             );
           })}
+        </div>
+        <div className='layout-not-student'>
+          <h1>Adding Teacher/Passenger ?</h1>
+          <Switch
+            onChange={(e) => {
+              setIsStudent(!e.target.checked);
+            }}
+            value={!isStudent}
+            size='md'
+            defaultIsChecked={false}
+          />
         </div>
         {isStudent ? (
           <>
@@ -224,29 +228,45 @@ export default function EditPassenger() {
             ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
-              <TextField key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} prefix={item.prefix} />
+              <TextField
+                key={i}
+                title={item.title}
+                placeholder={item.placeholder}
+                value={item.value}
+                setter={item.setter}
+                prefix={item.prefix}
+                type={item.type}
+              />
             );
           })}
         </div>
-        <div className='layout-not-student'>
-          <h1>Adding Teacher/Passenger ?</h1>
-          <Switch
-            onChange={(e) => {
-              setIsStudent(!isStudent);
-            }}
-            value={!isStudent}
-            size='md'
-            defaultIsChecked={false}
-          />
-        </div>
         <div className='layout-edit-row'>
           <UpdateButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
+            collection={`passenger/${id}`}
+            data={{
+              name,
+
+              photo,
+              DOB,
+              guardian: {
+                name: guardian,
+                phone: guardianPhone,
+                landline: landline,
+              },
+
+              location: {
+                type: 'Point',
+                coordinates: [23.861998, 78.803366],
+                address: 'MIG 71, Gour Nagar , Makronia , Sagar',
+              },
+
+              isStudent,
+              cls,
+            }}
           />
           <DeleteButton
-            collection={'bus'}
-            // data={{ name, busNumber, capacity }}
+
+          // data={{ name, busNumber, capacity }}
           />
         </div>
       </div>

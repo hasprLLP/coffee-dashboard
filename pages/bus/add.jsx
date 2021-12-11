@@ -11,8 +11,9 @@ import server from '@/functions/server';
 export default function Create() {
   const [RCNumber, setRCNumber] = useState();
   const [name, setName] = useState();
-  const [owner, setOwner] = useState();
-  const [ownerList, setOwnerList] = useState([]);
+  const [owner, setOwner] = useState({});
+  const [owners, setOwners] = useState();
+  const [ownerNames, setOwnerNames] = useState([]);
   const [capacity, setCapacity] = useState(40);
   const [commission, setCommission] = useState(10);
   const [vehicleType, setVehicleType] = useState('Bus');
@@ -22,10 +23,28 @@ export default function Create() {
   const [pucPhoto, setPucPhoto] = useState();
 
   const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto];
+
+  const getOwners = async () => {
+    try {
+      const response = await server.get(`owner`);
+      setOwners(response.data.data);
+      const tempOwnerName = [];
+      response.data.data.map((bus) => {
+        tempOwnerName.push(bus.name);
+      });
+      setOwnerNames(tempOwnerName);
+    } catch (error) {
+      console.log('Error while fetching Owner: ', error);
+    }
+  };
+
+  const setOwnerID = (ownerName) => {
+    const ownerObj = owners?.find((owner) => owner?.name === ownerName);
+    setOwner(ownerObj);
+  };
+
   useEffect(() => {
-    server.get('owner').then((res) => {
-      setOwnerList(res.data.data);
-    });
+    getOwners();
   }, []);
 
   //$ States and Hooks [#STATES#]
@@ -40,7 +59,15 @@ export default function Create() {
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
   ];
   const ownerFields = [
-    { title: 'Owner', isRequired: true, options: ownerList, type: 'dropdown', placeholder: 'Bus Owner Name', value: owner, setter: setOwner },
+    {
+      title: 'Owner',
+      isRequired: true,
+      options: ownerNames,
+      type: 'dropdown',
+      placeholder: 'Bus Owner Name',
+      value: owner?.name,
+      setter: setOwnerID,
+    },
   ];
 
   //& Return UI [#RETURN#]
@@ -70,7 +97,7 @@ export default function Create() {
           {!selfOwn
             ? ownerFields.map((item, i) => {
                 return item.type === 'dropdown' ? (
-                  <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
+                  <DropDown key={i} isRequired={item.isRequired} title={item.title} options={item.options} value={item.value} setter={item.setter} />
                 ) : (
                   <TextField
                     type={item.type}
@@ -103,7 +130,7 @@ export default function Create() {
           data={{
             name,
             RCNumber,
-            owner,
+            owner: owner?.id,
             capacity,
             selfOwn,
             vehicleType,
