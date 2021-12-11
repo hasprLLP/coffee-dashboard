@@ -10,7 +10,7 @@ export default function Locate() {
         <DropDown title={"Select Bus"} options={["D 0 1", "D 0 2", "D  0 3 "]} value={bus} setter={setBus} />
         <div className="layout-form" style={{ height: "75%", width: "95%", borderRadius: "var(--chakra-radii-md)", overflow: "hidden" }}>
           <GoogleMapReact
-            bootstrapURLKeys={{ key: "AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA" }}
+            bootstrapURLKeys={{ key: process.env.MAP_KEY }}
             defaultCenter={{
               lat: 23.854,
               lng: 78.7799,
