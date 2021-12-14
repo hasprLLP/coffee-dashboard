@@ -17,7 +17,6 @@ export default function Create() {
   const [guardian, setGuardian] = useState();
   const [phone, setPhone] = useState();
   const [landline, setLandline] = useState();
-  const [guardianPhone, setGuardianPhone] = useState();
   const [address, setAddress] = useState();
   const [location, setLocation] = useState();
   const [school, setSchool] = useState({});
@@ -36,7 +35,6 @@ export default function Create() {
     setGuardian,
     setPhone,
     setLandline,
-    setGuardianPhone,
     setAddress,
     setLocation,
     setRoute,
@@ -94,7 +92,7 @@ export default function Create() {
   //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
-    { title: 'Mobile', isRequired: true, placeholder: 'Contact No', value: phone, setter: setPhone, type: 'tel', prefix: '+91' },
+
     { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
     { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
@@ -105,12 +103,12 @@ export default function Create() {
       title: 'Guardian Mobile',
       isRequired: true,
       placeholder: 'Parent Contact No',
-      value: guardianPhone,
-      setter: setGuardianPhone,
+      value: phone,
+      setter: setPhone,
       type: 'tel',
       prefix: '+91',
     },
-    { title: 'Guardian Landline (Optional)', placeholder: 'Guardian Landline no', value: landline, setter: setLandline, type: 'tel' },
+    { title: ' Landline (Optional)', placeholder: ' Landline no', value: landline, setter: setLandline, type: 'tel' },
   ];
 
   const boardingDetails = [
@@ -132,6 +130,9 @@ export default function Create() {
         <div className='layout-title'>Add {isStudent ? 'Student' : 'Teacher'}</div>
         <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+          {!isStudent ? (
+            <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
+          ) : null}
           {basicFields.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
@@ -150,6 +151,10 @@ export default function Create() {
               />
             );
           })}
+          {!isStudent ? (
+            <TextField type={'tel'} title={'Landline (Optional)'} placeholder={'Landline no'} value={landline} setter={setLandline} />
+          ) : null}
+          {isStudent ? <TextField type={'number'} title={'Class'} placeholder={'Class'} value={cls} setter={setCls} /> : null}
         </div>
         <div className='layout-not-student'>
           <h1>Adding Teacher/Passenger ?</h1>
@@ -234,12 +239,9 @@ export default function Create() {
             phone,
             photo,
             DOB,
-            guardian: {
-              name: guardian,
-              phone: guardianPhone,
-              landline: landline,
-            },
-            route,
+            landline,
+            route: route.id,
+            school: school.id,
             location: {
               type: 'Point',
               coordinates: [23.861998, 78.803366],
@@ -250,6 +252,9 @@ export default function Create() {
             cls,
             joiningDate,
             dueDate,
+            guardian: {
+              name: guardian,
+            },
           }}
         />
       </div>

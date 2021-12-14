@@ -16,7 +16,6 @@ export default function EditPassenger() {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState();
-
   const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
@@ -25,7 +24,6 @@ export default function EditPassenger() {
   const [guardian, setGuardian] = useState();
   const [phone, setPhone] = useState();
   const [landline, setLandline] = useState();
-  const [guardianPhone, setGuardianPhone] = useState();
   const [address, setAddress] = useState();
   const [location, setLocation] = useState();
   const [school, setSchool] = useState({});
@@ -41,9 +39,9 @@ export default function EditPassenger() {
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data);
-      const [DOB, TDOB] = data.DOB.split('T');
-      const [joiningDate, TjoiningDate] = data.joiningDate.split('T');
-      const [dueDate, TdueDate] = data.dueDate.split('T');
+      const DOB = data?.DOB?.split('T') || '';
+      const joiningDate = data?.joiningDate?.split('T') || '';
+      const dueDate = data?.dueDate.split('T') || '';
       setIsStudent(data?.isStudent);
       setDOB(DOB);
       setName(data?.name);
@@ -51,8 +49,7 @@ export default function EditPassenger() {
       setDueDate(dueDate);
       setGuardian(data?.guardian?.name);
       setPhone(data?.user?.phone);
-      setLandline(data?.guardian.landline);
-      setGuardianPhone(data?.guardian.phone);
+      setLandline(data?.user?.landline);
       setAddress(data?.location?.address);
       setSchool(data?.route?.school);
       setRoute(data?.route);
@@ -109,7 +106,7 @@ export default function EditPassenger() {
   //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
-    { title: 'Mobile', isRequired: true, placeholder: 'Contact No', value: phone, setter: setPhone, type: 'tel', prefix: '+91' },
+
     { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
     { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
@@ -120,12 +117,12 @@ export default function EditPassenger() {
       title: 'Guardian Mobile',
       isRequired: true,
       placeholder: 'Parent Contact No',
-      value: guardianPhone,
-      setter: setGuardianPhone,
+      value: phone,
+      setter: setPhone,
       type: 'tel',
       prefix: '+91',
     },
-    { title: 'Guardian Landline (Optional)', placeholder: 'Guardian Landline no', value: landline, setter: setLandline, type: 'tel' },
+    { title: ' Landline (Optional)', placeholder: ' Landline no', value: landline, setter: setLandline, type: 'tel' },
   ];
 
   const boardingDetails = [
@@ -134,9 +131,9 @@ export default function EditPassenger() {
     { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
-    { title: 'Joining Date', type: 'fix', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
-    { title: 'Due Date', type: 'fix', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
-    { title: 'Fee Amount', type: 'fix', placeholder: 'Fee for Selected Duration', value: amount, setter: setAmount, prefix: '₹' },
+    { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
+    { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
+    { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
   ];
 
   //& Return UI [#RETURN#]
@@ -146,6 +143,9 @@ export default function EditPassenger() {
         <div className='layout-title'>Add {isStudent ? 'Student' : 'Teacher'}</div>
         <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+          {!isStudent ? (
+            <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
+          ) : null}
           {basicFields.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
@@ -164,6 +164,10 @@ export default function EditPassenger() {
               />
             );
           })}
+          {!isStudent ? (
+            <TextField type={'tel'} title={'Landline (Optional)'} placeholder={'Landline no'} value={landline} setter={setLandline} />
+          ) : null}
+          {isStudent ? <TextField type={'number'} title={'Class'} placeholder={'Class'} value={cls} setter={setCls} /> : null}
         </div>
         <div className='layout-not-student'>
           <h1>Adding Teacher/Passenger ?</h1>
@@ -245,23 +249,25 @@ export default function EditPassenger() {
             collection={`passenger/${id}`}
             data={{
               name,
-
+              phone,
               photo,
               DOB,
-              guardian: {
-                name: guardian,
-                phone: guardianPhone,
-                landline: landline,
-              },
-
+              landline,
+              route: route?.id,
+              school: school?.id,
               location: {
                 type: 'Point',
                 coordinates: [23.861998, 78.803366],
                 address: 'MIG 71, Gour Nagar , Makronia , Sagar',
               },
-
+              amount,
               isStudent,
               cls,
+              joiningDate,
+              dueDate,
+              guardian: {
+                name: guardian,
+              },
             }}
           />
           <DeleteButton

@@ -35,7 +35,7 @@ export default function PhotoCard({ passenger, id, onEdit, onDetail, onFeeDetail
         Monthly Fee - ₹ {Math.round(passenger.lastTransaction.monthlyAmount)}
       </Text>
       <Text textAlign={'center'} color={useColorModeValue('gray.700', 'gray.400')} px={3}>
-        {passenger.route.slug}
+        {passenger?.route?.slug || 'No Route'}
       </Text>
 
       <Stack mt={6} direction={'row'} spacing={4}>

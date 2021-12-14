@@ -16,8 +16,9 @@ export default function Passenger() {
   const [passengers, setPassengers] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const response = await server.get(`/passenger/?populate=["route||school" ,"lastTransaction","user"]`);
+      const response = await server.get(`/passenger/?populate=["route","school","lastTransaction","user"]`);
       setPassengers(response.data.data);
+      console.log(response.data.data);
       setLoading(true);
     };
 
