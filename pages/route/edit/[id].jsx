@@ -171,9 +171,9 @@ export default function EditRoute() {
             );
           })}
         </div>
-        <LoadScript googleMapsApiKey={key} libraries={lib}>
+        {/* //! TODO <LoadScript googleMapsApiKey={key} libraries={lib}>
           <Map />
-        </LoadScript>
+        </LoadScript> */}
         <div className='layout-edit-row'>
           <UpdateButton
             collection={`route/${id}`}

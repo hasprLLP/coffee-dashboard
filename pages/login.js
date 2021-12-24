@@ -1,22 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
-  InputLeftAddon,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
-  FormHelperText,
-  InputRightElement,
-} from '@chakra-ui/react';
+import { Flex, Heading, Input, Button, InputGroup, Stack, InputLeftAddon, Box, Link, Avatar, FormControl, FormHelperText, InputRightElement, } from '@chakra-ui/react';
 import server from 'src/backend/node/server';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 var ls = require('local-storage');
 
 export default function Login() {
@@ -30,13 +17,18 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await server.post('authentication/sign_in', {
+      const response = await axios.post('authentication/sign_in', {
         email,
         password,
       });
 
       Cookies.set('authorization', response.data.token);
       ls.set('authorization', response.data.token);
+
+      console.log(response.data.data);
+      
+
+      axios.defaults.headers.common["authorization"] = response?.data?.token;
 
       server.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
       if (response.status === 200) {

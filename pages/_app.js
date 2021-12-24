@@ -13,12 +13,15 @@ import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import verify from '../src/backend/node/verify';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 var ls = require('local-storage');
+require("../src/backend/node")
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [isVerified, setIsVerified] = useState(false);
+
   //$ Run on Page Load - Scroll Jack
   useEffect(() => {
     const view = document.querySelector('.home'); //` Declare View Reference to be Jellyfied
@@ -40,6 +43,7 @@ export default function MyApp({ Component, pageProps }) {
       const is_auth = verify(authorization);
       if (is_auth.id) {
         router.pathname === '/login' && router.push('/');
+        axios.defaults.headers.common["authorization"] = authorization;
       } else {
         router.push('/login');
       }

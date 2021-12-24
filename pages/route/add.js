@@ -124,6 +124,9 @@ export default function AddRoute() {
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
+  console.log(morningDeparture);
+  
+
   //& Return UI [#RETURN#]
   return (
     <div className='home'>
@@ -149,9 +152,6 @@ export default function AddRoute() {
             );
           })}
         </div>
-        <LoadScript googleMapsApiKey={key} libraries={lib}>
-          <Map />
-        </LoadScript>
         <SaveButton
           collection={'route'}
           reset={setterArray}
@@ -162,8 +162,8 @@ export default function AddRoute() {
             eveningDeparture,
             startsFrom: {
               type: 'Point',
-              coordinates: [23.86135575696267, 78.80405223062922],
-              address: 'Gour Nagar, Makroniya, Madhya Pradesh 470001',
+              coordinates: [0,0],
+              address: startsFrom,
             },
             school: school?.id,
             bus: bus?.id,

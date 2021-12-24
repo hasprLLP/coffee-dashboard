@@ -2,7 +2,7 @@ import { Select, FormControl, FormLabel } from '@chakra-ui/react';
 import useSize from '@/utilities/useSize';
 import { useState } from 'react';
 
-const DropDown = ({ title, options, value, setter, isRequired }) => {
+const DropDown = ({ title, options, value, setter, isRequired, type, fix }) => {
   const [invalid, setInvalid] = useState(false);
 
   const size = useSize();
@@ -15,6 +15,7 @@ const DropDown = ({ title, options, value, setter, isRequired }) => {
           bg='rgba(242, 242, 242, 0.4)'
           onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
           isInvalid={invalid}
+          isDisabled={fix === "fix" || false}
           focusBorderColor='#38B2AC'
           value={value}
           size={size > 1600 ? 'lg' : size > 1280 ? 'md' : size > 1024 ? 'sm' : 'xs'}

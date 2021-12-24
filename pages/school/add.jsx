@@ -23,6 +23,18 @@ export default function Create() {
     { title: 'Zip Code', type: 'number', placeholder: 'Enter Zip Code', value: zip, setter: setZip },
     { title: 'Phone', isRequired: true, placeholder: 'School Contact Number', type: 'tel', prefix: '+91', value: phone, setter: setPhone },
   ];
+console.log({
+  name,
+  city,
+  address,
+  zip,
+  phone,
+  location: {
+    type: 'Point',
+    coordinates: [23.854080641497234, 78.7799817655712],
+    address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
+  },
+});
 
   //& Return UI [#RETURN#]
   return (
@@ -53,13 +65,12 @@ export default function Create() {
           data={{
             name,
             city,
-            address,
             zip,
             phone,
             location: {
               type: 'Point',
               coordinates: [23.854080641497234, 78.7799817655712],
-              address: 'Adarsh Nagar, Anand Nagar, Makroniya, Madhya Pradesh 470001',
+              address: address,
             },
           }}
         />
