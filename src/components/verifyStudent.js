@@ -52,7 +52,7 @@ const VerifyStudent = () => {
             bg: "teal.500",
           }}
         >
-          Assign Bus
+          Assign Bus/Route
         </Button>
       </Stack>
     </Box>

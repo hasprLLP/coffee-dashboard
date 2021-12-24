@@ -47,10 +47,11 @@ export default function EditPassenger() {
       setDOB(DOB[0]);
       setName(data?.name);
       setJoiningDate(joiningDate[0]);
+      setLocation(data?.location);
       setDueDate(dueDate[0]);
       setGuardian(data?.guardian?.name);
       setPhone(data?.user?.phone);
-      setLandline(data?.user?.landline);
+      setLandline(data?.user?.whatsapp);
       setAddress(data?.location?.address);
       setSchool(data?.school);
       setRoute(data?.route);
@@ -127,9 +128,9 @@ export default function EditPassenger() {
   ];
 
   const boardingDetails = [
-    { title: "Full Address",type: "fix",  placeholder: "Boarding Point Address", value: address, setter: setAddress },
-    { title: "School", fix: "fix", options: schoolNames, value: school?.name, setter: setSchoolID, type: "dropdown" },
-    { title: "Route", fix: "fix", options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
+    { title: "Full Address", type: "fix", placeholder: "Boarding Point Address", value: address, setter: setAddress },
+    { title: "School", fix: school?.name && "fix", options: schoolNames, value: school?.name, setter: setSchoolID, type: "dropdown" },
+    { title: "Route", fix: route?.name && "fix", options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
   ];
   const feeDetails = [
     { title: "Joining Date", type: "date", placeholder: "eg 02/07/2003", value: joiningDate, setter: setJoiningDate },
@@ -141,7 +142,7 @@ export default function EditPassenger() {
   return (
     <div className="home">
       <div className="home-shift">
-      <div className='layout-title'>
+        <div className="layout-title">
           <GoBack />
           Edit {isStudent ? "Student" : "Teacher"}
         </div>
@@ -157,7 +158,6 @@ export default function EditPassenger() {
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
-                type={item.type}
                 key={i}
                 type={item.type}
                 title={item.title}
@@ -213,7 +213,15 @@ export default function EditPassenger() {
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {boardingDetails.map((item, i) => {
             return item.type === "dropdown" ? (
-              <DropDown key={i} title={item.title} fix={item.fix} options={item.options} value={item.value} setter={item.setter} isRequired={item.isRequired} />
+              <DropDown
+                key={i}
+                title={item.title}
+                fix={item.fix}
+                options={item.options}
+                value={item.value}
+                setter={item.setter}
+                isRequired={item.isRequired}
+              />
             ) : item.type === "upload" ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
@@ -263,8 +271,8 @@ export default function EditPassenger() {
               school: school?.id,
               location: {
                 type: "Point",
-                coordinates: [23.861998, 78.803366],
-                address: "MIG 71, Gour Nagar , Makronia , Sagar",
+                coordinates: location?.coordinates || [23.861998, 78.803366],
+                address: address,
               },
               amount,
               isStudent,
