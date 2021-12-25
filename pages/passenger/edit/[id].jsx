@@ -1,15 +1,15 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import FilePicker from "@/components/filepicker";
-import UpdateButton from "@/components/updateButton";
-import DeleteButton from "@/components/deleteButton";
-import GoBack from "@/helpers/goback";
-import { Switch } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import server from "src/backend/node/server";
-import { useRouter } from "next/router";
-import { format } from "date-fns";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import FilePicker from '@/components/filepicker';
+import UpdateButton from '@/components/updateButton';
+import DeleteButton from '@/components/deleteButton';
+import GoBack from '@/helpers/goback';
+import { Switch } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { format } from 'date-fns';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditPassenger() {
@@ -39,9 +39,9 @@ export default function EditPassenger() {
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data);
-      const DOB = data?.DOB?.split("T") || "";
-      const joiningDate = data?.joiningDate?.split("T") || "";
-      const dueDate = data?.dueDate.split("T") || "";
+      const DOB = data?.DOB?.split('T') || '';
+      const joiningDate = data?.joiningDate?.split('T') || '';
+      const dueDate = data?.dueDate.split('T') || '';
 
       setIsStudent(data?.isStudent);
       setDOB(DOB[0]);
@@ -56,14 +56,14 @@ export default function EditPassenger() {
       setSchool(data?.school);
       setRoute(data?.route);
       setPhoto(data?.photo);
-      setAmount(data?.lastTransaction.amount);
+      setAmount(data?.lastTransaction?.amount);
       setCls(data?.cls);
     }
   }, [router.query.data]);
 
   const getSchools = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      const response = await axios.get(`school/`);
       setSchools(response.data.data);
       const tempSchoolNames = [];
       response.data.data.map((school) => {
@@ -71,12 +71,12 @@ export default function EditPassenger() {
       });
       setSchoolNames(tempSchoolNames);
     } catch (error) {
-      console.log("School Error", error);
+      console.log('School Error', error);
     }
   };
   const getRoutes = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}route${school.id ? `?school=${school?.id}` : ""}`);
+      const response = await axios.get(`route${school.id ? `?school=${school?.id}` : ''}`);
       setRoutes(response.data.data);
       const tempRoutesName = [];
       response.data.data.map((route) => {
@@ -84,7 +84,7 @@ export default function EditPassenger() {
       });
       setRouteNames(tempRoutesName);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -107,54 +107,54 @@ export default function EditPassenger() {
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
-    { title: "Name", isRequired: true, placeholder: "Enter Passenger name", value: name, setter: setName },
+    { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
 
-    { title: "Upload Photo", value: photo, setter: setPhoto, type: "upload" },
-    { title: "Date of Birth", type: "date", placeholder: "eg 02/07/2003", value: DOB, setter: setDOB },
+    { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
 
   const guardianDetails = [
-    { title: "Guardian Name", isRequired: true, placeholder: "Father/Mother etc", value: guardian, setter: setGuardian },
+    { title: 'Guardian Name', isRequired: true, placeholder: 'Father/Mother etc', value: guardian, setter: setGuardian },
     {
-      title: "Guardian Mobile",
+      title: 'Guardian Mobile',
       isRequired: true,
-      placeholder: "Parent Contact No",
+      placeholder: 'Parent Contact No',
       value: phone,
       setter: setPhone,
-      type: "tel",
-      prefix: "+91",
+      type: 'tel',
+      prefix: '+91',
     },
-    { title: " Landline (Optional)", placeholder: " Landline no", value: landline, setter: setLandline, type: "tel" },
+    { title: ' Landline (Optional)', placeholder: ' Landline no', value: landline, setter: setLandline, type: 'tel' },
   ];
 
   const boardingDetails = [
-    { title: "Full Address", type: "fix", placeholder: "Boarding Point Address", value: address, setter: setAddress },
-    { title: "School", fix: school?.name && "fix", options: schoolNames, value: school?.name, setter: setSchoolID, type: "dropdown" },
-    { title: "Route", fix: route?.name && "fix", options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
+    { title: 'Full Address', type: 'fix', placeholder: 'Boarding Point Address', value: address, setter: setAddress },
+    { title: 'School', fix: school?.name && 'fix', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
+    { title: 'Route', fix: route?.name && 'fix', options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
-    { title: "Joining Date", type: "date", placeholder: "eg 02/07/2003", value: joiningDate, setter: setJoiningDate },
-    { title: "Due Date", type: "date", placeholder: "eg 02/07/2003", value: dueDate, setter: setDueDate },
-    { title: "Fee Amount", placeholder: "Fee for Selected Duration", type: "number", value: amount, setter: setAmount, prefix: "₹" },
+    { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
+    { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
+    { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
   ];
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="home-shift">
-        <div className="layout-title">
+    <div className='home'>
+      <div className='home-shift'>
+        <div className='layout-title'>
           <GoBack />
-          Edit {isStudent ? "Student" : "Teacher"}
+          Edit {isStudent ? 'Student' : 'Teacher'}
         </div>
-        <div className="layout-sub-title">{isStudent ? "Student" : "Teacher"} Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {!isStudent ? (
-            <TextField type={"tel"} title={"Mobile"} placeholder={"Contact No"} value={phone} setter={setPhone} prefix={"+91"} isRequired={true} />
+            <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
           ) : null}
           {basicFields.map((item, i) => {
-            return item.type === "dropdown" ? (
+            return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} type={item.type} options={item.options} value={item.value} setter={item.setter} />
-            ) : item.type === "upload" ? (
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -170,29 +170,29 @@ export default function EditPassenger() {
             );
           })}
           {!isStudent ? (
-            <TextField type={"tel"} title={"Landline (Optional)"} placeholder={"Landline no"} value={landline} setter={setLandline} />
+            <TextField type={'tel'} title={'Landline (Optional)'} placeholder={'Landline no'} value={landline} setter={setLandline} />
           ) : null}
-          {isStudent ? <TextField type={"number"} title={"Class"} placeholder={"Class"} value={cls} setter={setCls} /> : null}
+          {isStudent ? <TextField type={'number'} title={'Class'} placeholder={'Class'} value={cls} setter={setCls} /> : null}
         </div>
-        <div className="layout-not-student">
+        <div className='layout-not-student'>
           <h1>Adding Teacher/Passenger ?</h1>
           <Switch
             onChange={(e) => {
               setIsStudent(!e.target.checked);
             }}
             value={!isStudent}
-            size="md"
+            size='md'
             defaultIsChecked={false}
           />
         </div>
         {isStudent ? (
           <>
-            <div className="layout-sub-title">Guardian Details</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+            <div className='layout-sub-title'>Guardian Details</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
               {guardianDetails.map((item, i) => {
-                return item.type === "dropdown" ? (
+                return item.type === 'dropdown' ? (
                   <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-                ) : item.type === "upload" ? (
+                ) : item.type === 'upload' ? (
                   <FilePicker title={item.title} value={item.value} setter={item.setter} />
                 ) : (
                   <TextField
@@ -209,10 +209,10 @@ export default function EditPassenger() {
             </div>
           </>
         ) : null}
-        <div className="layout-sub-title">Boarding Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>Boarding Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {boardingDetails.map((item, i) => {
-            return item.type === "dropdown" ? (
+            return item.type === 'dropdown' ? (
               <DropDown
                 key={i}
                 title={item.title}
@@ -222,7 +222,7 @@ export default function EditPassenger() {
                 setter={item.setter}
                 isRequired={item.isRequired}
               />
-            ) : item.type === "upload" ? (
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -238,12 +238,12 @@ export default function EditPassenger() {
             );
           })}
         </div>
-        <div className="layout-sub-title">Fee Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>Fee Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {feeDetails.map((item, i) => {
-            return item.type === "dropdown" ? (
+            return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-            ) : item.type === "upload" ? (
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -258,7 +258,7 @@ export default function EditPassenger() {
             );
           })}
         </div>
-        <div className="layout-edit-row">
+        <div className='layout-edit-row'>
           <UpdateButton
             collection={`passenger/${id}`}
             data={{
@@ -270,7 +270,7 @@ export default function EditPassenger() {
               route: route?.id,
               school: school?.id,
               location: {
-                type: "Point",
+                type: 'Point',
                 coordinates: location?.coordinates || [23.861998, 78.803366],
                 address: address,
               },

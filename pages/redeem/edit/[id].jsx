@@ -7,7 +7,6 @@ import DeleteButton from '@/components/deleteButton';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import FilePicker from '@/components/filepicker';
-import server from 'src/backend/node/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditSchool() {

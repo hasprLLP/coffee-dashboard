@@ -1,6 +1,20 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Flex, Heading, Input, Button, InputGroup, Stack, InputLeftAddon, Box, Link, Avatar, FormControl, FormHelperText, InputRightElement, } from '@chakra-ui/react';
+import {
+  Flex,
+  Heading,
+  Input,
+  Button,
+  InputGroup,
+  Stack,
+  InputLeftAddon,
+  Box,
+  Link,
+  Avatar,
+  FormControl,
+  FormHelperText,
+  InputRightElement,
+} from '@chakra-ui/react';
 import server from 'src/backend/node/server';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -14,8 +28,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const login = async (e) => {
-    console.log("utton clicl");
-    
     e.preventDefault();
     setLoading(true);
     try {
@@ -29,10 +41,9 @@ export default function Login() {
 
       console.log(response.data.data);
 
+      axios.defaults.headers.common['authorization'] = response?.data?.token;
 
-      axios.defaults.headers.common["authorization"] = response?.data?.token;
-
-      server.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
+      axios.defaults.headers.common['authorization'] = 'Bearer ' + response.data.token;
       if (response.status === 200) {
         router.push('/');
         setLoading(false);

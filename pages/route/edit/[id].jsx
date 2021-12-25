@@ -8,7 +8,7 @@ import GoBack from '@/helpers/goback';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import server from 'src/backend/node/server';
+import axios from 'axios';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function EditRoute() {
@@ -51,7 +51,7 @@ export default function EditRoute() {
 
   const getPackages = async () => {
     try {
-      const response = await server.get(`package`);
+      const response = await axios.get(`package`);
       setPackages(response.data.data);
       const tempPackageNames = [];
       response.data.data.map((bus) => {
@@ -65,7 +65,7 @@ export default function EditRoute() {
 
   const getSchools = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      const response = await axios.get(`school/`);
       setSchools(response.data.data);
       const tempSchoolNames = [];
       response.data.data.map((school) => {
@@ -79,7 +79,7 @@ export default function EditRoute() {
 
   const getBuses = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}bus/`);
+      const response = await axios.get(`bus/`);
       setBuses(response.data.data);
       const tempBusNames = [];
       response.data.data.map((bus) => {

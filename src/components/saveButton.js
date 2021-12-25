@@ -2,7 +2,6 @@ import { Button } from '@chakra-ui/react';
 import Notification from '@/components/notification';
 import axios from 'axios';
 import { useState } from 'react';
-import server from 'src/backend/node/server';
 
 const SaveButton = ({ collection, data, reset }) => {
   const [status, setStatus] = useState(null);
@@ -12,7 +11,7 @@ const SaveButton = ({ collection, data, reset }) => {
     setLoading(true);
 
     try {
-      const response = await server.post(`${process.env.SERVER_URL}${collection}/`, data);
+      const response = await axios.post(`${collection}/`, data);
       console.log('response', response);
       if (response.status === 201) {
         setStatus('success');

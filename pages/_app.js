@@ -13,9 +13,12 @@ import { useRouter } from 'next/router';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import verify from '../src/backend/node/verify';
 import Cookies from 'js-cookie';
+import ls from 'local-storage';
 import axios from 'axios';
-var ls = require('local-storage');
-require("../src/backend/node")
+
+axios.defaults.baseURL = 'http://localhost:8080/api/v1/';
+axios.defaults.withCredentials = true;
+axios.defaults.timeout = 10000;
 
 //& Default App Entry Point
 export default function MyApp({ Component, pageProps }) {
@@ -43,7 +46,7 @@ export default function MyApp({ Component, pageProps }) {
       const is_auth = verify(authorization);
       if (is_auth.id) {
         router.pathname === '/login' && router.push('/');
-        axios.defaults.headers.common["authorization"] = authorization;
+        axios.defaults.headers.common['authorization'] = authorization;
       } else {
         router.push('/login');
       }

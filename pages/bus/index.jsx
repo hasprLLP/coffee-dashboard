@@ -1,7 +1,7 @@
 //& Input Components [#IMPORTS#]
 import SimpleCard from '@/components/simpleCard';
 import { useState, useEffect } from 'react';
-import server from 'src/backend/node/server';
+import axios from 'axios';
 import TextField from '@/components/input';
 import Filler from '@/components/filler';
 import Fuse from 'fuse.js';
@@ -16,7 +16,7 @@ export default function ViewBus() {
   const [data, setData] = useState([]);
 
   const fetch = async () => {
-    const { data } = await server.get(`/bus?populate=["owner"]`);
+    const { data } = await axios.get(`/bus?populate=["owner"]`);
     setData(data.data);
     setLoading(true);
   };

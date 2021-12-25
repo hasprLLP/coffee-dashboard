@@ -1,7 +1,7 @@
 //& Input Components [#IMPORTS#]
 import SimpleCard from '@/components/simpleCard';
 import TextField from '@/components/input';
-import server from 'src/backend/node/server';
+import axios from 'axios';
 import Fuse from 'fuse.js';
 import Filler from '@/components/filler';
 import { useState, useEffect } from 'react';
@@ -17,7 +17,7 @@ export default function ViewRoute() {
   const [routes, setRoutes] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await server.get(`/route?populate=["school","bus","package"]`);
+      const { data } = await axios.get(`/route?populate=["school","bus","package"]`);
       setRoutes(data.data);
       setLoading(true);
     };

@@ -1,7 +1,7 @@
 //& Input Components [#IMPORTS#]
 import PhotoCard from '@/components/photoCard';
 import { useState, useEffect } from 'react';
-import server from 'src/backend/node/server';
+import axios from 'axios';
 import TextField from '@/components/input';
 import Filler from '@/components/filler';
 import Fuse from 'fuse.js';
@@ -16,7 +16,7 @@ export default function Passenger() {
   const [passengers, setPassengers] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const response = await server.get(`/passenger/?populate=["route","school","lastTransaction","user"]`);
+      const response = await axios.get(`/passenger/?populate=["route","school","lastTransaction","user"]`);
       setPassengers(response.data.data);
       console.log(response.data.data);
       setLoading(true);

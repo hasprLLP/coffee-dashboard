@@ -3,8 +3,8 @@ import SimpleCard from '@/components/simpleCard';
 import TextField from '@/components/input';
 import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
-import Filler from "@/components/filler";
-import server from 'src/backend/node/server';
+import Filler from '@/components/filler';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 
 //& Create & Export Driver [#FUNCTION#]
@@ -17,7 +17,7 @@ export default function ViewDriver() {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await server.get(`/operator`);
+      const { data } = await axios.get(`/operator`);
       setData(data.data);
       setLoading(true);
     };
@@ -54,8 +54,8 @@ export default function ViewDriver() {
       <div className='home-shift'>
         <TextField title={'Search Driver Name'} placeholder={'Type Driver name'} value={driverName} setter={setDriverName} color={'white'} />
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-        {!loading && <Filler cards={4} />}
-          {!searchResultDisplay.length && loading && <div className="home-empty">No Drivers Added</div>}
+          {!loading && <Filler cards={4} />}
+          {!searchResultDisplay.length && loading && <div className='home-empty'>No Drivers Added</div>}
           {searchResultDisplay.map((item, i) => {
             return (
               <SimpleCard

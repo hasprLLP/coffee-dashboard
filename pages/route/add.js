@@ -1,12 +1,11 @@
 //& Input Components [#IMPORTS#]
+import axios from 'axios';
 import TextField from '@/components/input';
 import DropDown from '@/components/dropdown';
 import SaveButton from '@/components/saveButton';
-import axios from 'axios';
 import { LoadScript } from '@react-google-maps/api';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
-import server from 'src/backend/node/server';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {
@@ -31,7 +30,7 @@ export default function AddRoute() {
 
   const getPackages = async () => {
     try {
-      const response = await server.get(`package`);
+      const response = await axios.get(`package`);
       setPackages(response.data.data);
       const tempPackageNames = [];
       response.data.data.map((bus) => {
@@ -45,7 +44,7 @@ export default function AddRoute() {
 
   const getSchools = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}school/`);
+      const response = await axios.get(`school/`);
       setSchools(response.data.data);
       const tempSchoolNames = [];
       response.data.data.map((school) => {
@@ -59,7 +58,7 @@ export default function AddRoute() {
 
   const getBuses = async () => {
     try {
-      const response = await server.get(`${process.env.SERVER_URL}bus/`);
+      const response = await axios.get(`bus/`);
       setBuses(response.data.data);
       const tempBusNames = [];
       response.data.data.map((bus) => {
@@ -98,21 +97,21 @@ export default function AddRoute() {
       title: 'Bus Starts (Morning)',
       type: 'time',
       placeholder: 'Time of departure in morning',
-      value: morningDeparture || "07:00",
+      value: morningDeparture || '07:00',
       setter: setMorningDeparture,
     },
     {
       title: 'Bus Reaches School (Morning)',
       type: 'time',
       placeholder: 'Time of arrival at school in morning',
-      value: morningArrival || "08:00",
+      value: morningArrival || '08:00',
       setter: setMorningArrival,
     },
     {
       title: 'Bus Leaves School (Evening)',
       type: 'time',
       placeholder: 'Time of departure in evening',
-      value: eveningDeparture || "02:00",
+      value: eveningDeparture || '02:00',
       setter: setEveningDeparture,
     },
   ];
@@ -123,7 +122,6 @@ export default function AddRoute() {
     { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
-
 
   //& Return UI [#RETURN#]
   return (
