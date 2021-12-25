@@ -14,6 +14,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const login = async (e) => {
+    console.log("utton clicl");
+    
     e.preventDefault();
     setLoading(true);
     try {
@@ -26,7 +28,7 @@ export default function Login() {
       ls.set('authorization', response.data.token);
 
       console.log(response.data.data);
-      
+
 
       axios.defaults.headers.common["authorization"] = response?.data?.token;
 
@@ -59,7 +61,7 @@ export default function Login() {
                     <InputLeftAddon>@</InputLeftAddon>
                     <Input
                       focusBorderColor='#38B2AC'
-                      type='tel'
+                      type='email'
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}

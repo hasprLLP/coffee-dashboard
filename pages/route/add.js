@@ -98,21 +98,21 @@ export default function AddRoute() {
       title: 'Bus Starts (Morning)',
       type: 'time',
       placeholder: 'Time of departure in morning',
-      value: morningDeparture,
+      value: morningDeparture || "07:00",
       setter: setMorningDeparture,
     },
     {
       title: 'Bus Reaches School (Morning)',
       type: 'time',
       placeholder: 'Time of arrival at school in morning',
-      value: morningArrival,
+      value: morningArrival || "08:00",
       setter: setMorningArrival,
     },
     {
       title: 'Bus Leaves School (Evening)',
       type: 'time',
       placeholder: 'Time of departure in evening',
-      value: eveningDeparture,
+      value: eveningDeparture || "02:00",
       setter: setEveningDeparture,
     },
   ];
@@ -124,8 +124,6 @@ export default function AddRoute() {
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
-  console.log(morningDeparture);
-  
 
   //& Return UI [#RETURN#]
   return (
@@ -162,7 +160,7 @@ export default function AddRoute() {
             eveningDeparture,
             startsFrom: {
               type: 'Point',
-              coordinates: [0,0],
+              coordinates: [0, 0],
               address: startsFrom,
             },
             school: school?.id,

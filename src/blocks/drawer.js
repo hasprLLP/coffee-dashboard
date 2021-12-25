@@ -73,6 +73,17 @@ export default function Drawer() {
           fun={navigate}
         />
         <DrawerItem
+          icon='redeem'
+          heading='Bus Owner'
+          pages={[
+            { name: 'View', path: '/redeem' },
+            { name: 'Add', path: '/redeem/add' },
+          ]}
+          active={activePage}
+          setter={setActivePage}
+          fun={navigate}
+        />
+        <DrawerItem
           icon='bus'
           heading='Bus'
           pages={[
@@ -84,23 +95,22 @@ export default function Drawer() {
           fun={navigate}
         />
         <DrawerItem
-          icon='school'
-          heading='School'
-          pages={[
-            { name: 'View', path: '/school' },
-            { name: 'Add', path: '/school/add' },
-          ]}
-          active={activePage}
-          setter={setActivePage}
-          fun={navigate}
-        />
-
-        <DrawerItem
           icon='driver'
           heading='Driver'
           pages={[
             { name: 'View', path: '/driver' },
             { name: 'Add', path: '/driver/add' },
+          ]}
+          active={activePage}
+          setter={setActivePage}
+          fun={navigate}
+        />
+        <DrawerItem
+          icon='school'
+          heading='School'
+          pages={[
+            { name: 'View', path: '/school' },
+            { name: 'Add', path: '/school/add' },
           ]}
           active={activePage}
           setter={setActivePage}
@@ -128,7 +138,7 @@ export default function Drawer() {
           setter={setActivePage}
           fun={navigate}
         />
-        <DrawerItem
+        {/* <DrawerItem
           icon='user'
           heading='User'
           pages={[
@@ -137,18 +147,7 @@ export default function Drawer() {
           ]}
           active={activePage}
           setter={setActivePage}
-        />
-        <DrawerItem
-          icon='redeem'
-          heading='Redeem'
-          pages={[
-            { name: 'View', path: '/redeem' },
-            { name: 'Add Owners', path: '/redeem/add' },
-          ]}
-          active={activePage}
-          setter={setActivePage}
-          fun={navigate}
-        />
+        /> */}
       </Accordion>
     </div>
   );
