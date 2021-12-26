@@ -79,7 +79,7 @@ export default function Details() {
     title: "Current Fee Package",
     type: "fix",
     placeholder: "Package Name",
-    value: "Gold" || pack,
+    value: data?.route?.package || pack,
     setter: setPackage,
   };
 
@@ -107,7 +107,6 @@ export default function Details() {
           <GoBack />
           Details
         </div>
-        {JSON.stringify(data)}
         {/* //$ Student Info */}
         <div className="layout-sub-title">Student Basic Info</div>
         <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
@@ -234,11 +233,12 @@ export default function Details() {
             <Notification type={"success"} />
           </div>
         </div>
-        {/* <div style={{ textTransform: 'capitalize' }} className='table-report'>
+        <div className="layout-sub-title">Advanced Information</div>
+        <div style={{ textTransform: 'capitalize' }} className='table-report'>
           {data && <JSONToHTMLTable data={data} />}
         </div>
 
-        <br /> */}
+        <br />
       </div>
     </div>
   );
