@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 import ls from 'local-storage';
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.SERVER_URL + 'api/v1/';
+axios.defaults.baseURL = process.env.SERVER_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 10000;
 
