@@ -1,17 +1,19 @@
 import { Select, FormControl, FormLabel } from '@chakra-ui/react';
 import useSize from '@/utilities/useSize';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const DropDown = ({ title, options, value, setter, isRequired, type, fix }) => {
+const DropDown = ({ title, options, value, setter, isRequired, type, fix, page }) => {
+
   const [invalid, setInvalid] = useState(false);
 
   const size = useSize();
+
   return (
     <div className='dropdown' style={{ marginRight: '1vw' }}>
       <FormControl isRequired={isRequired || false}>
         <FormLabel>{title}</FormLabel>
         <Select
-          placeholder='Select option'
+          placeholder='Select Option'
           bg='rgba(242, 242, 242, 0.4)'
           onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
           isInvalid={invalid}

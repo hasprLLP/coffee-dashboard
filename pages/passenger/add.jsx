@@ -113,7 +113,7 @@ export default function Create() {
 
   const boardingDetails = [
     { title: 'Full Address', isRequired: true, placeholder: 'Boarding Point Address', value: address, setter: setAddress },
-    { title: 'School', isRequired: true, options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
+    { title: 'School', isRequired: true, page: "/school/add", options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
     { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
@@ -195,7 +195,7 @@ export default function Create() {
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {boardingDetails.map((item, i) => {
             return item.type === 'dropdown' ? (
-              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} isRequired={item.isRequired} />
+              <DropDown key={i} page={item.page} title={item.title} options={item.options} value={item.value} setter={item.setter} isRequired={item.isRequired} />
             ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (

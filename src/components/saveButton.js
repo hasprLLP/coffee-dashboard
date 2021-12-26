@@ -15,16 +15,15 @@ const SaveButton = ({ collection, data, reset }) => {
       console.log('response', response);
       if (response.status === 201) {
         setStatus('success');
-        reset.map((setter) => setter(''));
-        setLoading(false);
-      } else {
-        setStatus('error');
+        reset.map((setter) => {
+          setter('')
+        });
         setLoading(false);
       }
     } catch (error) {
       setStatus('error');
+      console.log(error);
       setLoading(false);
-      console.log(error.response);
     }
   };
   return (

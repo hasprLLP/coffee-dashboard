@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 export default function EditBus() {
   const router = useRouter();
   const { id } = router.query;
+  console.log(id);
+  
   const [data, setData] = useState();
   const [name, setName] = useState();
   const [phone, setPhone] = useState();

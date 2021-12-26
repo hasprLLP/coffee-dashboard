@@ -62,8 +62,8 @@ export default function ViewDriver() {
                 key={i}
                 name={item.name}
                 id={item.id}
-                heading={['DL', 'Phone']}
-                info={[item.dl, item.phone]}
+                heading={['PIN', 'Phone']}
+                info={[item.pin, item.phone]}
                 data={item}
                 start={item.start}
                 end={item.end}
