@@ -26,7 +26,9 @@ export default function Create() {
   const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
   const [photo, setPhoto] = useState();
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState(0);
+  const [deposit, setDeposit] = useState(0);
+  const [remainingAmount, setRemainingAmount] = useState();
   const [cls, setCls] = useState();
 
   const setterArray = [
@@ -89,6 +91,9 @@ export default function Create() {
     getRoutes();
   }, [school]);
 
+  useEffect(() => {
+    setRemainingAmount(amount - deposit);
+  }, [amount, deposit]);
   //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
@@ -120,8 +125,8 @@ export default function Create() {
     { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
     { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
     { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
+    { title: 'Deposit', placeholder: 'Enter the Deposited', type: 'number', value: deposit, setter: setDeposit, prefix: '₹' },
   ];
-  console.log(joiningDate);
 
   //& Return UI [#RETURN#]
   return (
@@ -231,6 +236,7 @@ export default function Create() {
             );
           })}
         </div>
+        <div className='header'>Remains Amount - {remainingAmount}</div>
         <SaveButton
           collection={'passenger'}
           reset={setterArray}
@@ -248,6 +254,8 @@ export default function Create() {
               address,
             },
             amount,
+            deposit,
+            remainingAmount,
             isStudent,
             cls,
             joiningDate,
