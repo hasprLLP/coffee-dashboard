@@ -52,5 +52,5 @@ const VerifyStudent = ({ student, onButton }) => {
     </Box>
   );
 };
-
+d
 export default VerifyStudent;
