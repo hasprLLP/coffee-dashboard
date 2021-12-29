@@ -17,7 +17,6 @@ export default function EditSchool() {
   const [address, setAddress] = useState();
   const [zip, setZip] = useState();
   const [phone, setPhone] = useState();
-  const [location, setLocation] = useState();
 
   useEffect(() => {
     if (router.query.data) {
@@ -76,7 +75,7 @@ export default function EditSchool() {
               phone,
               location: {
                 type: 'Point',
-                coordinates: [23.854080641497234, 78.7799817655712],
+                coordinates: [],
                 address,
               },
             }}

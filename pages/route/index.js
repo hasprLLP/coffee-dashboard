@@ -65,7 +65,7 @@ export default function ViewRoute() {
                   name={route.name}
                   data={route}
                   heading={['Start', 'School']}
-                  info={[route.school.name, route.school.name]}
+                  info={[route?.school?.name, route?.school?.name]}
                   onEdit={onEdit}
                   onDetails={onDetails}
                 />
