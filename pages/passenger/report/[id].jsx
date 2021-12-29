@@ -38,7 +38,7 @@ export default function Details() {
 
   const getRoutes = async () => {
     try {
-      const response = await axios.get(`${process.env.SERVER_URL}route${data?.school ? `?school=${data?.school?.id}` : ""}`);
+      const response = await axios.get(`route${data?.school ? `?school=${data?.school?.id}` : ""}`);
       let tempRoutesName = [];
       response.data.data.map((route) => {
         tempRoutesName.push(route.name);
@@ -79,7 +79,7 @@ export default function Details() {
     title: "Current Fee Package",
     type: "fix",
     placeholder: "Package Name",
-    value: "Gold" || pack,
+    value: data?.route?.package?.name || pack,
     setter: setPackage,
   };
 
@@ -107,13 +107,12 @@ export default function Details() {
           <GoBack />
           Details
         </div>
-        {JSON.stringify(data)}
         {/* //$ Student Info */}
         <div className="layout-sub-title">Student Basic Info</div>
         <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
           {data && (
             <div className="layout-sub-title" style={{ color: "black" }}>
-              {data?.name} - {data?.studentID} (data?.isVerified ? Verified : Not Verified)
+              {data?.name} - {data?.studentID} ({data?.isVerified ? "Verified" : "Not Verified"})
             </div>
           )}
         </div>
@@ -125,7 +124,7 @@ export default function Details() {
             <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
               Save
             </Button>
-            <Notification type={"success"} />
+            <Notification type={""} />
           </div>
         </div>
         {/* //$ Due Date Chnages */}
@@ -149,7 +148,7 @@ export default function Details() {
             <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
               Extend Date
             </Button>
-            <Notification type={"success"} />
+            <Notification type={""} />
           </div>
         </div>
         {/* //$ Package */}
@@ -177,10 +176,35 @@ export default function Details() {
             setter={packageAmountField.setter}
           />
         </div>
+        {/* //$ Transaciton */}
+        <div className="layout-sub-title">Transaction Details</div>
+        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+          <TextField
+            type={"fix"}
+            title={"Last Transaction"}
+            placeholder={"Transactionn"}
+            value={data?.lastTransaction?.date?.substring(0, 10)}
+            setter={packageDurationField.setter}
+          />
+          <TextField
+            type={"fix"}
+            title={"Remaining Amount"}
+            placeholder={"Amount"}
+            value={data?.lastTransaction?.remainingAmount}
+            setter={packageDurationField.setter}
+          />
+          <TextField
+            type={"fix"}
+            title={"Total Amount"}
+            placeholder={"Amount"}
+            value={data?.lastTransaction?.amount}
+            setter={packageDurationField.setter}
+          />
+        </div>
         {/* //$ Boarding Point */}
         <div className="layout-sub-title">Student Boarding Point</div>
         <div className="layout-sub-title" style={{ color: "black" }}>
-          {data?.location?.address}
+          Address : {data?.location?.address}
         </div>
         <div className="layout-form" style={{ height: "75%", width: "95%", borderRadius: "var(--chakra-radii-md)", overflow: "hidden" }}>
           {data?.location?.coordinates && (
@@ -199,46 +223,12 @@ export default function Details() {
             </GoogleMapReact>
           )}
         </div>
-        {/* //$ Leaves / Holidays */}
-        <div className="layout-sub-title">Student Attendance and Leaves</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-          <div className="layout-sub-title" style={{ color: "black" }}>
-            The Student was Absent on {data?.location?.address}
-          </div>
-          <div className="button">
-            <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
-              Extend Date
-            </Button>
-            <Notification type={"success"} />
-          </div>
-        </div>
-                {/* //$ Activate Deactvate */}
-                <div className="layout-sub-title">Student Account Settings</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-          <div className="layout-sub-title" style={{ color: "black" }}>
-            Activate Student
-          </div>
-          <div className="button">
-            <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
-             Activate
-            </Button>
-            <Notification type={"success"} />
-          </div>
-          <div className="layout-sub-title" style={{ color: "black" }}>
-            Deactivate Student
-          </div>
-          <div className="button">
-            <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
-             Deactivate
-            </Button>
-            <Notification type={"success"} />
-          </div>
-        </div>
-        {/* <div style={{ textTransform: 'capitalize' }} className='table-report'>
+        <div className="layout-sub-title" style={{ marginTop: "5vw"}}>Advanced Information</div>
+        <div style={{ textTransform: "capitalize" }} className="table-report">
           {data && <JSONToHTMLTable data={data} />}
         </div>
 
-        <br /> */}
+        <br />
       </div>
     </div>
   );

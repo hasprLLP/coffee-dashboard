@@ -6,6 +6,7 @@ import SaveButton from '@/components/saveButton';
 import { LoadScript } from '@react-google-maps/api';
 import Map from '@/utilities/map';
 import { useState, useEffect } from 'react';
+import GoBack from '@/helpers/goback';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {
@@ -27,6 +28,9 @@ export default function AddRoute() {
   const [bus, setBus] = useState({});
   const [buses, setBuses] = useState([]);
   const [busNames, setBusNames] = useState([]);
+
+  const setterArray = [setName, setMorningDeparture, setMorningArrival, setEveningDeparture, setStartsFrom, setSchool, setBus, setPackage];
+
 
   const getPackages = async () => {
     try {
@@ -89,7 +93,6 @@ export default function AddRoute() {
     getBuses();
   }, []);
 
-  const setterArray = [setName, setMorningDeparture, setMorningArrival, setEveningDeparture, setStartsFrom, setSchool, setBus];
 
   //$ States and Hooks [#STATES#]
   const timing = [
@@ -127,7 +130,7 @@ export default function AddRoute() {
   return (
     <div className='home'>
       <div className='home-shift'>
-        <div className='layout-title'>Add Route</div>
+        <div className='layout-title'><GoBack />Add Route</div>
         <div className='layout-sub-title'>Timing Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {timing.map((item, i) => {
