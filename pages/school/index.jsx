@@ -40,7 +40,7 @@ export default function ViewBus() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ['name', 'guardian.name', 'phone', 'DOB'],
+    keys: ['name'],
   });
 
   const result = schoolName !== '' && fuse.search(schoolName);

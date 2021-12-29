@@ -36,6 +36,25 @@ export default function EditPassenger() {
   const [amount, setAmount] = useState();
   const [cls, setCls] = useState();
 
+  const classesList = [
+    { id: 0, name: "Pre-School" },
+    { id: 1, name: "Nursery" },
+    { id: 2, name: "LKG" },
+    { id: 3, name: "UKG" },
+    { id: 4, name: "Class I (1)" },
+    { id: 5, name: "Class II (2)" },
+    { id: 6, name: "Class III (3)" },
+    { id: 7, name: "Class IV (4)" },
+    { id: 8, name: "Class V (5)" },
+    { id: 9, name: "Class VI (6)" },
+    { id: 10, name: "Class VII (7)" },
+    { id: 11, name: "Class VIII (8)" },
+    { id: 12, name: "Class IX (9)" },
+    { id: 13, name: "Class X (10)" },
+    { id: 14, name: "Class XI (11)" },
+    { id: 15, name: "Class XII (12)" }
+  ];
+  
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data);
@@ -172,18 +191,7 @@ export default function EditPassenger() {
           {!isStudent ? (
             <TextField type={'tel'} title={'Landline (Optional)'} placeholder={'Landline no'} value={landline} setter={setLandline} />
           ) : null}
-          {isStudent ? <TextField type={'number'} title={'Class'} placeholder={'Class'} value={cls} setter={setCls} /> : null}
-        </div>
-        <div className='layout-not-student'>
-          <h1>Adding Teacher/Passenger ?</h1>
-          <Switch
-            onChange={(e) => {
-              setIsStudent(!e.target.checked);
-            }}
-            value={!isStudent}
-            size='md'
-            defaultIsChecked={false}
-          />
+          {isStudent ? <DropDown title={"Class"} options={classesList} value={cls?.name} setter={setCls} /> : null}
         </div>
         {isStudent ? (
           <>

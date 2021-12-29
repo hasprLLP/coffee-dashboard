@@ -40,7 +40,7 @@ export default function ViewOwner() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ['name', 'guardian.name', 'phone', 'DOB'],
+    keys: ['name'],
   });
 
   const result = ownerName !== '' && fuse.search(ownerName);

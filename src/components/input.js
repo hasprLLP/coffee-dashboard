@@ -17,9 +17,9 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
           )}
           <Input
             value={value}
-            onBlur={() => !value && isRequired ? setInvalid(true) : setInvalid(false)}
+            onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
             isInvalid={invalid}
-            onChange={(e) => setter(e.target.value)}
+            onChange={(e) => (!type === "show" ? null : setter(e.target.value))}
             bg={color ? "white" : "rgba(242, 242, 242, 0.4)"}
             focusBorderColor="#38B2AC"
             type={type}

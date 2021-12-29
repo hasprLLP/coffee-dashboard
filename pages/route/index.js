@@ -41,7 +41,7 @@ export default function ViewRoute() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ['name', 'guardian.name', 'phone', 'DOB'],
+    keys: ['name'],
   });
 
   const result = routeName !== '' && fuse.search(routeName);
@@ -65,7 +65,7 @@ export default function ViewRoute() {
                   name={route.name}
                   data={route}
                   heading={['Start', 'School']}
-                  info={[route.school.name, route.school.name]}
+                  info={[route?.startsFrom?.address, route?.school?.name]}
                   onEdit={onEdit}
                   onDetails={onDetails}
                 />

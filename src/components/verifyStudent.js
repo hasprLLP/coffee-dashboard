@@ -23,7 +23,7 @@ const VerifyStudent = ({ student, onButton }) => {
                 rounded={'full'}
               >
                 {student.isVerified ? 'Verified ' : 'Pending '}
-                {student.route ? ` - ${student.route.name}` : ' - Route no available'}
+                {student.route ? ` - ${student.route.name}` : ' - Route not available'}
               </Text>
             </Stack>
             <Heading fontSize={'sm'} fontWeight={500} color={'gray.500'} fontFamily={'Gilroy'}>

@@ -1,7 +1,7 @@
-import { Button } from '@chakra-ui/react';
-import Notification from '@/components/notification';
-import axios from 'axios';
-import { useState } from 'react';
+import { Button } from "@chakra-ui/react";
+import Notification from "@/components/notification";
+import axios from "axios";
+import { useState } from "react";
 
 const SaveButton = ({ collection, data, reset }) => {
   const [status, setStatus] = useState(null);
@@ -12,23 +12,23 @@ const SaveButton = ({ collection, data, reset }) => {
 
     try {
       const response = await axios.post(`${collection}/`, data);
-      console.log('response', response);
+      console.log("response", response);
       if (response.status === 201) {
-        setStatus('success');
+        setStatus("success");
         reset.map((setter) => {
-          setter('')
+          setter("");
         });
         setLoading(false);
       }
     } catch (error) {
-      setStatus('error');
+      setStatus(error.message);
       console.log(error);
       setLoading(false);
     }
   };
   return (
-    <div className='button'>
-      <Button onClick={onSave} colorScheme='teal' size='md' isFullWidth isLoading={loading} loadingText='Submitting'>
+    <div className="button">
+      <Button onClick={onSave} colorScheme="teal" size="md" isFullWidth isLoading={loading} loadingText="Submitting">
         Save
       </Button>
       <Notification type={status} />

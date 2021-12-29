@@ -66,6 +66,7 @@ export default function Drawer() {
           heading='Student'
           pages={[
             { name: 'View', path: '/passenger' },
+            { name: 'Report', path: '/passenger/table' },
             { name: 'Add', path: '/passenger/add' },
           ]}
           active={activePage}
@@ -77,6 +78,7 @@ export default function Drawer() {
           heading='Bus Owner'
           pages={[
             { name: 'View', path: '/redeem' },
+            { name: 'Report', path: '/redeem/table' },
             { name: 'Add', path: '/redeem/add' },
           ]}
           active={activePage}
@@ -88,6 +90,7 @@ export default function Drawer() {
           heading='Bus'
           pages={[
             { name: 'View', path: '/bus' },
+            { name: 'Report', path: '/bus/table' },
             { name: 'Add', path: '/bus/add' },
           ]}
           active={activePage}
@@ -99,6 +102,7 @@ export default function Drawer() {
           heading='Driver'
           pages={[
             { name: 'View', path: '/driver' },
+            { name: 'Report', path: '/driver/table' },
             { name: 'Add', path: '/driver/add' },
           ]}
           active={activePage}
@@ -110,6 +114,7 @@ export default function Drawer() {
           heading='School'
           pages={[
             { name: 'View', path: '/school' },
+            { name: 'Report', path: '/school/table' },
             { name: 'Add', path: '/school/add' },
           ]}
           active={activePage}
@@ -121,6 +126,7 @@ export default function Drawer() {
           heading='Package'
           pages={[
             { name: 'View', path: '/package' },
+            { name: 'Report', path: '/package/table' },
             { name: 'Add', path: '/package/add' },
           ]}
           active={activePage}
@@ -132,6 +138,7 @@ export default function Drawer() {
           heading='Route'
           pages={[
             { name: 'View', path: '/route' },
+            { name: 'Report', path: '/route/table' },
             { name: 'Add', path: '/route/add' },
           ]}
           active={activePage}

@@ -41,7 +41,7 @@ export default function ViewPackage() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ['name', 'guardian.name', 'phone', 'DOB'],
+    keys: ['name'],
   });
 
   const result = packageName !== '' && fuse.search(packageName);

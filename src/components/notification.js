@@ -8,7 +8,7 @@ const Notification = ({ type }) => {
       ? toast.success("Saved Successfully !", {
           position: toast.POSITION.BOTTOM_RIGHT,
         })
-      : toast.error("Please Check Details !", {
+      : toast.error("Please Check Details !" + type, {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
   };
