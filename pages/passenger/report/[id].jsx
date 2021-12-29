@@ -46,24 +46,24 @@ export default function Details() {
   //@ Fetch Routes API Function
   const getRoutes = async () => {
     try {
-      const response = await axios.get(`route${data?.school ? `?school=${data?.school?.id}` : ""}`);
+      const response = await axios.get(`route${data?.school ? `?school=${data?.school?.id}` : ''}`);
       let tempRoutesName = [];
       response.data.data.map((route) => {
         tempRoutesName.push(route.name);
       });
       setRouteList(tempRoutesName);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
   //@ Get Route according to Selected School
   useEffect(() => {
+    getPassenger();
     getRoutes();
-  }, [data?.school]);
+  }, []);
 
-  //$` Function To Update Route
   const updateRoute = () => {
-    alert("Update");
+    alert('Update');
   };
 
   //$ Due date
@@ -74,9 +74,9 @@ export default function Details() {
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="home-shift">
-        <div className="layout-title">
+    <div className='home'>
+      <div className='home-shift'>
+        <div className='layout-title'>
           <GoBack />
           Details
         </div>
@@ -119,7 +119,7 @@ export default function Details() {
               <TextField type={"show"} title={"Total Amount"} placeholder={"No Amount"} value={"5000"} />
               <TextField type={"show"} title={"Amount Paid"} placeholder={"No Paid"} value={"3000"} />
               <TextField type={"show"} title={"Amount Remaining"} placeholder={"No Amount"} value={"2000"} />
-              <TextField type={"fix"} title={"Last Transaction"} placeholder={"Transactionn"} value={data?.lastTransaction?.date?.substring(0, 10)} />
+              <TextField type={"fix"} title={"Last Transaction"} placeholder={"Transaction"} value={data?.lastTransaction?.date?.substring(0, 10)} />
               <TextField type={"fix"} title={"Remaining Amount"} placeholder={"Amount"} value={data?.lastTransaction?.remainingAmount} />
               <TextField type={"fix"} title={"Total Amount"} placeholder={"Amount"} value={data?.lastTransaction?.amount} />
             </div>
@@ -132,7 +132,7 @@ export default function Details() {
             {/* //$ Students Verified  */}
             <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
               <div className="layout-sub-title" style={{ color: "red", width: "100%" }}>
-                {data?.isVerified ? "Student Verifed and Route is Assigned" : "Student Not Verified ! Assign a Route"}
+                {data?.isVerified ? "Student Verified and Route is Assigned" : "Student Not Verified ! Assign a Route"}
               </div>
               <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
               <div className="button">

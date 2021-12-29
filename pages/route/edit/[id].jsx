@@ -6,7 +6,7 @@ import DeleteButton from '@/components/deleteButton';
 import { LoadScript } from '@react-google-maps/api';
 import GoBack from '@/helpers/goback';
 import Map from '@/utilities/map';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
@@ -23,10 +23,6 @@ export default function EditRoute() {
   const [morningArrival, setMorningArrival] = useState();
   const [eveningDeparture, setEveningDeparture] = useState();
   const [startsFrom, setStartsFrom] = useState();
-  //` Added Underscore to avoid conflict with the name of the package
-  const [package_, setPackage] = useState({});
-  const [packages, setPackages] = useState([]);
-  const [packageNames, setPackageNames] = useState([]);
   const [school, setSchool] = useState({});
   const [schools, setSchools] = useState([]);
   const [schoolNames, setSchoolNames] = useState([]);
@@ -37,33 +33,19 @@ export default function EditRoute() {
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data);
-
-      setName(data.name);
-      setMorningDeparture(data.morningDeparture);
-      setMorningArrival(data.morningArrival);
-      setEveningDeparture(data.eveningDeparture);
+      setName(data?.name);
+      setMorningDeparture(data?.morningDeparture);
+      setMorningArrival(data?.morningArrival);
+      setEveningDeparture(data?.eveningDeparture);
       setStartsFrom(data?.startsFrom?.address);
-      setPackage(data.package);
-      setSchool(data.school);
-      setBus(data.bus);
+      setSchool(data?.school);
+      setBus(data?.bus);
     }
   }, [router.query.data]);
 
-  const getPackages = async () => {
-    try {
-      const response = await axios.get(`package`);
-      setPackages(response.data.data);
-      const tempPackageNames = [];
-      response.data.data.map((bus) => {
-        tempPackageNames.push(bus.name);
-      });
-      setPackageNames(tempPackageNames);
-    } catch (error) {
-      console.log('Error while fetching Packages: ', error);
-    }
-  };
 
-  const getSchools = async () => {
+
+  const getSchools = useCallback(async () => {
     try {
       const response = await axios.get(`school/`);
       setSchools(response.data.data);
@@ -75,9 +57,9 @@ export default function EditRoute() {
     } catch (error) {
       console.log('error', error);
     }
-  };
+  },[]);
 
-  const getBuses = async () => {
+  const getBuses = useCallback(async () => {
     try {
       const response = await axios.get(`bus/`);
       setBuses(response.data.data);
@@ -89,7 +71,7 @@ export default function EditRoute() {
     } catch (error) {
       console.log('error', error);
     }
-  };
+  },[]);
 
   const setBusID = (busName) => {
     const busObj = buses?.find((bus) => bus?.name === busName);
@@ -99,16 +81,11 @@ export default function EditRoute() {
     const schoolObj = schools?.find((school) => school?.name === schoolName);
     setSchool(schoolObj);
   };
-  const setPackageID = (packageName) => {
-    const packageObj = packages?.find((_package) => _package?.name === packageName);
-    setPackage(packageObj);
-  };
-
+ 
   useEffect(() => {
-    getPackages();
     getSchools();
     getBuses();
-  }, []);
+  }, [getSchools, getBuses]);
 
   //$ States and Hooks [#STATES#]
   const timing = [
@@ -140,7 +117,6 @@ export default function EditRoute() {
     { title: 'Starts from', placeholder: 'Starting Point Address', value: startsFrom, setter: setStartsFrom },
     { title: 'Destination (School)', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
     { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
-    { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
   //& Return UI [#RETURN#]
@@ -184,12 +160,11 @@ export default function EditRoute() {
               eveningDeparture,
               startsFrom: {
                 type: 'Point',
-                coordinates: [23.86135575696267, 78.80405223062922],
-                address: 'Gour Nagar, Makroniya, Madhya Pradesh 470001',
+                coordinates: [],
+                address : startsFrom,
               },
               school: school?.id,
               bus: bus?.id,
-              package: package_?.id,
             }}
           />
           <DeleteButton

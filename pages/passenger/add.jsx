@@ -1,17 +1,15 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import FilePicker from "@/components/filepicker";
-import SaveButton from "@/components/saveButton";
-import { Switch } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { async } from "@firebase/util";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import FilePicker from '@/components/filepicker';
+import SaveButton from '@/components/saveButton';
+import { Switch } from '@chakra-ui/react';
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
   const [name, setName] = useState();
-  const [studentID, setStudentID] = useState();
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
   const [joiningDate, setJoiningDate] = useState();
@@ -32,6 +30,10 @@ export default function Create() {
   const [deposit, setDeposit] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState();
   const [cls, setCls] = useState();
+  const [passengerID, setPassengerID] = useState();
+  const [package_, setPackage] = useState({});
+  const [packages, setPackages] = useState([]);
+  const [packageNames, setPackageNames] = useState([]);
 
   const setterArray = [
     setName,
@@ -50,6 +52,23 @@ export default function Create() {
     setDeposit,
     setRemainingAmount,
   ];
+  const getPackages = useCallback(async () => {
+    try {
+      const response = await axios.get(`package`);
+      setPackages(response.data.data);
+      const tempPackageNames = [];
+      response.data.data.map((bus) => {
+        tempPackageNames.push(bus.name);
+      });
+      setPackageNames(tempPackageNames);
+    } catch (error) {
+      console.log('Error while fetching Packages: ', error);
+    }
+  }, []);
+  const setPackageID = (packageName) => {
+    const packageObj = packages?.find((_package) => _package?.name === packageName);
+    setPackage(packageObj);
+  };
 
   const getSchools = async () => {
     try {
@@ -61,12 +80,17 @@ export default function Create() {
       });
       setSchoolNames(tempSchoolNames);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
-  const getRoutes = async () => {
+
+  const setSchoolID = async (schoolName) => {
     try {
-      const response = await axios.get(`route${school ? `?school=${school?.id}` : ""}`);
+      const schoolObj = schools?.find((school) => school?.name === schoolName);
+      setSchool(schoolObj);
+      const response = await axios.get(`route${schoolObj ? `?school=${schoolObj?.id}` : ''}`);
+      const res = await axios.get(`misc/generate_passenger_id/${schoolObj.id}`);
+      setPassengerID(res.data.data);
       setRoutes(response.data.data);
       const tempRoutesName = [];
       response.data.data.map((route) => {
@@ -74,13 +98,10 @@ export default function Create() {
       });
       setRouteNames(tempRoutesName);
     } catch (error) {
-      console.log("error", error.response.data);
+      console.log('error', error);
+      setPassengerID('');
+      setRoutes([]);
     }
-  };
-
-  const setSchoolID = (schoolName) => {
-    const schoolObj = schools?.find((school) => school?.name === schoolName);
-    setSchool(schoolObj);
   };
   const setRouteID = (routeName) => {
     const routeObj = routes?.find((route) => route?.name === routeName);
@@ -89,6 +110,7 @@ export default function Create() {
 
   useEffect(() => {
     getSchools();
+    getPackages();
   }, []);
 
   //$ Get Count
@@ -143,45 +165,55 @@ export default function Create() {
   ];
 
   const guardianDetails = [
-    { title: "Guardian Name", isRequired: true, placeholder: "Father/Mother etc", value: guardian, setter: setGuardian },
+    { title: 'Guardian Name', isRequired: true, placeholder: 'Father/Mother etc', value: guardian, setter: setGuardian },
     {
-      title: "Guardian Mobile",
+      title: 'Guardian Mobile',
       isRequired: true,
-      placeholder: "Parent Contact No",
+      placeholder: 'Parent Contact No',
       value: phone,
       setter: setPhone,
-      type: "tel",
-      prefix: "+91",
+      type: 'tel',
+      prefix: '+91',
     },
-    { title: "Whatsapp (Optional)", placeholder: "Whatsapp no", value: landline, setter: setLandline, type: "tel" },
+    { title: 'Whatsapp (Optional)', placeholder: 'Whatsapp no', value: landline, setter: setLandline, type: 'tel' },
   ];
 
   const boardingDetails = [
-    { title: "Full Address", isRequired: true, placeholder: "Boarding Point Address", value: address, setter: setAddress },
-    { title: "School", isRequired: true, page: "/school/add", options: schoolNames, value: school?.name, setter: setSchoolID, type: "dropdown" },
-    { title: "Route", isRequired: true, options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
+    { title: 'Full Address', isRequired: true, placeholder: 'Boarding Point Address', value: address, setter: setAddress },
+    {
+      title: 'School',
+      isRequired: true,
+      page: '/school/add',
+      options: schoolNames,
+      value: school?.name,
+      setter: setSchoolID,
+      type: 'dropdown',
+    },
+    { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
-    { title: "Joining Date", type: "date", placeholder: "eg 02/07/2003", value: joiningDate, setter: setJoiningDate },
-    { title: "Due Date", type: "date", placeholder: "eg 02/07/2003", value: dueDate, setter: setDueDate },
-    { title: "Fee Amount", placeholder: "Fee for Selected Duration", type: "number", value: amount, setter: setAmount, prefix: "₹" },
-    { title: "Deposit", placeholder: "Enter the Deposited", type: "number", value: deposit, setter: setDeposit, prefix: "₹" },
-    { title: "Remaining", type: "fix", placeholder: "Remaining", value: remainingAmount, setter: setRemainingAmount, prefix: "₹" },
+    { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
+    { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
+    { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
+    { title: 'Deposit', placeholder: 'Enter the Deposited', type: 'number', value: deposit, setter: setDeposit, prefix: '₹' },
+    { title: 'Remaining', type: 'fix', placeholder: 'Remaining', value: remainingAmount, setter: setRemainingAmount, prefix: '₹' },
+    { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home">
-      <div className="home-shift">
-        <div className="layout-title">Add {isStudent ? "Student" : "Teacher"}</div>
-        <div className="layout-not-student">
+    <div className='home'>
+      <div className='home-shift'>
+        <div className='layout-title'>Add {isStudent ? 'Student' : 'Teacher'}</div>
+        <div className='layout-sub-title'>Passenger ID - {passengerID}</div>
+        <div className='layout-not-student'>
           <h1>Adding Teacher/Passenger ?</h1>
           <Switch
             onChange={(e) => {
               setIsStudent(!e.target.checked);
             }}
             value={!isStudent}
-            size="md"
+            size='md'
             defaultIsChecked={false}
           />
         </div>
@@ -212,12 +244,12 @@ export default function Create() {
         <div className="layout-sub-title">{isStudent ? "Student" : "Teacher"} Details</div>
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {!isStudent ? (
-            <TextField type={"tel"} title={"Mobile"} placeholder={"Contact No"} value={phone} setter={setPhone} prefix={"+91"} isRequired={true} />
+            <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
           ) : null}
           {basicFields.map((item, i) => {
-            return item.type === "dropdown" ? (
-              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-            ) : item.type === "upload" ? (
+            return item.type === 'dropdown' ? (
+              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} onChange={item.onChange} />
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -238,7 +270,7 @@ export default function Create() {
         <div className="layout-sub-title">Boarding Details</div>
         <div className="layout-form" style={{ justifyContent: "flex-start" }}>
           {boardingDetails.map((item, i) => {
-            return item.type === "dropdown" ? (
+            return item.type === 'dropdown' ? (
               <DropDown
                 key={i}
                 page={item.page}
@@ -248,7 +280,7 @@ export default function Create() {
                 setter={item.setter}
                 isRequired={item.isRequired}
               />
-            ) : item.type === "upload" ? (
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -263,12 +295,12 @@ export default function Create() {
             );
           })}
         </div>
-        <div className="layout-sub-title">Fee Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>Fee Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {feeDetails.map((item, i) => {
-            return item.type === "dropdown" ? (
-              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-            ) : item.type === "upload" ? (
+            return item.type === 'dropdown' ? (
+              <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} onChange={item.onChange} />
+            ) : item.type === 'upload' ? (
               <FilePicker title={item.title} value={item.value} setter={item.setter} />
             ) : (
               <TextField
@@ -284,7 +316,7 @@ export default function Create() {
           })}
         </div>
         <SaveButton
-          collection={"passenger"}
+          collection={'passenger'}
           reset={setterArray}
           data={{
             name,
@@ -292,10 +324,10 @@ export default function Create() {
             photo,
             DOB,
             whatsApp: landline,
-            route: route.id,
-            school: school.id,
+            route: route?.id,
+            school: school?.id,
             location: {
-              type: "Point",
+              type: 'Point',
               coordinates: [0, 0],
               address,
             },
@@ -306,6 +338,7 @@ export default function Create() {
             cls,
             joiningDate,
             dueDate,
+            package: package_?.id,
             guardian: {
               name: guardian,
             },

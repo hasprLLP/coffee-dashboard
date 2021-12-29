@@ -5,23 +5,16 @@ import DropDown from '@/components/dropdown';
 import SaveButton from '@/components/saveButton';
 import { LoadScript } from '@react-google-maps/api';
 import Map from '@/utilities/map';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import GoBack from '@/helpers/goback';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {
-  const lib = ['places'];
-  const key = 'AIzaSyCHvfKSXzV5-wKUkV5XvwJwp4n5RHc9lNA';
-
   const [name, setName] = useState();
-  const [morningDeparture, setMorningDeparture] = useState();
-  const [morningArrival, setMorningArrival] = useState();
-  const [eveningDeparture, setEveningDeparture] = useState();
+  const [morningDeparture, setMorningDeparture] = useState("06:00 AM");
+  const [morningArrival, setMorningArrival] = useState("08:00 AM");
+  const [eveningDeparture, setEveningDeparture] = useState("02:00 PM");
   const [startsFrom, setStartsFrom] = useState();
-  //` Added Underscore to avoid conflict with the name of the package
-  const [package_, setPackage] = useState({});
-  const [packages, setPackages] = useState([]);
-  const [packageNames, setPackageNames] = useState([]);
   const [school, setSchool] = useState({});
   const [schools, setSchools] = useState([]);
   const [schoolNames, setSchoolNames] = useState([]);
@@ -29,24 +22,9 @@ export default function AddRoute() {
   const [buses, setBuses] = useState([]);
   const [busNames, setBusNames] = useState([]);
 
-  const setterArray = [setName, setMorningDeparture, setMorningArrival, setEveningDeparture, setStartsFrom, setSchool, setBus, setPackage];
+  const setterArray = [setName, setMorningDeparture, setMorningArrival, setEveningDeparture, setStartsFrom, setSchool, setBus];
 
-
-  const getPackages = async () => {
-    try {
-      const response = await axios.get(`package`);
-      setPackages(response.data.data);
-      const tempPackageNames = [];
-      response.data.data.map((bus) => {
-        tempPackageNames.push(bus.name);
-      });
-      setPackageNames(tempPackageNames);
-    } catch (error) {
-      console.log('Error while fetching Packages: ', error);
-    }
-  };
-
-  const getSchools = async () => {
+  const getSchools = useCallback(async () => {
     try {
       const response = await axios.get(`school/`);
       setSchools(response.data.data);
@@ -58,11 +36,12 @@ export default function AddRoute() {
     } catch (error) {
       console.log('error', error);
     }
-  };
+  }, []);
 
-  const getBuses = async () => {
+  const getBuses = useCallback(async () => {
     try {
       const response = await axios.get(`bus/`);
+      console.log('response', response);
       setBuses(response.data.data);
       const tempBusNames = [];
       response.data.data.map((bus) => {
@@ -72,7 +51,7 @@ export default function AddRoute() {
     } catch (error) {
       console.log('error', error);
     }
-  };
+  }, []);
 
   const setBusID = (busName) => {
     const busObj = buses?.find((bus) => bus?.name === busName);
@@ -82,17 +61,11 @@ export default function AddRoute() {
     const schoolObj = schools?.find((school) => school?.name === schoolName);
     setSchool(schoolObj);
   };
-  const setPackageID = (packageName) => {
-    const packageObj = packages?.find((_package) => _package?.name === packageName);
-    setPackage(packageObj);
-  };
 
   useEffect(() => {
-    getPackages();
     getSchools();
     getBuses();
-  }, []);
-
+  }, [getSchools, getBuses]);
 
   //$ States and Hooks [#STATES#]
   const timing = [
@@ -100,21 +73,21 @@ export default function AddRoute() {
       title: 'Bus Starts (Morning)',
       type: 'time',
       placeholder: 'Time of departure in morning',
-      value: morningDeparture || '07:00',
+      value: morningDeparture,
       setter: setMorningDeparture,
     },
     {
       title: 'Bus Reaches School (Morning)',
       type: 'time',
       placeholder: 'Time of arrival at school in morning',
-      value: morningArrival || '08:00',
+      value: morningArrival,
       setter: setMorningArrival,
     },
     {
       title: 'Bus Leaves School (Evening)',
       type: 'time',
       placeholder: 'Time of departure in evening',
-      value: eveningDeparture || '02:00',
+      value: eveningDeparture,
       setter: setEveningDeparture,
     },
   ];
@@ -123,14 +96,16 @@ export default function AddRoute() {
     { title: 'Starts from', placeholder: 'Starting Point Address', value: startsFrom, setter: setStartsFrom },
     { title: 'Destination (School)', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
     { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
-    { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
   ];
 
   //& Return UI [#RETURN#]
   return (
     <div className='home'>
       <div className='home-shift'>
-        <div className='layout-title'><GoBack />Add Route</div>
+        <div className='layout-title'>
+          <GoBack />
+          Add Route
+        </div>
         <div className='layout-sub-title'>Timing Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {timing.map((item, i) => {
@@ -166,7 +141,6 @@ export default function AddRoute() {
             },
             school: school?.id,
             bus: bus?.id,
-            package: package_?.id,
           }}
         />
       </div>

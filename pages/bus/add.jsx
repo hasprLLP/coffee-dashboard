@@ -52,7 +52,6 @@ export default function Create() {
     { title: 'Bus Name (or ID)', isRequired: true, placeholder: 'Bus Name for Reference', value: name, setter: setName },
     { title: 'Bus No (RC)', isRequired: true, placeholder: 'Provide Registration No', value: RCNumber, setter: setRCNumber },
     { title: 'Capacity', placeholder: 'Bus Seating Capacity', type: 'number', value: capacity, setter: setCapacity },
-    { title: 'Commission', placeholder: 'Owner Commission', type: 'number', value: commission, setter: setCommission, type: selfOwn ? 'fix' : null },
     { title: 'Vehicle Type', options: ['Bus', 'Mini-Bus', 'Van'], value: vehicleType, setter: setVehicleType, type: 'dropdown' },
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
@@ -68,6 +67,7 @@ export default function Create() {
       value: owner?.name,
       setter: setOwnerID,
     },
+    { title: 'Commission', placeholder: 'Owner Commission', type: 'number', value: commission, setter: setCommission, type: selfOwn ? 'fix' : null },
   ];
 
   //& Return UI [#RETURN#]
