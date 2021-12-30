@@ -35,26 +35,26 @@ export default function EditPassenger() {
   const [photo, setPhoto] = useState();
   const [amount, setAmount] = useState();
   const [cls, setCls] = useState();
+  const [packName,setPackName] = useState();
 
   const classesList = [
-    { id: 0, name: "Pre-School" },
-    { id: 1, name: "Nursery" },
-    { id: 2, name: "LKG" },
-    { id: 3, name: "UKG" },
-    { id: 4, name: "Class I (1)" },
-    { id: 5, name: "Class II (2)" },
-    { id: 6, name: "Class III (3)" },
-    { id: 7, name: "Class IV (4)" },
-    { id: 8, name: "Class V (5)" },
-    { id: 9, name: "Class VI (6)" },
-    { id: 10, name: "Class VII (7)" },
-    { id: 11, name: "Class VIII (8)" },
-    { id: 12, name: "Class IX (9)" },
-    { id: 13, name: "Class X (10)" },
-    { id: 14, name: "Class XI (11)" },
-    { id: 15, name: "Class XII (12)" }
+    'Pre-School',
+    'Nursery',
+    'LKG',
+    'UKG',
+    'Class I (1)',
+    'Class II (2)',
+    'Class III (3)',
+    'Class IV (4)',
+    'Class V (5)',
+    'Class VI (6)',
+    'Class VII (7)',
+    'Class VIII (8)',
+    'Class IX (9)',
+    'Class X (10)',
+    'Class XI (11)',
+    'Class XII (12)',
   ];
-  
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data);
@@ -77,6 +77,7 @@ export default function EditPassenger() {
       setPhoto(data?.photo);
       setAmount(data?.lastTransaction?.amount);
       setCls(data?.cls);
+      setPackName(data?.feePackage?.name)
     }
   }, [router.query.data]);
 
@@ -148,13 +149,14 @@ export default function EditPassenger() {
 
   const boardingDetails = [
     { title: 'Full Address', type: 'fix', placeholder: 'Boarding Point Address', value: address, setter: setAddress },
-    { title: 'School', fix: school?.name && 'fix', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
-    { title: 'Route', fix: route?.name && 'fix', options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
+    { title: 'School', fix: 'fix', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
+    { title: 'Route', fix: 'fix', options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
     { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
     { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
-    { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
+        { title: 'Package', type: 'fix', placeholder: 'Package Name', value: packName, setter: setPackname },
+
   ];
 
   //& Return UI [#RETURN#]
@@ -191,7 +193,7 @@ export default function EditPassenger() {
           {!isStudent ? (
             <TextField type={'tel'} title={'Landline (Optional)'} placeholder={'Landline no'} value={landline} setter={setLandline} />
           ) : null}
-          {isStudent ? <DropDown title={"Class"} options={classesList} value={cls?.name} setter={setCls} /> : null}
+          {isStudent ? <DropDown title={'Class'} options={classesList} value={cls} setter={setCls} /> : null}
         </div>
         {isStudent ? (
           <>

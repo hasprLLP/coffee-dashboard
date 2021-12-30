@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
-import GoBack from "@/helpers/goback";
-import DropDown from "@/components/dropdown";
-import TextField from "@/components/input";
-import Notification from "@/components/notification";
-import { Button } from "@chakra-ui/react";
-import axios from "axios";
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import GoBack from '@/helpers/goback';
+import DropDown from '@/components/dropdown';
+import TextField from '@/components/input';
+import Notification from '@/components/notification';
+import { Button } from '@chakra-ui/react';
+import axios from 'axios';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
@@ -40,7 +40,7 @@ export default function Details() {
   //$ Get Routes List and Update Route
   const [route, setRoute] = useState();
   const [routeList, setRouteList] = useState([]);
-  const routeField = { title: "Route Name", options: routeList, value: route?.name, setter: setRoute, type: "dropdown" };
+  const routeField = { title: 'Route Name', options: routeList, value: route?.name, setter: setRoute, type: 'dropdown' };
   const [routeLoading, setRouteLoading] = useState(false);
 
   //@ Fetch Routes API Function
@@ -58,7 +58,7 @@ export default function Details() {
   };
   //@ Get Route according to Selected School
   useEffect(() => {
-    getPassenger();
+    getStudentData();
     getRoutes();
   }, []);
 
@@ -81,79 +81,79 @@ export default function Details() {
           Details
         </div>
         {/* //$ Students Info Left Row */}
-        <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
+        <div className='layout-sub-title' style={{ color: 'black', width: '40%' }}>
           STUDENT INFO
         </div>
-        <div className="layout-row" style={{ alignItems: "flex-start" }}>
-          <div className="layout-row-item">
-            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+        <div className='layout-row' style={{ alignItems: 'flex-start' }}>
+          <div className='layout-row-item' style={{ flex: 1.25 }}>
+            <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
               {/* //$ Student Info */}
-              <div style={{ width: "100%" }}>
-                <div style={{ width: "12vw", height: "12vw", marginTop: "1vw", marginBottom: "2vw", resizeMode: "cover" }}>
+              <div style={{ width: '100%' }}>
+                <div style={{ width: '12vw', height: '12vw', marginTop: '1vw', marginBottom: '2vw', resizeMode: 'cover' }}>
                   <img
-                    alt="No Photo Available"
+                    alt='No Photo Available'
                     src={data?.photo}
-                    style={{ width: "12vw", height: "12vw", resizeMode: "cover", borderRadius: "100%" }}
+                    style={{ width: '12vw', height: '12vw', resizeMode: 'cover', borderRadius: '100%' }}
                   />
                 </div>
               </div>
-              <TextField type={"show"} title={"Student Name"} placeholder={"No Name"} value={data?.name} />
-              <TextField type={"show"} title={"Student ID"} placeholder={"No ID"} value={data?.studentID} />
-              <TextField type={"show"} title={"Student Address"} placeholder={"No Address"} value={data?.location?.address} />
-              <TextField type={"show"} title={"Student DOB"} placeholder={"No DOB"} value={data?.DOB.substring(0, 10)} />
+              <TextField type={'show'} title={'Student Name'} placeholder={'No Name'} value={data?.name} />
+              <TextField type={'show'} title={'Student ID'} placeholder={'No ID'} value={data?.studentID} />
+              <TextField type={'show'} title={'Student Address'} placeholder={'No Address'} value={data?.location?.address} />
+              <TextField type={'show'} title={'Student DOB'} placeholder={'No DOB'} value={data?.DOB.substring(0, 10)} />
             </div>
             {/* //$ School Details */}
-            <div className="layout-sub-title">School Details</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-              <TextField type={"show"} title={"School Name"} placeholder={"No School"} value={data?.school?.name} />
+            <div className='layout-sub-title'>School Details</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+              <TextField type={'show'} title={'School Name'} placeholder={'No School'} value={data?.school?.name} />
             </div>
             {/* //$ Package */}
-            <div className="layout-sub-title">Package Information</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-              <TextField type={"show"} title={"Package"} placeholder={"No Package"} value={"0-4KM"} />
-              <TextField type={"show"} title={"Duration"} placeholder={"No Duration"} value={"3 Months"} />
+            <div className='layout-sub-title'>Package Information</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+              <TextField type={'show'} title={'Package'} placeholder={'No Package'} value={'0-4KM'} />
+              <TextField type={'show'} title={'Duration'} placeholder={'No Duration'} value={'3 Months'} />
             </div>
             {/* //$ Transactions */}
-            <div className="layout-sub-title">Transaction Details</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
-              <TextField type={"show"} title={"Total Amount"} placeholder={"No Amount"} value={"5000"} />
-              <TextField type={"show"} title={"Amount Paid"} placeholder={"No Paid"} value={"3000"} />
-              <TextField type={"show"} title={"Amount Remaining"} placeholder={"No Amount"} value={"2000"} />
-              <TextField type={"fix"} title={"Last Transaction"} placeholder={"Transaction"} value={data?.lastTransaction?.date?.substring(0, 10)} />
-              <TextField type={"fix"} title={"Remaining Amount"} placeholder={"Amount"} value={data?.lastTransaction?.remainingAmount} />
-              <TextField type={"fix"} title={"Total Amount"} placeholder={"Amount"} value={data?.lastTransaction?.amount} />
+            <div className='layout-sub-title'>Transaction Details</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+              <TextField type={'show'} title={'Total Amount'} placeholder={'No Amount'} value={'5000'} />
+              <TextField type={'show'} title={'Amount Paid'} placeholder={'No Paid'} value={'3000'} />
+              <TextField type={'show'} title={'Amount Remaining'} placeholder={'No Amount'} value={'2000'} />
+              <TextField type={'fix'} title={'Last Transaction'} placeholder={'Transaction'} value={data?.lastTransaction?.date?.substring(0, 10)} />
+              <TextField type={'fix'} title={'Remaining Amount'} placeholder={'Amount'} value={data?.lastTransaction?.remainingAmount} />
+              <TextField type={'fix'} title={'Total Amount'} placeholder={'Amount'} value={data?.lastTransaction?.amount} />
             </div>
           </div>
           {/* //$ Notifications Right Row */}
-          <div className="layout-row-item">
-            <div className="layout-sub-title" style={{ color: "black" }}>
+          <div className='layout-row-item'>
+            <div className='layout-sub-title' style={{ color: 'black' }}>
               NOTIFICATIONS PANEL
             </div>
             {/* //$ Students Verified  */}
-            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-              <div className="layout-sub-title" style={{ color: "red", width: "100%" }}>
-                {data?.isVerified ? "Student Verified and Route is Assigned" : "Student Not Verified ! Assign a Route"}
+            <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+              <div className='layout-sub-title' style={{ color: 'red', width: '100%' }}>
+                {data?.isVerified ? 'Student Verified and Route is Assigned' : 'Student Not Verified ! Assign a Route'}
               </div>
               <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
-              <div className="button">
-                <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
+              <div className='button'>
+                <Button onClick={updateRoute} colorScheme='teal' size='md' isFullWidth isLoading={routeLoading} loadingText='Submitting'>
                   Assign
                 </Button>
-                <Notification type={""} />
+                <Notification type={''} />
               </div>
             </div>
             {/* //$ Due Date Change */}
-            <div className="layout-sub-title">Payment/Package Info</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-              <div className="layout-sub-title" style={{ color: "red", width: "100%" }}>
-                {data?.dueDate ? `Due date is ${data?.dueDate.substring(0, 10)}` : "No Dues"}
+            <div className='layout-sub-title'>Payment/Package Info</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+              <div className='layout-sub-title' style={{ color: 'red', width: '100%' }}>
+                {data?.dueDate ? `Due date is ${data?.dueDate.substring(0, 10)}` : 'No Dues'}
               </div>
-              <TextField type={"date"} title={"Extend Due Date"} value={dueDateChange} setter={setDueDateChange} />
-              <div className="button">
-                <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
+              <TextField type={'date'} title={'Extend Due Date'} value={dueDateChange} setter={setDueDateChange} />
+              <div className='button'>
+                <Button onClick={updateRoute} colorScheme='teal' size='md' isFullWidth isLoading={routeLoading} loadingText='Submitting'>
                   Extend Date
                 </Button>
-                <Notification type={""} />
+                <Notification type={''} />
               </div>
             </div>
           </div>

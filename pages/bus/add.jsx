@@ -29,8 +29,8 @@ export default function Create() {
       const response = await axios.get(`owner`);
       setOwners(response.data.data);
       const tempOwnerName = [];
-      response.data.data.map((bus) => {
-        tempOwnerName.push(bus.name);
+      response.data.data.map((owner) => {
+        tempOwnerName.push(owner.name);
       });
       setOwnerNames(tempOwnerName);
     } catch (error) {
@@ -76,17 +76,17 @@ export default function Create() {
       <div className='home-shift'>
         <div className='layout-title'>Add Bus</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-        <div className='layout-not-student'>
-          <h1>Self Own Bus ?</h1>
-          <Switch
-            onChange={(e) => {
-              setSelfOwn(e.target.checked);
-            }}
-            value={selfOwn}
-            size='md'
-            defaultIsChecked={false}
-          />
-        </div>
+          <div className='layout-not-student'>
+            <h1>Self Own Bus ?</h1>
+            <Switch
+              onChange={(e) => {
+                setSelfOwn(e.target.checked);
+              }}
+              value={selfOwn}
+              size='md'
+              defaultIsChecked={false}
+            />
+          </div>
           {basicFields.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />

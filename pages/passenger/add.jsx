@@ -27,6 +27,7 @@ export default function Create() {
   const [routeNames, setRouteNames] = useState([]);
   const [photo, setPhoto] = useState();
   const [amount, setAmount] = useState(0);
+  const [discount, setDiscount] = useState(0);
   const [deposit, setDeposit] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState();
   const [cls, setCls] = useState();
@@ -55,6 +56,7 @@ export default function Create() {
   const getPackages = useCallback(async () => {
     try {
       const response = await axios.get(`package`);
+      console.log(response.data.data)
       setPackages(response.data.data);
       const tempPackageNames = [];
       response.data.data.map((bus) => {
@@ -69,7 +71,6 @@ export default function Create() {
     const packageObj = packages?.find((_package) => _package?.name === packageName);
     setPackage(packageObj);
   };
-
   const getSchools = async () => {
     try {
       const response = await axios.get(`school/`);
@@ -113,48 +114,34 @@ export default function Create() {
     getPackages();
   }, []);
 
-  //$ Get Count
-  // const getCount = async (school) => {
-  //   try {
-  //     let prefix = school?.prefix;
-  //     let count = await axios.get(`misc/get_passenger_school/${school?.id}`);
-  //     console.log(prefix);
-
-  //     console.log(count.data.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  // };
-
   useEffect(() => {
     setRemainingAmount(amount - deposit);
   }, [amount, deposit]);
 
   const classesList = [
-    { id: 0, name: "Pre-School" },
-    { id: 1, name: "Nursery" },
-    { id: 2, name: "LKG" },
-    { id: 3, name: "UKG" },
-    { id: 4, name: "Class I (1)" },
-    { id: 5, name: "Class II (2)" },
-    { id: 6, name: "Class III (3)" },
-    { id: 7, name: "Class IV (4)" },
-    { id: 8, name: "Class V (5)" },
-    { id: 9, name: "Class VI (6)" },
-    { id: 10, name: "Class VII (7)" },
-    { id: 11, name: "Class VIII (8)" },
-    { id: 12, name: "Class IX (9)" },
-    { id: 13, name: "Class X (10)" },
-    { id: 14, name: "Class XI (11)" },
-    { id: 15, name: "Class XII (12)" }
+    'Pre-School',
+    'Nursery',
+    'LKG',
+    'UKG',
+    'Class I (1)',
+    'Class II (2)',
+    'Class III (3)',
+    'Class IV (4)',
+    'Class V (5)',
+    'Class VI (6)',
+    'Class VII (7)',
+    'Class VIII (8)',
+    'Class IX (9)',
+    'Class X (10)',
+    'Class XI (11)',
+    'Class XII (12)',
   ];
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
-    { title: "Name", isRequired: true, placeholder: "Enter Passenger name", value: name, setter: setName },
-    { title: "Upload Photo", value: photo, setter: setPhoto, type: "upload" },
-    { title: "Date of Birth", type: "date", placeholder: "eg 02/07/2003", value: DOB, setter: setDOB },
+    { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
+    { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
 
   const guardianDetails = [
@@ -188,6 +175,8 @@ export default function Create() {
     { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
     { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
     { title: 'Fee Amount', placeholder: 'Fee for Selected Duration', type: 'number', value: amount, setter: setAmount, prefix: '₹' },
+    { title: 'Discount', placeholder: 'Discount on Fee', type: 'number', value: discount, setter: setDiscount, prefix: '₹' },
+    { title: 'Total Amount', placeholder: 'Total Amount', type: 'fix', value: parseInt(amount) + parseInt(discount), prefix: '₹' },
     { title: 'Deposit', placeholder: 'Enter the Deposited', type: 'number', value: deposit, setter: setDeposit, prefix: '₹' },
     { title: 'Remaining', type: 'fix', placeholder: 'Remaining', value: remainingAmount, setter: setRemainingAmount, prefix: '₹' },
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
@@ -212,12 +201,12 @@ export default function Create() {
         </div>
         {isStudent ? (
           <>
-            <div className="layout-sub-title">Guardian Details</div>
-            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+            <div className='layout-sub-title'>Guardian Details</div>
+            <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
               {guardianDetails.map((item, i) => {
-                return item.type === "dropdown" ? (
+                return item.type === 'dropdown' ? (
                   <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-                ) : item.type === "upload" ? (
+                ) : item.type === 'upload' ? (
                   <FilePicker title={item.title} value={item.value} setter={item.setter} />
                 ) : (
                   <TextField
@@ -234,8 +223,8 @@ export default function Create() {
             </div>
           </>
         ) : null}
-        <div className="layout-sub-title">{isStudent ? "Student" : "Teacher"} Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {!isStudent ? (
             <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
           ) : null}
@@ -257,11 +246,11 @@ export default function Create() {
               />
             );
           })}
-          {!isStudent ? <TextField type={"tel"} title={"Whatsapp"} placeholder={"Landline no"} value={landline} setter={setLandline} /> : null}
-          {isStudent ? <DropDown title={"Class"} options={classesList} value={cls?.name} setter={setCls} /> : null}
+          {!isStudent ? <TextField type={'tel'} title={'Whatsapp'} placeholder={'Landline no'} value={landline} setter={setLandline} /> : null}
+          {isStudent ? <DropDown title={'Class'} options={classesList} value={cls} setter={setCls} /> : null}
         </div>
-        <div className="layout-sub-title">Boarding Details</div>
-        <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+        <div className='layout-sub-title'>Boarding Details</div>
+        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
           {boardingDetails.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown
@@ -327,6 +316,7 @@ export default function Create() {
             amount,
             deposit,
             remainingAmount,
+            discount,
             isStudent,
             cls,
             joiningDate,

@@ -3,7 +3,6 @@ import useSize from '@/utilities/useSize';
 import { useState, useEffect } from 'react';
 
 const DropDown = ({ title, options, value, setter, isRequired, type, fix, page }) => {
-
   const [invalid, setInvalid] = useState(false);
 
   const size = useSize();
@@ -17,14 +16,16 @@ const DropDown = ({ title, options, value, setter, isRequired, type, fix, page }
           bg='rgba(242, 242, 242, 0.4)'
           onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
           isInvalid={invalid}
-          isDisabled={fix === "fix" || false}
+          isDisabled={fix === 'fix' || false}
           focusBorderColor='#38B2AC'
           value={value}
           size={size > 1600 ? 'lg' : size > 1280 ? 'md' : size > 1024 ? 'sm' : 'xs'}
           marginBottom='2vw'
           marginTop='1vw'
           marginRight='1vw'
-          onChange={(select) => setter(select.target.value)}
+          onChange={(select) => {
+            setter(select.target.value);
+          }}
         >
           {options.map((option, i) => {
             return (
