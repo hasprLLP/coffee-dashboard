@@ -35,7 +35,7 @@ export default function EditPassenger() {
   const [photo, setPhoto] = useState();
   const [amount, setAmount] = useState();
   const [cls, setCls] = useState();
-  const [packName,setPackName] = useState();
+  const [packName, setPackName] = useState();
 
   const classesList = [
     'Pre-School',
@@ -77,7 +77,7 @@ export default function EditPassenger() {
       setPhoto(data?.photo);
       setAmount(data?.lastTransaction?.amount);
       setCls(data?.cls);
-      setPackName(data?.feePackage?.name)
+      setPackName(data?.feePackage?.name);
     }
   }, [router.query.data]);
 
@@ -155,8 +155,7 @@ export default function EditPassenger() {
   const feeDetails = [
     { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
     { title: 'Due Date', type: 'date', placeholder: 'eg 02/07/2003', value: dueDate, setter: setDueDate },
-        { title: 'Package', type: 'fix', placeholder: 'Package Name', value: packName, setter: setPackname },
-
+    { title: 'Package', type: 'fix', placeholder: 'Package Name', value: packName, setter: setPackName },
   ];
 
   //& Return UI [#RETURN#]

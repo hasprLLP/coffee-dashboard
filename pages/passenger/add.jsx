@@ -56,7 +56,7 @@ export default function Create() {
   const getPackages = useCallback(async () => {
     try {
       const response = await axios.get(`package`);
-      console.log(response.data.data)
+      console.log(response.data.data);
       setPackages(response.data.data);
       const tempPackageNames = [];
       response.data.data.map((bus) => {
@@ -307,6 +307,7 @@ export default function Create() {
             DOB,
             whatsApp: landline,
             route: route?.id,
+            passengerID,
             school: school?.id,
             location: {
               type: 'Point',
@@ -321,7 +322,7 @@ export default function Create() {
             cls,
             joiningDate,
             dueDate,
-            package: package_?.id,
+            feePackage: package_?.id,
             guardian: {
               name: guardian,
             },

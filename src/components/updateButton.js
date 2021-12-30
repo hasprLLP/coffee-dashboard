@@ -12,20 +12,15 @@ const UpdateButton = ({ collection, data }) => {
 
     try {
       const response = await axios.patch(`${collection}/`, data);
-      if (response.status === 202) {
+      console.log(response.status);
+      if (response.status === 201) {
         setStatus('success');
-        setLoading(false);
-      } else if(response.status === 204){
-        setStatus('error');
-        setLoading(false);
-      }else {
-        setStatus('error');
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
-      setStatus('error');
       setLoading(false);
+      setStatus(error?.response?.data?.message);
+      console.log(error?.response);
     }
   };
   return (
