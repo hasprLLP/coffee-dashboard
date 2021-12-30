@@ -82,7 +82,7 @@ export default function Details() {
         </div>
         {/* //$ Students Info Left Row */}
         <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
-          PACKAGE INFO
+          DRIVER INFO
         </div>
         <div className="layout-row" style={{ alignItems: "flex-start" }}>
           <div className="layout-row-item">

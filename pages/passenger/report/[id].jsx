@@ -1,32 +1,50 @@
-import { useCallback } from 'react';
-import { useRouter } from 'next/router';
-import GoBack from '@/helpers/goback';
-import GoogleMapReact from 'google-map-react';
-import { JSONToHTMLTable } from '@kevincobain2000/json-to-html-table';
-import { useState, useEffect } from 'react';
-import DropDown from '@/components/dropdown';
-import TextField from '@/components/input';
-import Notification from '@/components/notification';
-import Image from 'next/image';
-import { Button } from '@chakra-ui/react';
-import axios from 'axios';
+/* eslint-disable @next/next/no-img-element */
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import GoBack from "@/helpers/goback";
+import DropDown from "@/components/dropdown";
+import TextField from "@/components/input";
+import Notification from "@/components/notification";
+import { Button } from "@chakra-ui/react";
+import axios from "axios";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
+  //$ Path and Page Data
   const router = useRouter();
   const { id } = router.query;
+
+  //$ State to Store API Data
   const [data, setData] = useState();
 
-  const getPassenger = useCallback(async () => {
+  //$ Function to Get Data from API using api route and set to State
+  const getStudentData = async () => {
     try {
       const response = await axios.get(`passenger/${id}`);
       setData(response.data.data);
     } catch (error) {
       console.log(error);
     }
-  }, [id]);
+  };
+  //@ Get Student Full Data on Page Load
+  const got = useRef(false); //` Initial False
+  useEffect(() => {
+    if (router?.query?.data) {
+      if (!got.current) {
+        getStudentData(`passenger/${id}`, setData); //@ Get Student List
+      }
+      got.current = true; //` Set To True After Getting Data
+    }
+  }, [router.query.data, data]);
 
-  const getRoutes = useCallback(async () => {
+  //$ Get Routes List and Update Route
+  const [route, setRoute] = useState();
+  const [routeList, setRouteList] = useState([]);
+  const routeField = { title: "Route Name", options: routeList, value: route?.name, setter: setRoute, type: "dropdown" };
+  const [routeLoading, setRouteLoading] = useState(false);
+
+  //@ Fetch Routes API Function
+  const getRoutes = async () => {
     try {
       const response = await axios.get(`route${data?.school ? `?school=${data?.school?.id}` : ''}`);
       let tempRoutesName = [];
@@ -37,18 +55,12 @@ export default function Details() {
     } catch (error) {
       console.log('error', error);
     }
-  }, [data]);
-
+  };
+  //@ Get Route according to Selected School
   useEffect(() => {
     getPassenger();
     getRoutes();
   }, []);
-
-  //$ Update Route
-  const [route, setRoute] = useState();
-  const [routeList, setRouteList] = useState([]);
-  const routeField = { title: 'Route Name', options: routeList, value: route?.name, setter: setRoute, type: 'dropdown' };
-  const [routeLoading, setRouteLoading] = useState(false);
 
   const updateRoute = () => {
     alert('Update');
@@ -56,46 +68,9 @@ export default function Details() {
 
   //$ Due date
   const [dueDateChange, setDueDateChange] = useState();
-  const dueDateField = {
-    title: 'Current Due Date',
-    type: 'fix',
-    placeholder: 'eg 02/07/2003',
-    value: data?.dueDate.substring(0, 10),
-    setter: setDueDateChange,
-  };
-  const extendDateField = {
-    title: 'Extend Due Date',
-    type: 'date',
-    placeholder: 'eg 02/07/2003',
-    value: dueDateChange || data?.dueDate.substring(0, 10),
-    setter: setDueDateChange,
-  };
 
   //$ Package
   const [pack, setPackage] = useState();
-  const packageNameField = {
-    title: 'Current Fee Package',
-    type: 'fix',
-    placeholder: 'Package Name',
-    value: data?.route?.package?.name || pack,
-    setter: setPackage,
-  };
-
-  const packageDurationField = {
-    title: 'Duration (in Months)',
-    type: 'fix',
-    placeholder: 'Package Duration',
-    value: '3 Months',
-    setter: setPackage,
-  };
-
-  const packageAmountField = {
-    title: 'Package Amount',
-    type: 'fix',
-    placeholder: 'Package Amount',
-    value: '₹5600',
-    setter: setPackage,
-  };
 
   //& Return UI [#RETURN#]
   return (
@@ -105,129 +80,84 @@ export default function Details() {
           <GoBack />
           Details
         </div>
-        {/* //$ Student Info */}
-        <div className='layout-sub-title'>Student Basic Info</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {data && (
-            <div className='layout-sub-title' style={{ color: 'black' }}>
-              {data?.name} - {data?.studentID} ({data?.isVerified ? 'Verified' : 'Not Verified'})
-            </div>
-          )}
+        {/* //$ Students Info Left Row */}
+        <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
+          STUDENT INFO
         </div>
-        {/* //$ Route Changes */}
-        <div className='layout-sub-title'>Assign / Update Route</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
-          <div className='button'>
-            <Button onClick={updateRoute} colorScheme='teal' size='md' isFullWidth isLoading={routeLoading} loadingText='Submitting'>
-              Save
-            </Button>
-            <Notification type={''} />
-          </div>
-        </div>
-        {/* //$ Due Date Chnages */}
-        <div className='layout-sub-title'>Extend Fees Due Date</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <TextField
-            type={dueDateField.type}
-            title={dueDateField.title}
-            placeholder={dueDateField.placeholder}
-            value={dueDateField.value}
-            setter={dueDateField.setter}
-          />
-          <TextField
-            type={extendDateField.type}
-            title={extendDateField.title}
-            placeholder={extendDateField.placeholder}
-            value={extendDateField.value}
-            setter={extendDateField.setter}
-          />
-          <div className='button'>
-            <Button onClick={updateRoute} colorScheme='teal' size='md' isFullWidth isLoading={routeLoading} loadingText='Submitting'>
-              Extend Date
-            </Button>
-            <Notification type={''} />
-          </div>
-        </div>
-        {/* //$ Package */}
-        <div className='layout-sub-title'>Package Information</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-          <TextField
-            type={packageNameField.type}
-            title={packageNameField.title}
-            placeholder={packageNameField.placeholder}
-            value={packageNameField.value}
-            setter={packageNameField.setter}
-          />
-          <TextField
-            type={packageDurationField.type}
-            title={packageDurationField.title}
-            placeholder={packageDurationField.placeholder}
-            value={packageDurationField.value}
-            setter={packageDurationField.setter}
-          />
-          <TextField
-            type={packageAmountField.type}
-            title={packageAmountField.title}
-            placeholder={packageAmountField.placeholder}
-            value={packageAmountField.value}
-            setter={packageAmountField.setter}
-          />
-        </div>
-        {/* //$ Transaciton */}
-        <div className='layout-sub-title'>Transaction Details</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-          <TextField
-            type={'fix'}
-            title={'Last Transaction'}
-            placeholder={'Transactionn'}
-            value={data?.lastTransaction?.date?.substring(0, 10)}
-            setter={packageDurationField.setter}
-          />
-          <TextField
-            type={'fix'}
-            title={'Remaining Amount'}
-            placeholder={'Amount'}
-            value={data?.lastTransaction?.remainingAmount}
-            setter={packageDurationField.setter}
-          />
-          <TextField
-            type={'fix'}
-            title={'Total Amount'}
-            placeholder={'Amount'}
-            value={data?.lastTransaction?.amount}
-            setter={packageDurationField.setter}
-          />
-        </div>
-        {/* //$ Boarding Point */}
-        <div className='layout-sub-title'>Student Boarding Point</div>
-        <div className='layout-sub-title' style={{ color: 'black' }}>
-          Address : {data?.location?.address}
-        </div>
-        <div className='layout-form' style={{ height: '75%', width: '95%', borderRadius: 'var(--chakra-radii-md)', overflow: 'hidden' }}>
-          {data?.location?.coordinates && (
-            <GoogleMapReact
-              bootstrapURLKeys={{ key: process.env.MAP_KEY }}
-              defaultCenter={{
-                lat: data?.location?.coordinates[0],
-                lng: data?.location?.coordinates[1],
-              }}
-              defaultZoom={18}
-              yesIWantToUseGoogleMapApiInternals={true}
-            >
-              <div className='drawer-item-icon' style={{ width: '2.5vw', height: '2.5vw' }}>
-                <Image alt='owner' src={`/static/svg/bus-on.svg`} layout='fill' size='2.5vw' objectFit='contain' />
+        <div className="layout-row" style={{ alignItems: "flex-start" }}>
+          <div className="layout-row-item">
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              {/* //$ Student Info */}
+              <div style={{ width: "100%" }}>
+                <div style={{ width: "12vw", height: "12vw", marginTop: "1vw", marginBottom: "2vw", resizeMode: "cover" }}>
+                  <img
+                    alt="No Photo Available"
+                    src={data?.photo}
+                    style={{ width: "12vw", height: "12vw", resizeMode: "cover", borderRadius: "100%" }}
+                  />
+                </div>
               </div>
-            </GoogleMapReact>
-          )}
+              <TextField type={"show"} title={"Student Name"} placeholder={"No Name"} value={data?.name} />
+              <TextField type={"show"} title={"Student ID"} placeholder={"No ID"} value={data?.studentID} />
+              <TextField type={"show"} title={"Student Address"} placeholder={"No Address"} value={data?.location?.address} />
+              <TextField type={"show"} title={"Student DOB"} placeholder={"No DOB"} value={data?.DOB.substring(0, 10)} />
+            </div>
+            {/* //$ School Details */}
+            <div className="layout-sub-title">School Details</div>
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <TextField type={"show"} title={"School Name"} placeholder={"No School"} value={data?.school?.name} />
+            </div>
+            {/* //$ Package */}
+            <div className="layout-sub-title">Package Information</div>
+            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+              <TextField type={"show"} title={"Package"} placeholder={"No Package"} value={"0-4KM"} />
+              <TextField type={"show"} title={"Duration"} placeholder={"No Duration"} value={"3 Months"} />
+            </div>
+            {/* //$ Transactions */}
+            <div className="layout-sub-title">Transaction Details</div>
+            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+              <TextField type={"show"} title={"Total Amount"} placeholder={"No Amount"} value={"5000"} />
+              <TextField type={"show"} title={"Amount Paid"} placeholder={"No Paid"} value={"3000"} />
+              <TextField type={"show"} title={"Amount Remaining"} placeholder={"No Amount"} value={"2000"} />
+              <TextField type={"fix"} title={"Last Transaction"} placeholder={"Transaction"} value={data?.lastTransaction?.date?.substring(0, 10)} />
+              <TextField type={"fix"} title={"Remaining Amount"} placeholder={"Amount"} value={data?.lastTransaction?.remainingAmount} />
+              <TextField type={"fix"} title={"Total Amount"} placeholder={"Amount"} value={data?.lastTransaction?.amount} />
+            </div>
+          </div>
+          {/* //$ Notifications Right Row */}
+          <div className="layout-row-item">
+            <div className="layout-sub-title" style={{ color: "black" }}>
+              NOTIFICATIONS PANEL
+            </div>
+            {/* //$ Students Verified  */}
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div className="layout-sub-title" style={{ color: "red", width: "100%" }}>
+                {data?.isVerified ? "Student Verified and Route is Assigned" : "Student Not Verified ! Assign a Route"}
+              </div>
+              <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
+              <div className="button">
+                <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
+                  Assign
+                </Button>
+                <Notification type={""} />
+              </div>
+            </div>
+            {/* //$ Due Date Change */}
+            <div className="layout-sub-title">Payment/Package Info</div>
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div className="layout-sub-title" style={{ color: "red", width: "100%" }}>
+                {data?.dueDate ? `Due date is ${data?.dueDate.substring(0, 10)}` : "No Dues"}
+              </div>
+              <TextField type={"date"} title={"Extend Due Date"} value={dueDateChange} setter={setDueDateChange} />
+              <div className="button">
+                <Button onClick={updateRoute} colorScheme="teal" size="md" isFullWidth isLoading={routeLoading} loadingText="Submitting">
+                  Extend Date
+                </Button>
+                <Notification type={""} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className='layout-sub-title' style={{ marginTop: '5vw' }}>
-          Advanced Information
-        </div>
-        <div style={{ textTransform: 'capitalize' }} className='table-report'>
-          {data && <JSONToHTMLTable data={data} />}
-        </div>
-
         <br />
       </div>
     </div>

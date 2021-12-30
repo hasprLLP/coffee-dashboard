@@ -41,7 +41,7 @@ export default function ViewBus() {
     includeMatches: false,
     findAllMatches: false,
     minMatchCharLength: 0,
-    keys: ['name', 'owner.name', 'RCNumber'],
+    keys: ['name','RCNumber'],
   });
 
   const result = busName !== '' && fuse.search(busName);

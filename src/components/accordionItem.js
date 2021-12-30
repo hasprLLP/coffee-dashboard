@@ -11,9 +11,9 @@ const DrawerItem = ({ icon, heading, pages, active, setter, fun }) => {
               <Box flex='1'>
                 <div className='drawer-item'>
                   <div className='drawer-item-row'>
-                    <div className='drawer-item-icon'>
+{                    <div className='drawer-item-icon'>
                       <Image alt='owner' src={`/static/svg/${icon}-${isExpanded ? 'on' : 'off'}.svg`} layout='fill' size='1vw' objectFit='contain' />
-                    </div>
+                    </div>}
                     <h2 className={isExpanded ? 'drawer-item-label-active' : 'drawer-item-label'}>{heading}</h2>
                   </div>
                 </div>

@@ -14,7 +14,8 @@ export default function Create() {
   const [zip, setZip] = useState();
   const [phone, setPhone] = useState();
 
-  const setterArray = [setName, setCity, setAddress, setZip, setPhone];
+  const setterArray = [setName, setCity, setAddress, setZip, setPhone, setPrefix];
+
 
   //$ States and Hooks [#STATES#]
   const fields = [

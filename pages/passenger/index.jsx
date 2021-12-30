@@ -46,7 +46,7 @@ export default function Passenger() {
     includeMatches: true,
     findAllMatches: true,
     minMatchCharLength: 0,
-    keys: ["name", "guardian.name", "phone", "DOB"],
+    keys: ["name", "phone"],
   });
 
   const result = student !== "" && fuse.search(student);
