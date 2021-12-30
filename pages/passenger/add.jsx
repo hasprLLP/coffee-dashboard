@@ -128,13 +128,6 @@ export default function Create() {
   // };
 
   useEffect(() => {
-    getRoutes();
-    // if (school?.id) {
-    //   getCount(school);
-    // }
-  }, [school]);
-
-  useEffect(() => {
     setRemainingAmount(amount - deposit);
   }, [amount, deposit]);
 

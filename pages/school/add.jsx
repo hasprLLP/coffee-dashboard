@@ -14,20 +14,8 @@ export default function Create() {
   const [zip, setZip] = useState();
   const [phone, setPhone] = useState();
 
-  const setterArray = [setName, setCity, setAddress, setZip, setPhone, setLocation, setPrefix];
+  const setterArray = [setName, setCity, setAddress, setZip, setPhone, setPrefix];
 
-  // useEffect(() => {
-  //   if (name && city) {
-  //     setTimeout(() => {
-  //       try {
-  //         const res = axios.get("misc/get_school_address", { name, city });
-  //         console.log(res.data.data);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }, 5000);
-  //   }
-  // }, [name, city]);
 
   //$ States and Hooks [#STATES#]
   const fields = [
