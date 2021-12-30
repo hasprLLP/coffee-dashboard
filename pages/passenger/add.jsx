@@ -281,7 +281,7 @@ export default function Create() {
           reset={setterArray}
           data={{
             name,
-            phone,
+            phone: `+91${phone}`,
             photo,
             DOB,
             whatsApp: landline,
