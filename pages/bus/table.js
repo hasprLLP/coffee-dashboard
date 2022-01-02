@@ -2,6 +2,7 @@
 import MaterialTable from "material-table";
 import { forwardRef } from "react";
 import tableIcons from "@/utilities/tableIcons"
+import GoHome from '@/helpers/gohome'
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
@@ -28,8 +29,8 @@ export default function BusTable() {
 
   return (
     <div className="home">
-      <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "5vw" }}>
-        <div style={{ paddingBottom: "2vw", paddingTop: "2vw" }}>
+      <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
+        <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
           <MaterialTable
             icons={tableIcons}
             className="mat-table"
@@ -57,5 +58,5 @@ export default function BusTable() {
         </div>
       </div>
     </div>
-  );
+  )
 }

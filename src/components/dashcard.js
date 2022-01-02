@@ -21,10 +21,6 @@ const DashCard = ({ title, no, path }) => {
       <Box bg={useColorModeValue('gray.50', 'gray.900')} px={6} py={6}>
         <List spacing={3}>
           <ListItem>
-            <ListIcon as={CheckIcon} color='green.400' />
-            75 Bus Assigned
-          </ListItem>
-          <ListItem>
             <ListIcon as={WarningIcon} color='red.400' />4 Pending Verification
           </ListItem>
         </List>

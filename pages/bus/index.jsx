@@ -50,12 +50,12 @@ export default function ViewBus() {
 
   //& Return UI [#RETURN#]
   return (
-    <div className='home' style={{ backgroundColor: 'var(--chakra-colors-gray-100)' }}>
-      <div className='home-shift'>
+    <div className="home" style={{ backgroundColor: 'var(--chakra-colors-gray-100)' }}>
+      <div className="home-shift">
         <TextField title={'Search Bus No'} placeholder={'Type Bus No'} value={busName} setter={setBusName} color={'white'} />
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {!loading && <Filler cards={4} />}
-          {!searchResultDisplay.length && loading && <div className='home-empty'>No Buses Added</div>}
+          {!searchResultDisplay.length && loading && <div className="home-empty">No Buses Added</div>}
           {searchResultDisplay &&
             searchResultDisplay.map((item, i) => {
               return (
@@ -69,10 +69,10 @@ export default function ViewBus() {
                   onEdit={onEdit}
                   onDetails={onDetails}
                 />
-              );
+              )
             })}
         </div>
       </div>
     </div>
-  );
+  )
 }
