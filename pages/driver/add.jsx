@@ -1,22 +1,23 @@
 //& Input Components [#IMPORTS#]
-import TextField from '@/components/input';
-import DropDown from '@/components/dropdown';
-import FilePicker from '@/components/filepicker';
-import SaveButton from '@/components/saveButton';
-import { useState } from 'react';
+import TextField from '@/components/input'
+import DropDown from '@/components/dropdown'
+import FilePicker from '@/components/filepicker'
+import SaveButton from '@/components/saveButton'
+import { useState } from 'react'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [pin, setPin] = useState();
-  const [photo, setPhoto] = useState();
-  const [sign, setSign] = useState();
-  const [drivingLicense, setDrivingLicense] = useState();
-  const [aadharFront, setAadharFront] = useState();
-  const [aadharBack, setAadharBack] = useState();
+  const [name, setName] = useState()
+  const [phone, setPhone] = useState()
+  const [pin, setPin] = useState()
+  const [photo, setPhoto] = useState()
+  const [sign, setSign] = useState()
+  const [drivingLicense, setDrivingLicense] = useState()
+  const [aadharFront, setAadharFront] = useState()
+  const [aadharBack, setAadharBack] = useState()
+  const [covid, setCovid] = useState()
 
-  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack];
+  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid]
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -37,15 +38,16 @@ export default function Create() {
     { title: 'Upload Aadhar Card Back', value: aadharBack, setter: setAadharBack, type: 'upload' },
     { title: 'Upload Signature', value: sign, setter: setSign, type: 'upload' },
     { title: 'Upload Driving License', value: drivingLicense, setter: setDrivingLicense, type: 'upload' },
-  ];
+    { title: 'Upload COVID Certificate', value: covid, setter: setCovid, type: 'upload' },
+  ]
 
   // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
-    <div className='home'>
-      <div className='home-shift'>
-        <div className='layout-title'>Add Driver</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+    <div className="home">
+      <div className="home-shift">
+        <div className="layout-title">Add Driver</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {fields.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
@@ -62,11 +64,11 @@ export default function Create() {
                 prefix={item.prefix}
                 type={item.type}
               />
-            );
+            )
           })}
         </div>
         <SaveButton reset={setterArray} collection={'operator'} data={{ name, phone, pin, sign, photo, drivingLicense }} />
       </div>
     </div>
-  );
+  )
 }
