@@ -51,7 +51,7 @@ export default function PhotoCard({ passenger, id, onEdit, onDetail, onFeeDetail
             bg: "gray.200",
           }}
         >
-          Reports
+          Panel
         </Button>
         <Button
           flex={1}

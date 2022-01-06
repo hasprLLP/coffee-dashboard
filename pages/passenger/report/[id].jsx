@@ -246,9 +246,9 @@ export default function Details() {
                     alt="No Photo Available"
                     src={data?.photo}
                     style={{
-                      width: "12vw",
-                      height: "12vw",
-                      resizeMode: "cover",
+                      width: "100%",
+                      height: "100%",
+                      resizeMode: "contain",
                       borderRadius: "100%",
                     }}
                   />

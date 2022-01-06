@@ -43,7 +43,7 @@ export default function SimpleCard({ name, heading, info, onEdit, id, data, onDe
               bg: 'gray.200',
             }}
           >
-            Reports
+            Panel
           </Button>
           <Button
             flex={1}
