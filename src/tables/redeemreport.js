@@ -4,14 +4,14 @@ import tableIcons from "@/utilities/tableIcons"
 
 const RedeemReport = () => {
   const data = [
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
-    { bus: "Bus", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
+    { bus: "Bus", school: "DMA", owner: "Owner Name", School: "DMA", total: "20000", redeem: "0", remaining: "20000", income: "20000", mode: "Monthly" },
   ];
 
   const column = [

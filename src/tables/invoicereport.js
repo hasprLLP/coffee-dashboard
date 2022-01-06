@@ -42,12 +42,20 @@ const InvoiceReport = () => {
         sorting: true,
         showTitle: true,
         draggable: true,
+        actionsColumnIndex: -1,
       }}
       columns={column}
       data={data}
+      actions={[
+        {
+          icon: tableIcons.Print,
+          tooltip: 'Print',
+          onClick: (event, rowData) => alert('Print Invoice For '+rowData.no),
+        },
+      ]}
       title="Invoice Report"
     />
-  );
+  )
 };
 
 export default InvoiceReport;

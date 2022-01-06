@@ -72,18 +72,18 @@ export default function Create() {
 
   //& Return UI [#RETURN#]
   return (
-    <div className='home'>
-      <div className='home-shift'>
-        <div className='layout-title'>Add Bus</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
-          <div className='layout-not-student'>
+    <div className="home">
+      <div className="home-shift">
+        <div className="layout-title">Add Bus</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
+          <div className="layout-not-student">
             <h1>Self Own Bus ?</h1>
             <Switch
-              onChange={(e) => {
-                setSelfOwn(e.target.checked);
+              onChange={e => {
+                setSelfOwn(e.target.checked)
               }}
               value={selfOwn}
-              size='md'
+              size="md"
               defaultIsChecked={false}
             />
           </div>
@@ -103,7 +103,7 @@ export default function Create() {
                 prefix={item.prefix}
                 isRequired={item.isRequired}
               />
-            );
+            )
           })}
           {!selfOwn
             ? ownerFields.map((item, i) => {
@@ -120,7 +120,7 @@ export default function Create() {
                     prefix={item.prefix}
                     isRequired={item.isRequired}
                   />
-                );
+                )
               })
             : null}
         </div>
@@ -139,5 +139,5 @@ export default function Create() {
         />
       </div>
     </div>
-  );
+  )
 }
