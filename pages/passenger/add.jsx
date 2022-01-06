@@ -10,7 +10,6 @@ import { format } from 'date-fns';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  //$ States
   const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
@@ -56,7 +55,6 @@ export default function Create() {
       console.log('Error while fetching Packages: ', error);
     }
   }, []);
-
   const setPackageID = (packageName) => {
     const packageObj = packages?.find((_package) => _package?.name === packageName);
     setPackage(packageObj);
@@ -104,12 +102,9 @@ export default function Create() {
 
     }
   };
-
-  const getRoutes = async () => {
-    if (school?.id) {
-      const response = await axios.get(`route${school ? `?school=${school?.id}` : ""}`);
-      setRoutes(response.data.data);
-    }
+  const setRouteID = (routeName) => {
+    const routeObj = routes?.find((route) => route?.name === routeName);
+    setRoute(routeObj);
   };
   
   useEffect(() => {
@@ -141,18 +136,11 @@ export default function Create() {
 
   }, [clean]);
 
-  //$ Get Lists on Load
   useEffect(() => {
     getSchools();
     getPackages();
   }, [getSchools, getPackages]);
 
-  //$ Get Lists on Load
-  useEffect(() => {
-    getRoutes;
-  }, [school]);
-
-  //$ Calculate Remaining Amount
   useEffect(() => {
     if (pack && package_ && joiningDate) {
       const { monthly, annually, halfYearly, quarterly } = package_;
@@ -224,7 +212,7 @@ export default function Create() {
     setTotal,
   ];
 
-  //$ UI Data
+  //$ States and Hooks [#STATES#]
   const basicFields = [
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
     { title: 'Passenger ID', isRequired: true, placeholder: 'Enter Passenger ID', value: passengerID, setter: setPassengerID },
