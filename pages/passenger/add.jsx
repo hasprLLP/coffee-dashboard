@@ -14,6 +14,7 @@ export default function Create() {
   const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
+  const [gender, setGender] = useState("Male");
   const [joiningDate, setJoiningDate] = useState();
   const [dueDate, setDueDate] = useState();
   const [guardian, setGuardian] = useState();
@@ -204,31 +205,20 @@ export default function Create() {
     'Class XII (12)',
   ];
 
-  const setterArray = [
-    setName,
-    setDOB,
-    setGuardian,
-    setPhone,
-    setLandline,
-    setAddress,
-    setLocation,
-    setSchool,
-    setSchoolID,
-    setRoute,
-    setRouteID,
-    setPhoto,
-    setJoiningDate,
-    setDueDate,
-    setCls,
-    setAmount,
-    setTotal,
-  ];
 
   //$ UI Data
   const basicFields = [
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
     { title: 'Passenger ID', isRequired: true, placeholder: 'Enter Passenger ID', value: passengerID, setter: setPassengerID },
     { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
+    {
+      title: 'Gender',
+      isRequired: true,
+      options: ["Male","Female"],
+      value: gender,
+      setter: setGender,
+      type: 'dropdown',
+    },
     { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
 
