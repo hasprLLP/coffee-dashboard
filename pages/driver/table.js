@@ -8,22 +8,39 @@ axios.defaults.withCredentials = true;
 
 export default function DriverTable() {
 
-  const data = [ { id: "ID0002", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, ];
+//$ Online Data
+  const onlineData = [
+    {
+      name: "Halle Mulle",
+      pin: "0000",
+      phone: "9845716325",
+      isVerified: true,
+      active: true,
+      route: { name: "Makronia to DMA" },
 
+    }
+  ]
+
+  //$ Mapped Data
+  const data = onlineData.map(item => {
+    return {
+      name: item.name,
+      pin: item.pin,
+      phone: item.phone,
+      isVerified: item.isVerified,
+      active: item.active,
+      route: item.route.name,
+    }
+  })
+
+  //$ Column
   const column = [
-    { title: "Driver ID", field: "id" },
-    { title: "Driver Name", field: "name" },
-    { title: "Package", field: "package" },
-    { title: "Fee Amount", field: "fee" },
-    { title: "Discount", field: "discount" },
-    { title: "Paid Amt", field: "paid" },
-    { title: "Due Amt", field: "due" },
-    { title: "School", field: "school" },
-    { title: "Father Name", field: "father" },
+    { title: "Driver", field: "name" },
+    { title: "Pin", field: "pin" },
     { title: "Phone", field: "phone" },
-    { title: "Address", field: "address" },
-    { title: "Bus", field: "bus" },
-    { title: "Route", field: "route" },
+    { title: "Verified", field: "isVerified" },
+    { title: "Active", field: "active" },
+    { title: "Route Assigned", field: "route" },
   ];
 
   return (
@@ -47,7 +64,7 @@ export default function DriverTable() {
               sorting: true,
               showTitle: true,
               draggable: true,
-              pageSize: 25,
+              pageSize: 5,
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
