@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const TextField = ({ title, placeholder, value, setter, type, prefix, color, isRequired }) => {
   const [invalid, setInvalid] = useState(false);
-  const size = useSize();
+  const size = useSize();  
   return (
     <div className="input">
       <FormControl isRequired={isRequired}>

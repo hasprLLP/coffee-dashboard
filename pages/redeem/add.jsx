@@ -3,7 +3,7 @@ import TextField from '@/components/input'
 import DropDown from '@/components/dropdown'
 import FilePicker from '@/components/filepicker'
 import SaveButton from '@/components/saveButton'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
@@ -16,6 +16,20 @@ export default function Create() {
   const [passwordConfirm, setPasswordConfirm] = useState()
 
   const setterArray = [setName, setPhone, setPin, setPhoto, setNote, setPasswordConfirm, setPassword]
+
+  const [clean, setClean] = useState(false)
+
+  useEffect(() => {
+    setName("")
+    setPhone("")
+    setPin("")
+    setPhoto("")
+    setNote("")
+    setPassword("")
+    setPasswordConfirm("")
+  }, [clean])
+
+
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -63,7 +77,7 @@ export default function Create() {
             )
           })}
         </div>
-        <SaveButton reset={setterArray} collection={'owner'} data={{ name, phone, pin, photo, note, password, passwordConfirm }} />
+        <SaveButton reset={setClean} collection={'owner'} data={{ name, phone, pin, photo, note, password, passwordConfirm }} />
       </div>
     </div>
   )
