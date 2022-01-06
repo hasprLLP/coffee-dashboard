@@ -5,14 +5,14 @@ import tableIcons from "@/utilities/tableIcons"
 const InvoiceReport = () => {
   const data = [
     { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
-    { no: "INVOICE001", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE002", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE003", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE004", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE005", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE006", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE007", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE008", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
+    { no: "INVOICE0077", id: "ID001", student: "Student Name", school: "DMA", date: "02/07/1998", print: "Print Invoice" },
   ];
 
   const column = [

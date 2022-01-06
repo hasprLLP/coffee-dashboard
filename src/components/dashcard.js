@@ -19,11 +19,11 @@ const DashCard = ({ title, no, path }) => {
       </Stack>
 
       <Box bg={useColorModeValue('gray.50', 'gray.900')} px={6} py={6}>
-        <List spacing={3}>
+        {/* <List spacing={3}>
           <ListItem>
             <ListIcon as={WarningIcon} color='red.400' />4 Pending Verification
           </ListItem>
-        </List>
+        </List> */}
 
         <Button
           mt={4}

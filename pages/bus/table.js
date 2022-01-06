@@ -14,7 +14,10 @@ export default function BusTable() {
   //@ Fetch Bus API Function
   const getData = async () => {
     try {
-      const response = await axios.get("bus/")
+      const populate = {
+        path: 'owner',
+      }
+      const response = await axios.get(`bus?populate=${JSON.stringify(populate)}`)
       setData(response.data.data)
     } catch (error) {
       console.log('error', error)
@@ -30,8 +33,7 @@ export default function BusTable() {
     return {
       rc: item.RCNumber,
       name: item.name,
-      owner: item.owner?.name,
-      self: item.selfOwn ? "Self Owned" : "",
+      owner: item.owner?.name ? item.owner.name : item.selfOwn && "Self Owned",
       type: item.vehicleType,
       capacity: item.capacity,
       commission: item.commission,
@@ -44,12 +46,9 @@ export default function BusTable() {
     { title: 'Registration No', field: 'rc' },
     { title: 'Bus Name', field: 'name' },
     { title: 'Owner', field: 'owner' },
-    { title: 'Self Owned', field: 'self' },
     { title: 'Type', field: 'type' },
     { title: 'Capacity', field: 'capacity' },
     { title: 'Commission', field: 'commission' },
-    { title: 'Speed', field: 'avgSpeed' },
-    { title: 'Distance', field: 'avgDistance' },
   ]
 
   return (

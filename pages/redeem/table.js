@@ -13,7 +13,10 @@ export default function BusOwnerTable() {
   //@ Fetch Bus API Function
   const getData = async () => {
     try {
-      const response = await axios.get("owner/")
+      const populate = {
+        path: 'buses',
+      }
+      const response = await axios.get(`owner?populate=${JSON.stringify(populate)}`)
       setData(response.data.data)
     } catch (error) {
       console.log('error', error)

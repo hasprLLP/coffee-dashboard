@@ -264,7 +264,7 @@ export default function Details() {
                 type={"show"}
                 title={"Student ID"}
                 placeholder={"No ID"}
-                value={data?.studentID}
+                value={data?.passengerID}
               />
               <TextField
                 type={"show"}
@@ -424,7 +424,7 @@ export default function Details() {
                 style={{ color: "red", width: "100%" }}
               >
                 {data?.dueDate
-                  ? `Due date is ${data?.dueDate.substring(0, 10)}`
+                  ? `Due date is ${data?.payDate.substring(0, 10)}`
                   : "No Dues"}
               </div>
               <TextField

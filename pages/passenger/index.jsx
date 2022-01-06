@@ -18,7 +18,7 @@ export default function Passenger() {
     const fetch = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`/passenger/?populate=["route","school","lastTransaction","user"]`)
+        const response = await axios.get(`/passenger/?populate=["route","school","lastTransaction","user","feePackage"]`)
         setPassengers(response.data.data)
         console.log(response.data.data)
         setLoading(false)

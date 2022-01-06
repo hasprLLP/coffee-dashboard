@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 
 const Notification = ({ type }) => {
+
   const push = (type) => {
     type === 'success'
       ? toast.success('Saved Successfully !', {

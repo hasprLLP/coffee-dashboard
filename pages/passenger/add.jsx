@@ -32,6 +32,7 @@ export default function Create() {
   const [total, setTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [cls, setCls] = useState();
+  const [section, setSection] = useState("A")
   const [passengerID, setPassengerID] = useState();
   const [package_, setPackage] = useState({});
   const [packages, setPackages] = useState([]);
@@ -120,7 +121,7 @@ export default function Create() {
     setAddress("");
     setLocation("");
     setSchool({name : ""});
-   
+    setGender("")
     setRoute({name : ""});
     setRoutes([]);
     setRouteNames([]);
@@ -171,6 +172,9 @@ export default function Create() {
     }
   }, [pack, package_, joiningDate]);
 
+  console.log("p[ack duration",pack);
+  
+
   useEffect(() => {
     setTotal(amount - discount);
   }, [amount, discount]);
@@ -199,14 +203,7 @@ export default function Create() {
     { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
     { title: 'Passenger ID', isRequired: true, placeholder: 'Enter Passenger ID', value: passengerID, setter: setPassengerID },
     { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
-    {
-      title: 'Gender',
-      isRequired: true,
-      options: ["Male","Female"],
-      value: gender,
-      setter: setGender,
-      type: 'dropdown',
-    },
+    { title: 'Gender', isRequired: true, options: ["Male","Female"], value: gender, setter: setGender, type: 'dropdown', },
     { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
 
@@ -239,7 +236,7 @@ export default function Create() {
   ];
   const feeDetails = [
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
-    { title: 'Select Pack', isRequired: true, options: packType, value: pack, setter: setPack, type: 'dropdown' },
+    { title: 'Select Duration', isRequired: true, options: packType, value: pack, setter: setPack, type: 'dropdown' },
     { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
   ];
 
@@ -308,6 +305,7 @@ export default function Create() {
           })}
           {!isStudent ? <TextField type={'tel'} title={'Whatsapp'} placeholder={'Landline no'} value={landline} setter={setLandline} /> : null}
           {isStudent ? <DropDown title={'Class'} options={classesList} value={cls} setter={setCls} /> : null}
+          {isStudent ? <TextField title={'Section'} placeholder={'Enter Section'} value={section} setter={setSection} /> : null}
         </div>
         <div className='layout-sub-title'>Boarding Details</div>
         <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
@@ -385,7 +383,8 @@ export default function Create() {
             phone: `+91${phone}`,
             photo,
             DOB,
-            pack,
+            gender,
+            section,
             whatsApp: landline,
             route: route?.id,
             passengerID,

@@ -13,8 +13,13 @@ export default function PassengerTable() {
   //@ Fetch Routes API Function
   const getData = async () => {
     try {
-      const response = await axios.get("passenger/")
+      const populate = {
+        path: 'route feePackage school user',
+      }
+      const response = await axios.get(`passenger?populate=${JSON.stringify(populate)}`)
       setData(response.data.data)
+      console.log(response.data.data);
+      
     } catch (error) {
       console.log('error', error)
     }
@@ -33,6 +38,7 @@ export default function PassengerTable() {
       school: item.school?.name,
       route: item.route?.name,
       feePackage: item.feePackage?.name,
+      pack: item.pack,
       isVerified: item.isVerified ? "Verified" : "Not Verified",
       status: item.status,
       DOB: item.DOB?.substring(0, 10),
@@ -41,8 +47,7 @@ export default function PassengerTable() {
       address: item.location?.address,
       cls: item.cls,
       section: item.section,
-      dueDate: item.dueDate?.substring(0, 10),
-      feeDate: item.feeDate?.substring(0, 10),
+      payDate: item.payDate?.substring(0, 10),
       isStudent: item.isStudent ? "Student" : "Teacher",
       joiningDate: item.joiningDate?.substring(0, 10),
       distanceTravelled: item.distanceTravelled
@@ -57,6 +62,7 @@ export default function PassengerTable() {
     { title: 'School', field: 'school' },
     { title: 'Route', field: 'route' },
     { title: 'Package', field: 'feePackage' },
+    { title: 'Duration', field: 'pack' },
     { title: 'Verified', field: 'isVerified' },
     { title: 'Status', field: 'status' },
     { title: 'DOB', field: 'DOB' },
@@ -65,8 +71,7 @@ export default function PassengerTable() {
     { title: 'Address', field: 'address' },
     { title: 'Class', field: 'cls' },
     { title: 'Section', field: 'section' },
-    { title: 'Due Date', field: 'dueDate' },
-    { title: 'Fee Date', field: 'feeDate' },
+    { title: 'Pay Date', field: 'payDate' },
     { title: 'Type', field: 'isStudent' },
     { title: 'Joining', field: 'joiningDate' },
     { title: 'Distance Travelled', field: 'distanceTravelled' },

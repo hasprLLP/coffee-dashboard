@@ -1,131 +1,70 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { forwardRef } from "react";
+import { useEffect, useState } from "react";
 import tableIcons from "@/utilities/tableIcons"
+import axios from 'axios'
 
 const FeeReport = () => {
-  const data = [
-    {
-      id: "ID0002",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-    {
-      id: "ID001",
-      name: "Student",
-      school: "DMA",
-      package: "Gold- 3 Month",
-      fee: "20000",
-      discount: "3000",
-      paid: "10000",
-      due: "7000",
-      father: "Father",
-      phone: "9874562145",
-      address: "Sagar MP",
-      bus: "Makrnia to DMA Bus",
-      route: "Route Name",
-    },
-  ];
+
+  const [onlineData, setData] = useState([])
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const populate = {
+        path: 'route passenger appUser ',
+        populate: { path: "feePackage bus school lastTransaction" }
+      }
+      const response = await axios.get(`transaction?populate=${JSON.stringify(populate)}`)
+      setData(response.data.data)
+      console.log(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  //$ Mapped Data
+  const data = onlineData.map(item => {
+
+    return {
+      date: item?.date?.substring(0, 10),
+      name: item?.passenger.name,
+      id: item?.passenger.passengerID,
+      school: item?.passenger?.school?.name,
+      package: item?.passenger?.feePackage?.name,
+      pack: item?.pack?.substring(0, 1)?.toUpperCase() + item?.pack?.substring(1),
+      bus: item?.route?.bus?.RCNumber,
+      phone: item?.appUser?.phone,
+      guardian: item?.passenger?.guardian?.name,
+      LastTransitionAmount: item?.amount,
+      LastTransitionDiscount: item?.discount,
+      LastTransitionTotal: item?.amount - item?.discount,
+      month: months[item?.date_.month],
+      year: item?.date_.year,
+      startsFrom: item.startsFrom?.address,
+      avgDistance: item.avgDistance,
+      avgMorningDuration: item.avgMorningDuration,
+      avgEveningDuration: item.avgEveningDuration,
+    }
+  })
 
   const column = [
-    { title: "Student ID", field: "id" },
     { title: "Student Name", field: "name" },
-    { title: "Package", field: "package" },
-    { title: "Fee Amount", field: "fee" },
-    { title: "Discount", field: "discount" },
-    { title: "Paid Amt", field: "paid" },
-    { title: "Due Amt", field: "due" },
+    { title: "ID", field: "id" },
     { title: "School", field: "school" },
-    { title: "Father Name", field: "father" },
     { title: "Phone", field: "phone" },
-    { title: "Address", field: "address" },
-    { title: "Bus", field: "bus" },
-    { title: "Route", field: "route" },
+    { title: "Package", field: "package" },
+    { title: "Duration", field: "pack" },
+    { title: "Last Transition Amount", field: "LastTransitionAmount" },
+    { title: "Last Transition Discount", field: "LastTransitionDiscount" },
+    { title: "Date", field: "date" },
+    { title: "Month", field: "month" },
+    { title: "Year", field: "year" },
   ];
 
   return (

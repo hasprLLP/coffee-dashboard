@@ -32,7 +32,6 @@ export default function DriverTable() {
       phone: item.phone,
       isVerified: item.isVerified ? "Verified" : "Not Verified",
       active: item.active ? "Active" : "Disabled",
-      route: item.route?.name,
     }
   })
 
@@ -43,7 +42,6 @@ export default function DriverTable() {
     { title: "Phone", field: "phone" },
     { title: "Verified", field: "isVerified" },
     { title: "Active", field: "active" },
-    { title: "Route Assigned", field: "route" },
   ];
 
   return (

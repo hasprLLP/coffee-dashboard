@@ -13,13 +13,13 @@ const SaveButton = ({ collection, data, reset }) => {
     try {
       const response = await axios.post(`${collection}/`, data);
       setLoading(false);
-      if (response.status === 201) {
-        setStatus('success');
-        Array.isArray(reset) ? reset.map((setter) => {
-          setter("");
-        }) :
-          reset((state) => !state)
-      }
+      setStatus('success');
+      Array.isArray(reset) ? reset.map((setter) => {
+        setter("");
+      }) :
+        reset((state) => !state)
+      setStatus();
+
     } catch (error) {
       setLoading(false);
       setStatus(error?.response?.data?.message);

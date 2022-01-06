@@ -5,7 +5,6 @@ import convertAMPM from "@/utilities/convertAMPM";
 import tableIcons from '@/utilities/tableIcons'
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
 
 export default function RouteTable() {
 
@@ -14,7 +13,10 @@ export default function RouteTable() {
   //@ Fetch Bus API Function
   const getData = async () => {
     try {
-      const response = await axios.get("route/")
+      const populate = {
+        path: 'school bus',
+      }
+      const response = await axios.get(`route?populate=${JSON.stringify(populate)}`)
       setData(response.data.data)
     } catch (error) {
       console.log('error', error)
@@ -37,10 +39,10 @@ export default function RouteTable() {
       morningDeparture: convertAMPM(item?.morningDeparture),
       morningArrival: convertAMPM(item?.morningArrival),
       eveningDeparture: convertAMPM(item?.eveningDeparture),
-      startsFrom: item.startsFrom?.location?.address,
-      avgDistance: item.avgDistance,
-      avgMorningDuration: item.avgMorningDuration,
-      avgEveningDuration: item.avgEveningDuration,
+      startsFrom: item.startsFrom?.address,
+      avgDistance: item.avgDistance || "--",
+      avgMorningDuration: item.avgMorningDuration || "--",
+      avgEveningDuration: item.avgEveningDuration || "--",
     }
   })
 
