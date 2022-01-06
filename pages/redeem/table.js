@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { forwardRef } from "react";
+import { useEffect, useState } from 'react'
 import tableIcons from "@/utilities/tableIcons"
 import axios from "axios";
 
@@ -8,22 +8,28 @@ axios.defaults.withCredentials = true;
 
 export default function BusOwnerTable() {
 
-  //$ Online Data
-  const onlineData = [
-    {
-      name: 'Bus Owner Boi',
-      phone: '9652145785',
-      buses: [{ RCNumber: 'MP14CB6734' }, { RCNumber: 'MP14CB6737' }],
-      password: 'abc456',
-    },
-  ]
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("owner/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   //$ Mapped Data
   const data = onlineData.map(item => {
     return {
       name: item.name,
       phone: item.phone,
-      buses: item.buses.map(bus => { return `${bus.RCNumber}  ` }),
+      buses: item.buses?.map(bus => { return `${bus.RCNumber}  ` }),
       password: item.password
 
   }

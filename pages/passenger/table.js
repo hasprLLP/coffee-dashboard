@@ -1,54 +1,75 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { forwardRef } from 'react'
+import { useEffect, useState } from 'react'
 import tableIcons from '@/utilities/tableIcons'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
 
 export default function PassengerTable() {
-  //$ Online Data
-  const onlineData = [
-    {
-      name: 'Abhay Rohit',
-      studentID: 'DMA0001',
-      isVerified: false,
-      status: 'active',
-      DOB: '02-05-1998',
-      user: { name: 'Abhays Father', phone: '9658745632' },
-      location: { address: 'MIG 67, Gau Nagar, Makronia' },
-      cls: 'Class 12th',
-      section: 'B',
-    },
-  ]
+
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Routes API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("passenger/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   //$ Mapped Data
   const data = onlineData.map(item => {
     return {
       name: item.name,
-      id: item.studentID,
-      isVerified: item.isVerified ? 'Verified' : 'Not Verified',
+      id: item.passengerID,
+      gender: item.gender,
+      school: item.school?.name,
+      route: item.route?.name,
+      feePackage: item.feePackage?.name,
+      isVerified: item.isVerified ? "Verified" : "Not Verified",
       status: item.status,
-      DOB: item.DOB.substring(0, 10),
-      guardianName: item.user.name,
-      guardianPhone: item.user.phone,
-      address: item.location.address,
+      DOB: item.DOB?.substring(0, 10),
+      guardianName: item.user?.name,
+      guardianPhone: item.user?.phone,
+      address: item.location?.address,
       cls: item.cls,
       section: item.section,
+      dueDate: item.dueDate?.substring(0, 10),
+      feeDate: item.feeDate?.substring(0, 10),
+      isStudent: item.isStudent ? "Student" : "Teacher",
+      joiningDate: item.joiningDate?.substring(0, 10),
+      distanceTravelled: item.distanceTravelled
     }
   })
 
   //$ Column
   const column = [
+    { title: 'Student', field: 'name' },
     { title: 'Student ID', field: 'id' },
-    { title: 'Student Name', field: 'name' },
+    { title: 'Gender', field: 'gender' },
+    { title: 'School', field: 'school' },
+    { title: 'Route', field: 'route' },
+    { title: 'Package', field: 'feePackage' },
     { title: 'Verified', field: 'isVerified' },
+    { title: 'Status', field: 'status' },
     { title: 'DOB', field: 'DOB' },
-    { title: 'Parent Name', field: 'guardianName' },
-    { title: 'Parent Phone', field: 'guardianPhone' },
+    { title: 'Parent', field: 'guardianName' },
+    { title: 'Phone', field: 'guardianPhone' },
     { title: 'Address', field: 'address' },
     { title: 'Class', field: 'cls' },
     { title: 'Section', field: 'section' },
+    { title: 'Due Date', field: 'dueDate' },
+    { title: 'Fee Date', field: 'feeDate' },
+    { title: 'Type', field: 'isStudent' },
+    { title: 'Joining', field: 'joiningDate' },
+    { title: 'Distance Travelled', field: 'distanceTravelled' },
   ]
 
   return (

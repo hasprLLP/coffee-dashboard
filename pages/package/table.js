@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { forwardRef } from "react";
+import { useState,useEffect } from "react";
 import tableIcons from "@/utilities/tableIcons"
 import axios from "axios";
 
@@ -9,50 +9,21 @@ axios.defaults.withCredentials = true;
 export default function PackageTable() {
 
   //$ Online Data
-  const onlineData = [
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-    {
-      name: '0-4KM',
-      monthly: '1000',
-      quarterly: '2500',
-      halfYearly: '5000',
-      annually: '7500',
-    },
-  ]
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("package/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   const column = [
     { title: 'Package Name', field: 'name' },

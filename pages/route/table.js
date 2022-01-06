@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { forwardRef } from 'react'
+import { useEffect, useState } from 'react'
+import convertAMPM from "@/utilities/convertAMPM";
 import tableIcons from '@/utilities/tableIcons'
 import axios from 'axios'
 
@@ -8,21 +9,35 @@ axios.defaults.withCredentials = true
 
 export default function RouteTable() {
 
-  //$ Data from Server
-  const onlineData = [ { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, { name: 'Route Name', status: 'Active', school: { name: 'DMA' }, bus: { RCNumber: 'MP15CB7654' }, isRunning: 'Running', morningDeparture: '08:15 AM', morningArrival: '10:10 AM', eveningDeparture: '02:15 PM', startsFrom: { location: { address: 'Makronia Square' } }, avgDistance: '8KM', avgMorningDuration: '20 Min', avgEveningDuration: '25 Min', }, ]
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("route/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   //$ Mapped Data
   const data = onlineData.map(item => {
+
     return {
       name: item.name,
       status: item.status,
-      school: item.school.name,
-      bus: item.bus.RCNumber,
-      isRunning: item.isRunning,
-      morningDeparture: item.morningDeparture,
-      morningArrival: item.morningArrival,
-      eveningDeparture: item.eveningDeparture,
-      startsFrom: item.startsFrom.location.address,
+      school: item.school?.name,
+      bus: item.bus?.RCNumber,
+      isRunning: item.isRunning ? "Running" : "Stopped",
+      morningDeparture: convertAMPM(item?.morningDeparture),
+      morningArrival: convertAMPM(item?.morningArrival),
+      eveningDeparture: convertAMPM(item?.eveningDeparture),
+      startsFrom: item.startsFrom?.location?.address,
       avgDistance: item.avgDistance,
       avgMorningDuration: item.avgMorningDuration,
       avgEveningDuration: item.avgEveningDuration,

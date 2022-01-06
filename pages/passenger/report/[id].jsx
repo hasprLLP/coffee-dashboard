@@ -276,7 +276,7 @@ export default function Details() {
                 type={"show"}
                 title={"Student DOB"}
                 placeholder={"No DOB"}
-                value={data?.DOB.substring(0, 10)}
+                value={data?.DOB?.substring(0, 10)}
               />
             </div>
             {/* //$ School Details */}

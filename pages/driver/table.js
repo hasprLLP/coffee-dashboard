@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { forwardRef } from "react";
+import { useEffect, useState } from 'react'
 import tableIcons from "@/utilities/tableIcons"
 import axios from "axios";
 
@@ -8,18 +8,21 @@ axios.defaults.withCredentials = true;
 
 export default function DriverTable() {
 
-//$ Online Data
-  const onlineData = [
-    {
-      name: "Halle Mulle",
-      pin: "0000",
-      phone: "9845716325",
-      isVerified: true,
-      active: true,
-      route: { name: "Makronia to DMA" },
+  const [onlineData, setData] = useState([])
 
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("operator/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
     }
-  ]
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   //$ Mapped Data
   const data = onlineData.map(item => {
@@ -27,9 +30,9 @@ export default function DriverTable() {
       name: item.name,
       pin: item.pin,
       phone: item.phone,
-      isVerified: item.isVerified,
-      active: item.active,
-      route: item.route.name,
+      isVerified: item.isVerified ? "Verified" : "Not Verified",
+      active: item.active ? "Active" : "Disabled",
+      route: item.route?.name,
     }
   })
 

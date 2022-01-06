@@ -1,68 +1,27 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { forwardRef } from "react";
+import { useEffect,useState } from "react";
 import tableIcons from "@/utilities/tableIcons"
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
 export default function SchoolTable() {
-  const onlineData = [
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-    {
-      name: 'Deepak Memorial School',
-      prefix: 'DMA',
-      phone: '9587456324',
-      city: 'Sagar',
-      state: 'MP',
-      zip: '470004',
-      location: { address: 'Sagar MP' },
-    },
-  ]
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("school/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   //$ Mapped Data
   const data = onlineData.map(item => {
@@ -73,7 +32,7 @@ export default function SchoolTable() {
       city: item.city,
       state: item.state,
       pincode: item.zip,
-      address: item.location.address
+      address: item.location?.address
     }
   })
 

@@ -9,6 +9,7 @@ import axios from "axios";
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
+  //$ States
   const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
   const [DOB, setDOB] = useState();
@@ -36,6 +37,7 @@ export default function Create() {
   const [packages, setPackages] = useState([]);
   const [packageNames, setPackageNames] = useState([]);
 
+  //$ Clear Setters
   const setterArray = [
     setName,
     setDOB,
@@ -53,6 +55,8 @@ export default function Create() {
     setDeposit,
     setRemainingAmount,
   ];
+
+  //$ Get Packages
   const getPackages = useCallback(async () => {
     try {
       const response = await axios.get(`package`);
@@ -67,10 +71,13 @@ export default function Create() {
       console.log("Error while fetching Packages: ", error);
     }
   }, []);
+
   const setPackageID = (packageName) => {
     const packageObj = packages?.find((_package) => _package?.name === packageName);
     setPackage(packageObj);
   };
+
+  //$ Get Schools
   const getSchools = async () => {
     try {
       const response = await axios.get(`school/`);
@@ -89,10 +96,7 @@ export default function Create() {
     try {
       const schoolObj = schools?.find((school) => school?.name === schoolName);
       setSchool(schoolObj);
-      const response = await axios.get(`route${schoolObj ? `?school=${schoolObj?.id}` : ""}`);
-      const res = await axios.get(`misc/generate_passenger_id/${schoolObj.id}`);
-      setPassengerID(res.data.data);
-      setRoutes(response.data.data);
+
       const tempRoutesName = [];
       response.data.data.map((route) => {
         tempRoutesName.push(route.name);
@@ -104,20 +108,31 @@ export default function Create() {
       setRoutes([]);
     }
   };
-  const setRouteID = (routeName) => {
-    const routeObj = routes?.find((route) => route?.name === routeName);
-    setRoute(routeObj);
+
+  const getRoutes = async () => {
+    if (school?.id) {
+      const response = await axios.get(`route${school ? `?school=${school?.id}` : ""}`);
+      setRoutes(response.data.data);
+    }
   };
 
+  //$ Get Lists on Load
   useEffect(() => {
     getSchools();
     getPackages();
   }, []);
 
+  //$ Get Lists on Load
+  useEffect(() => {
+    getRoutes;
+  }, [school]);
+
+  //$ Calculate Remaining Amount
   useEffect(() => {
     setRemainingAmount(amount - deposit);
   }, [amount, deposit]);
 
+  //$ Classes List
   const classesList = [
     "Pre-School",
     "Nursery",
@@ -137,7 +152,7 @@ export default function Create() {
     "Class XII (12)",
   ];
 
-  //$ States and Hooks [#STATES#]
+  //$ UI Data
   const basicFields = [
     { title: "Name", isRequired: true, placeholder: "Enter Passenger name", value: name, setter: setName },
     { title: "Upload Photo", value: photo, setter: setPhoto, type: "upload" },
@@ -164,12 +179,12 @@ export default function Create() {
       title: "School",
       isRequired: true,
       page: "/school/add",
-      options: schoolNames,
+      options: schools,
       value: school?.name,
-      setter: setSchoolID,
+      setter: setSchool,
       type: "dropdown",
     },
-    { title: "Route", isRequired: true, options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
+    { title: "Route", isRequired: true, options: routes, type: "number", value: route?.name, setter: setRoute, type: "dropdown" },
   ];
   const feeDetails = [
     { title: "Select Package", isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: "dropdown" },

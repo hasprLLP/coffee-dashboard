@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { forwardRef } from 'react'
+import { useEffect, useState } from 'react'
 import tableIcons from '@/utilities/tableIcons'
 import GoHome from '@/helpers/gohome'
 import axios from 'axios'
@@ -8,82 +8,30 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 
 export default function BusTable() {
-  //$ Online Data
-  const onlineData = [
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: { name: 'Halle Pathak' },
-      selfOwn: false,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: null,
-      selfOwn: true,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: { name: 'Halle Pathak' },
-      selfOwn: false,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: { name: 'Halle Pathak' },
-      selfOwn: false,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: { name: 'Halle Pathak' },
-      selfOwn: false,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-    {
-      RCNumber: 'MP15CB7564',
-      name: 'Red Bus',
-      owner: { name: 'Halle Pathak' },
-      selfOwn: false,
-      vehicleType: 'Bus',
-      capacity: '60',
-      commission: '1000',
-      avgSpeed: '60KM/HR',
-      avgDistance: '150KM',
-    },
-  ]
+
+  const [onlineData, setData] = useState([])
+
+  //@ Fetch Bus API Function
+  const getData = async () => {
+    try {
+      const response = await axios.get("bus/")
+      setData(response.data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   //$ Mapped Data
   const data = onlineData.map(item => {
     return {
       rc: item.RCNumber,
       name: item.name,
       owner: item.owner?.name,
-      self: item.selfOwn,
+      self: item.selfOwn ? "Self Owned" : "",
       type: item.vehicleType,
       capacity: item.capacity,
       commission: item.commission,
