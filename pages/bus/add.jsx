@@ -24,6 +24,8 @@ export default function Create() {
 
   const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto];
 
+
+
   const getOwners = async () => {
     try {
       const response = await axios.get(`owner`);
