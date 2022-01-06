@@ -1,31 +1,108 @@
 /* eslint-disable react/display-name */
-import MaterialTable from "material-table";
-import { forwardRef } from "react";
-import tableIcons from "@/utilities/tableIcons"
+import MaterialTable from 'material-table'
+import { forwardRef } from 'react'
+import tableIcons from '@/utilities/tableIcons'
 import GoHome from '@/helpers/gohome'
-import axios from "axios";
+import axios from 'axios'
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
 export default function BusTable() {
-
-  const data = [ { id: "ID0002", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, ];
+  //$ Online Data
+  const onlineData = [
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: { name: 'Halle Pathak' },
+      selfOwn: false,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: null,
+      selfOwn: true,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: { name: 'Halle Pathak' },
+      selfOwn: false,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: { name: 'Halle Pathak' },
+      selfOwn: false,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: { name: 'Halle Pathak' },
+      selfOwn: false,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+    {
+      RCNumber: 'MP15CB7564',
+      name: 'Red Bus',
+      owner: { name: 'Halle Pathak' },
+      selfOwn: false,
+      vehicleType: 'Bus',
+      capacity: '60',
+      commission: '1000',
+      avgSpeed: '60KM/HR',
+      avgDistance: '150KM',
+    },
+  ]
+  //$ Mapped Data
+  const data = onlineData.map(item => {
+    return {
+      rc: item.RCNumber,
+      name: item.name,
+      owner: item.owner?.name,
+      self: item.selfOwn,
+      type: item.vehicleType,
+      capacity: item.capacity,
+      commission: item.commission,
+      avgSpeed: item.avgSpeed,
+      avgDistance: item.avgDistance,
+    }
+  })
 
   const column = [
-    { title: "Bus ID", field: "id" },
-    { title: "Bus Name", field: "name" },
-    { title: "Package", field: "package" },
-    { title: "Fee Amount", field: "fee" },
-    { title: "Discount", field: "discount" },
-    { title: "Paid Amt", field: "paid" },
-    { title: "Due Amt", field: "due" },
-    { title: "School", field: "school" },
-    { title: "Father Name", field: "father" },
-    { title: "Phone", field: "phone" },
-    { title: "Address", field: "address" },
-    { title: "Bus", field: "bus" },
-    { title: "Route", field: "route" },
-  ];
+    { title: 'Registration No', field: 'rc' },
+    { title: 'Bus Name', field: 'name' },
+    { title: 'Owner', field: 'owner' },
+    { title: 'Self Owned', field: 'self' },
+    { title: 'Type', field: 'type' },
+    { title: 'Capacity', field: 'capacity' },
+    { title: 'Commission', field: 'commission' },
+    { title: 'Speed', field: 'avgSpeed' },
+    { title: 'Distance', field: 'avgDistance' },
+  ]
 
   return (
     <div className="home">
@@ -48,7 +125,7 @@ export default function BusTable() {
               sorting: true,
               showTitle: true,
               draggable: true,
-              pageSize: 25,
+              pageSize: 5,
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}

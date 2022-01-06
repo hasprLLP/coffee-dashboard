@@ -8,22 +8,33 @@ axios.defaults.withCredentials = true;
 
 export default function BusOwnerTable() {
 
-  const data = [ { id: "ID0002", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, ];
+  //$ Online Data
+  const onlineData = [
+    {
+      name: 'Bus Owner Boi',
+      phone: '9652145785',
+      buses: [{ RCNumber: 'MP14CB6734' }, { RCNumber: 'MP14CB6737' }],
+      password: 'abc456',
+    },
+  ]
 
+  //$ Mapped Data
+  const data = onlineData.map(item => {
+    return {
+      name: item.name,
+      phone: item.phone,
+      buses: item.buses.map(bus => { return `${bus.RCNumber}  ` }),
+      password: item.password
+
+  }
+  })
+
+  //$ Column
   const column = [
-    { title: "Bus Owner ID", field: "id" },
-    { title: "Bus Owner Name", field: "name" },
-    { title: "Package", field: "package" },
-    { title: "Fee Amount", field: "fee" },
-    { title: "Discount", field: "discount" },
-    { title: "Paid Amt", field: "paid" },
-    { title: "Due Amt", field: "due" },
-    { title: "School", field: "school" },
-    { title: "Father Name", field: "father" },
+    { title: "Owner", field: "name" },
     { title: "Phone", field: "phone" },
-    { title: "Address", field: "address" },
-    { title: "Bus", field: "bus" },
-    { title: "Route", field: "route" },
+    { title: "Buses", field: "buses" },
+    { title: "Password", field: "password" },
   ];
 
   return (
@@ -47,7 +58,7 @@ export default function BusOwnerTable() {
               sorting: true,
               showTitle: true,
               draggable: true,
-              pageSize: 25,
+              pageSize: 5,
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}

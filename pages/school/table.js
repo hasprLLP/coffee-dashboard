@@ -7,29 +7,91 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 export default function SchoolTable() {
+  const onlineData = [
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+    {
+      name: 'Deepak Memorial School',
+      prefix: 'DMA',
+      phone: '9587456324',
+      city: 'Sagar',
+      state: 'MP',
+      zip: '470004',
+      location: { address: 'Sagar MP' },
+    },
+  ]
 
-  const data = [ { id: "ID0002", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, { id: "ID001", name: "Student", school: "DMA", package: "Gold- 3 Month", fee: "20000", discount: "3000", paid: "10000", due: "7000", father: "Father", phone: "9874562145", address: "Sagar MP", bus: "Makrnia to DMA Bus", route: "Route Name", }, ];
+  //$ Mapped Data
+  const data = onlineData.map(item => {
+    return {
+      name: item.name,
+      prefix: item.prefix,
+      phone: item.phone,
+      city: item.city,
+      state: item.state,
+      pincode: item.zip,
+      address: item.location.address
+    }
+  })
 
+  //$ Column
   const column = [
-    { title: "School ID", field: "id" },
-    { title: "School Name", field: "name" },
-    { title: "Package", field: "package" },
-    { title: "Fee Amount", field: "fee" },
-    { title: "Discount", field: "discount" },
-    { title: "Paid Amt", field: "paid" },
-    { title: "Due Amt", field: "due" },
-    { title: "School", field: "school" },
-    { title: "Father Name", field: "father" },
-    { title: "Phone", field: "phone" },
-    { title: "Address", field: "address" },
-    { title: "Bus", field: "bus" },
-    { title: "Route", field: "route" },
-  ];
+    { title: 'Name', field: 'name' },
+    { title: 'Prefix', field: 'prefix' },
+    { title: 'Phone', field: 'phone' },
+    { title: 'City', field: 'city' },
+    { title: 'State', field: 'state' },
+    { title: 'Pincode', field: 'pincode' },
+    { title: 'Address', field: 'address' },
+  ]
 
   return (
     <div className="home">
-      <div style={{ marginLeft: "5vw", width: "85%", height: "100%", marginTop: "5vw" }}>
-        <div style={{ paddingBottom: "2vw", paddingTop: "2vw" }}>
+      <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
+        <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
           <MaterialTable
             icons={tableIcons}
             className="mat-table"
@@ -47,7 +109,7 @@ export default function SchoolTable() {
               sorting: true,
               showTitle: true,
               draggable: true,
-              pageSize: 25,
+              pageSize: 5,
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
@@ -57,5 +119,5 @@ export default function SchoolTable() {
         </div>
       </div>
     </div>
-  );
+  )
 }
