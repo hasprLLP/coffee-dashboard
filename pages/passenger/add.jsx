@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 export default function Create() {
   const [name, setName] = useState();
   const [isStudent, setIsStudent] = useState(true);
+  const [clf, setClf] = useState(false);
   const [DOB, setDOB] = useState();
   const [gender, setGender] = useState("Male");
   const [joiningDate, setJoiningDate] = useState();
@@ -82,8 +83,8 @@ export default function Create() {
         const schoolObj = schools?.find((school) => school?.name === schoolName);
         setSchool(schoolObj);
         const response = await axios.get(`route${schoolObj ? `?school=${schoolObj?.id}` : ''}`);
-        const res = await axios.get(`misc/generate_passenger_id/${schoolObj.id}`);
-        setPassengerID(res.data.data);
+        // const res = await axios.get(`misc/generate_passenger_id/${schoolObj.id}`);
+        // setPassengerID(res.data.data);
         setRoutes(response.data.data);
         const tempRoutesName = [];
         response.data.data.map((route) => {
@@ -355,6 +356,17 @@ export default function Create() {
             );
           })}
         </div>
+          <div className='layout-not-student'>
+          <h1>Add CLF Subscription </h1>
+          <Switch
+            onChange={(e) => {
+              setClf(!e.target.checked);
+            }}
+            value={!clf}
+            size='md'
+            defaultIsChecked={false}
+          />
+        </div>
         <div
           className='layout-form'
           style={{
@@ -402,6 +414,7 @@ export default function Create() {
             guardian: {
               name: guardian,
             },
+            clf
           }}
         />
       </div>

@@ -33,8 +33,8 @@ const FeeReport = () => {
 
     return {
       date: item?.date?.substring(0, 10),
-      name: item?.passenger.name,
-      id: item?.passenger.passengerID,
+      name: item?.passenger?.name,
+      id: item?.passenger?.passengerID,
       school: item?.passenger?.school?.name,
       package: item?.passenger?.feePackage?.name,
       pack: item?.pack?.substring(0, 1)?.toUpperCase() + item?.pack?.substring(1),
