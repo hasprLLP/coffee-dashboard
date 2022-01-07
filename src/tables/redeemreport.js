@@ -43,12 +43,14 @@ const RedeemReport = () => {
         sorting: true,
         showTitle: true,
         draggable: true,
+        pageSize: 5,
+        pageSizeOptions: [50, 100, 500, 1000],
       }}
       columns={column}
       data={data}
       title="Redeem Report"
     />
-  );
+  )
 };
 
 export default RedeemReport;

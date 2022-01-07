@@ -307,7 +307,7 @@ export default function Details() {
                 placeholder={"No Duration"}
                 value={"3 Months"}
               />
-            </div>
+            </div>epo
           </div>
           {/* //$ Notifications Right Row */}
           <div className="layout-row-item">

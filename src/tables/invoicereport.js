@@ -42,6 +42,8 @@ const InvoiceReport = () => {
         sorting: true,
         showTitle: true,
         draggable: true,
+        pageSize: 5,
+        pageSizeOptions: [50, 100, 500, 1000],
         actionsColumnIndex: -1,
       }}
       columns={column}
@@ -50,7 +52,7 @@ const InvoiceReport = () => {
         {
           icon: tableIcons.Print,
           tooltip: 'Print',
-          onClick: (event, rowData) => alert('Print Invoice For '+rowData.no),
+          onClick: (event, rowData) => alert('Print Invoice For ' + rowData.no),
         },
       ]}
       title="Invoice Report"
