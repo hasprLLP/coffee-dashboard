@@ -3,16 +3,17 @@
 
   &-title {
     @include row;
-    font-size: $h3;
+    font-size: $h2;
+    align-items: center;
     font-weight: 500;
     margin-bottom: 3.5vw;
   }
 
   &-sub-title {
-    font-size: $h4;
-    font-weight: 900;
+    font-size: $h3;
+    font-weight: 500;
     margin-bottom: 0.5vw;
-    color: $color-active;
+    color: $color-text;
   }
 
   &-back {
@@ -20,10 +21,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
+    margin-right: 1.5vw;
     width: 2.5vw;
-    height: 2vw;
-    padding-right: 1vw;
+    height: 2.5vw;
   }
 
   &-form {
