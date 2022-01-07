@@ -133,21 +133,21 @@ export default function Details() {
   };
 
   const assignPackage = async () => {
-     setPackageLoading(true);
-     try {
-       const res = await axios.post(
-         `passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`
-       );
-       setData((data) => ({ ...data, feePackage: res.data.data }));
+    setPackageLoading(true);
+    try {
+      const res = await axios.post(
+        `passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`
+      );
+      setData((data) => ({ ...data, feePackage: res.data.data }));
 
-       setPackageLoading(false);
-     } catch (error) {
-       console.log(error);
-       setPackageLoading(false);
-     }
+      setPackageLoading(false);
+    } catch (error) {
+      console.log(error);
+      setPackageLoading(false);
+    }
   };
 
-   const UnassignPackage = async () => {
+  const UnassignPackage = async () => {
     setUnsetPackageLoading(true);
     try {
       await axios.delete(`passenger/assign_fee_package/${data.id}`);
@@ -160,13 +160,10 @@ export default function Details() {
     }
   };
 
-  
   const verifyPassenger = async () => {
     setVerifyLoading(true);
     try {
-      const res = await axios.post(
-        `passenger/verify/${data.id}`
-      );
+      const res = await axios.post(`passenger/verify/${data.id}`);
 
       setData((data) => ({ ...data, isVerified: res.data.data }));
 
@@ -179,8 +176,8 @@ export default function Details() {
 
   const extendDueDate = async () => {
     setExtendDueDateLoading(true);
-    if(!dueDateChange){
-      alert("Please Enter Due Date")
+    if (!dueDateChange) {
+      alert("Please Enter Due Date");
     }
     try {
       const res = await axios.post(
@@ -309,49 +306,6 @@ export default function Details() {
                 title={"Duration"}
                 placeholder={"No Duration"}
                 value={"3 Months"}
-              />
-            </div>
-            {/* //$ Transactions */}
-            <div className="layout-sub-title">Transaction Details</div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start" }}
-            >
-              <TextField
-                type={"show"}
-                title={"Total Amount"}
-                placeholder={"No Amount"}
-                value={"5000"}
-              />
-              <TextField
-                type={"show"}
-                title={"Amount Paid"}
-                placeholder={"No Paid"}
-                value={"3000"}
-              />
-              <TextField
-                type={"show"}
-                title={"Amount Remaining"}
-                placeholder={"No Amount"}
-                value={"2000"}
-              />
-              <TextField
-                type={"fix"}
-                title={"Last Transaction"}
-                placeholder={"Transaction"}
-                value={data?.lastTransaction?.date?.substring(0, 10)}
-              />
-              <TextField
-                type={"fix"}
-                title={"Remaining Amount"}
-                placeholder={"Amount"}
-                value={data?.lastTransaction?.remainingAmount}
-              />
-              <TextField
-                type={"fix"}
-                title={"Total Amount"}
-                placeholder={"Amount"}
-                value={data?.lastTransaction?.amount}
               />
             </div>
           </div>
@@ -500,8 +454,8 @@ export default function Details() {
                 <Notification type={""} />
               </div>
             </div>
-             {/* //$Verify Passenger */}
-             <div className="layout-sub-title">
+            {/* //$Verify Passenger */}
+            <div className="layout-sub-title">
               Verify/Unverify Passenger
               <span style={{ color: "red" }}>
                 {!data?.feePackage ? "⚠️" : ""}
@@ -511,13 +465,11 @@ export default function Details() {
               className="layout-form"
               style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
             >
-           
-             
               <div
                 className="button"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
-              {data?.isVerified ? (
+                {data?.isVerified ? (
                   <Button
                     onClick={() => {
                       onOpenVerify.current.showAlert();
@@ -528,18 +480,20 @@ export default function Details() {
                     loadingText="Verifing"
                     isFullWidth
                   >
-                   Unverify
+                    Unverify
                   </Button>
-                ) : <Button
-                  onClick={verifyPassenger}
-                  colorScheme="teal"
-                  size="md"
-                   isFullWidth
-                  isLoading={verifyLoading}
-                  loadingText="Unverifing"
-                >
-                  Verify
-                </Button>}
+                ) : (
+                  <Button
+                    onClick={verifyPassenger}
+                    colorScheme="teal"
+                    size="md"
+                    isFullWidth
+                    isLoading={verifyLoading}
+                    loadingText="Unverifing"
+                  >
+                    Verify
+                  </Button>
+                )}
                 <Notification type={""} />
               </div>
             </div>
@@ -569,7 +523,6 @@ export default function Details() {
         fun={verifyPassenger}
         type="warning"
       />
-     
     </div>
   );
 }
