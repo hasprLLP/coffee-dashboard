@@ -1,34 +1,17 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { useEffect, useState } from 'react'
 import tableIcons from "@/utilities/tableIcons"
+import useSWR from 'swr'
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export default function BusOwnerTable() {
 
-  const [onlineData, setData] = useState([])
-
-  //@ Fetch Bus API Function
-  const getData = async () => {
-    try {
-      const populate = {
-        path: 'buses',
-      }
-      const response = await axios.get(`owner?populate=${JSON.stringify(populate)}`)
-      setData(response.data.data)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data, error } = useSWR(`owner?populate=${JSON.stringify({ path: 'buses' })}`, fetcher)
 
   //$ Mapped Data
-  const data = onlineData.map(item => {
+  const dataShow = data?.map(item => {
     return {
       name: item.name,
       phone: item.phone,
@@ -71,7 +54,7 @@ export default function BusOwnerTable() {
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
-            data={data}
+            data={dataShow}
             title="Bus Owner Report Table View"
           />
         </div>

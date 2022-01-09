@@ -1,35 +1,17 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { useEffect, useState } from 'react'
 import tableIcons from '@/utilities/tableIcons'
-import GoHome from '@/helpers/gohome'
+import useSWR from 'swr'
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export default function BusTable() {
 
-  const [onlineData, setData] = useState([])
-
-  //@ Fetch Bus API Function
-  const getData = async () => {
-    try {
-      const populate = {
-        path: 'owner',
-      }
-      const response = await axios.get(`bus?populate=${JSON.stringify(populate)}`)
-      setData(response.data.data)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data, error } = useSWR(`bus?populate=${JSON.stringify({ path: 'owner' })}`, fetcher)
 
   //$ Mapped Data
-  const data = onlineData.map(item => {
+  const dataShow = data?.map(item => {
     return {
       rc: item.RCNumber,
       name: item.name,
@@ -76,7 +58,7 @@ export default function BusTable() {
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
-            data={data}
+            data={dataShow}
             title="Bus Report Table View"
           />
         </div>

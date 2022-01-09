@@ -1,36 +1,18 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { useEffect, useState } from 'react'
 import tableIcons from '@/utilities/tableIcons'
+import Loading from '@/blocks/loading'
+import useSWR from 'swr'
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export default function PassengerTable() {
 
-  const [onlineData, setData] = useState([])
-
-  //@ Fetch Routes API Function
-  const getData = async () => {
-    try {
-      const populate = {
-        path: 'route feePackage school user',
-      }
-      const response = await axios.get(`passenger?populate=${JSON.stringify(populate)}`)
-      setData(response.data.data)
-      console.log(response.data.data);
-      
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data, error } = useSWR(`passenger?populate=${JSON.stringify({ path: 'route feePackage school user' })}`, fetcher)
 
   //$ Mapped Data
-  const data = onlineData.map(item => {
+  const dataShow = data?.map(item => {
     return {
       name: item.name,
       id: item.passengerID,
@@ -77,6 +59,10 @@ export default function PassengerTable() {
     { title: 'Distance Travelled', field: 'distanceTravelled' },
   ]
 
+
+  if (error) return <div className="home"><div>failed to load</div></div>
+  if (!data) return  <Loading />
+
   return (
     <div className="home">
       <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
@@ -102,7 +88,7 @@ export default function PassengerTable() {
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
-            data={data}
+            data={dataShow}
             title="Students Report Table View"
           />
         </div>

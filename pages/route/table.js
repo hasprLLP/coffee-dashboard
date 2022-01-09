@@ -1,35 +1,18 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import { useEffect, useState } from 'react'
 import convertAMPM from "@/utilities/convertAMPM";
 import tableIcons from '@/utilities/tableIcons'
+import useSWR from 'swr'
 import axios from 'axios'
 
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export default function RouteTable() {
-
-  const [onlineData, setData] = useState([])
-
-  //@ Fetch Bus API Function
-  const getData = async () => {
-    try {
-      const populate = {
-        path: 'school bus',
-      }
-      const response = await axios.get(`route?populate=${JSON.stringify(populate)}`)
-      setData(response.data.data)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  
+  const { data, error } = useSWR(`route?populate=${JSON.stringify({ path: 'school bus' })}`, fetcher)
 
   //$ Mapped Data
-  const data = onlineData.map(item => {
-
+  const dataShow = data?.map(item => {
     return {
       name: item.name,
       status: item.status,
@@ -88,7 +71,7 @@ export default function RouteTable() {
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
-            data={data}
+            data={dataShow}
             title="Route Report Table View"
           />
         </div>

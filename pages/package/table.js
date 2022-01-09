@@ -1,29 +1,13 @@
 /* eslint-disable react/display-name */
 import MaterialTable from "material-table";
-import { useState,useEffect } from "react";
 import tableIcons from "@/utilities/tableIcons"
+import useSWR from 'swr'
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+const fetcher = url => axios.get(url).then(res => res.data.data)
 
 export default function PackageTable() {
-
-  //$ Online Data
-  const [onlineData, setData] = useState([])
-
-  //@ Fetch Bus API Function
-  const getData = async () => {
-    try {
-      const response = await axios.get("package/")
-      setData(response.data.data)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
+  const { data, error } = useSWR(`package`, fetcher)
 
   const column = [
     { title: 'Package Name', field: 'name' },
@@ -58,7 +42,7 @@ export default function PackageTable() {
               pageSizeOptions: [50, 100, 500, 1000],
             }}
             columns={column}
-            data={onlineData}
+            data={data}
             title="Package Report Table View"
           />
         </div>

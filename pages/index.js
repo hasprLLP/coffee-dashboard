@@ -1,18 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import Logout from '@/utilities/logout'
 import DashCard from '@/components/dashcard'
 import VerifyStudent from '@/components/verifyStudent'
 import CollectFee from '@/components/collectFee'
 import axios from 'axios'
-import TextField from '@/components/input'
-import DropDown from '@/components/dropdown'
+import Cookies from 'js-cookie';
+import ls from 'local-storage';
 import { useRouter } from 'next/router'
 
-export default function Home() {
+export default function Home({ help }) {
   const router = useRouter()
   const [counts, setCounts] = useState({})
   const [unverifiedPassengers, setUnverifiedPassengers] = useState([])
   const [pendingCashRequests, setPendingCashRequests] = useState([])
+
+  console.log("Props Received", help);
+
+
   const getCounts = async () => {
     try {
       const response = await axios.get('details/counts')
@@ -42,7 +46,7 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getCounts()
     getUnverified()
     getPendingPaymentRequests()
@@ -97,16 +101,16 @@ export default function Home() {
             <div className="dashboard-subtitle">Verify Students & Assign Bus</div>
             {unverifiedPassengers.length > 0
               ? unverifiedPassengers.map((item, index) => {
-                  return <VerifyStudent key={index} student={item} onButton={onButton} />
-                })
+                return <VerifyStudent key={index} student={item} onButton={onButton} />
+              })
               : 'No Pending Verifications'}
           </div>
           <div className="dashboard-verify">
             <div className="dashboard-subtitle">Verify Fee Payment</div>
             {pendingCashRequests.length > 0
               ? pendingCashRequests.map((item, index) => {
-                  return <CollectFee key={index} item={item} />
-                })
+                return <CollectFee key={index} item={item} />
+              })
               : 'No pending requests'}
           </div>
         </div>
@@ -115,4 +119,30 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps(context) {
+
+  let authorization = Cookies.get('authorization') || ls.get('authorization');
+
+  const server = axios.create({
+    baseURL: `${process.env.SERVER_URL}`,
+    timeout: 1000,
+    withCredentials: true,
+    headers: { 'Authorization': 'Bearer ' + authorization }
+  });
+
+  const res = await server.get(`details/counts`)
+  const help = await res.data.data.json()
+
+  if (!help) {
+    return {
+      
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { help }, // will be passed to the page component as props
+  }
 }

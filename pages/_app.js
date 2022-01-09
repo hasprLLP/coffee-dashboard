@@ -6,7 +6,7 @@ import Footer from '@/blocks/footer';
 import Drawer from '@/blocks/drawer';
 import Login from '@/pages/login';
 import { Global } from '@/global/global';
-import { useEffect, useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import Scrollbar from 'smooth-scrollbar';
 import EdgeDamping from '@/helpers/edgeDamping';
 import { useRouter } from 'next/router';
@@ -26,7 +26,7 @@ export default function MyApp({ Component, pageProps }) {
   const [isVerified, setIsVerified] = useState(false);
 
   //$ Run on Page Load - Scroll Jack
-  useEffect(() => {
+  useLayoutEffect(() => {
     const view = document.querySelector('.home'); //` Declare View Reference to be Jellyfied
     const settings = {
       damping: 0.075,
@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }) {
   }, [router]);
 
   // `Authorization Check
-  useEffect(() => {
+  useLayoutEffect(() => {
     let authorization = Cookies.get('authorization') || ls.get('authorization');
 
     if (!authorization) {
