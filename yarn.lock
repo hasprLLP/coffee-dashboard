@@ -4076,11 +4076,6 @@ filefy@0.1.10:
   resolved "https://registry.yarnpkg.com/filefy/-/filefy-0.1.10.tgz#174677c8e2fa5bc39a3af0ed6fb492f16b8fbf42"
   integrity sha512-VgoRVOOY1WkTpWH+KBy8zcU1G7uQTVsXqhWEgzryB9A5hg2aqCyZ6aQ/5PSzlqM5+6cnVrX6oYV0XqD3HZSnmQ==
 
-filefy@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/filefy/-/filefy-0.1.11.tgz#6b4df1f90e8861f8ca12d3e9b1458b289a4add74"
-  integrity sha512-gPcFFtRTcgllmGUKMyW1tSp4RlK2CTf9NyJZSCEuAfuH9siE45UWVwb75Uoi9OP81+FZq/4Se61dVlU3nk/TOA==
-
 filelist@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/filelist/-/filelist-1.0.2.tgz#80202f21462d4d1c2e214119b1807c1bc0380e5b"
