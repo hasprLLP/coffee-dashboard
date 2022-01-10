@@ -1,9 +1,9 @@
-import { Box, Center, Text, Stack, List, ListItem, ListIcon, Button, useColorModeValue } from '@chakra-ui/react';
-import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import { useRouter } from 'next/router';
+import { Box, Center, Text, Stack, List, ListItem, ListIcon, Button, useColorModeValue } from '@chakra-ui/react'
+import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
 
-const DashCard = ({ title, no, path }) => {
-  const router = useRouter();
+const BigCard = ({ title, no, path }) => {
+  const router = useRouter()
 
   return (
     <Box maxW={'240px'} w={'full'} mr={3} mb={3} bg={useColorModeValue('white', 'gray.800')} rounded={'lg'} overflow={'hidden'}>
@@ -33,21 +33,21 @@ const DashCard = ({ title, no, path }) => {
             })
           }
           w={'full'}
-          bg={'gray.300'}
+          bg={'teal.500'}
           color={'white'}
           rounded={'md'}
           _hover={{
-            bg: 'teal.500',
+            bg: 'red.400',
           }}
           _focus={{
-            bg: 'teal.500',
+            bg: 'red.400',
           }}
         >
           View Detailed
         </Button>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default DashCard;
+export default BigCard

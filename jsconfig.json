@@ -14,6 +14,7 @@
         "@/page/*": ["src/page/*"],
         "@/functions/*": ["src/backend/node/*"],
         "@/firebase/*": ["src/backend/firebase/*"],
+        "@/hooks/*": ["src/hooks/*"]
       }
     },
     "exclude": ["node_modules", "out"]

@@ -1,15 +1,15 @@
 /* eslint-disable react/display-name */
 import MaterialTable from 'material-table'
-import convertAMPM from "@/utilities/convertAMPM";
+import convertAMPM from '@/utilities/convertAMPM'
 import tableIcons from '@/utilities/tableIcons'
-import useSWR from 'swr'
-import axios from 'axios'
-
-const fetcher = url => axios.get(url).then(res => res.data.data)
+import useFetch from '@/hooks/useFetch'
+import Loading from '@/blocks/loading'
+import { useRouter } from 'next/router'
 
 export default function RouteTable() {
-  
-  const { data, error } = useSWR(`route?populate=${JSON.stringify({ path: 'school bus' })}`, fetcher)
+  const router = useRouter()
+  const routeData = useFetch(`route?populate=${JSON.stringify({ path: 'school bus' })}`)
+  const data = routeData?.data
 
   //$ Mapped Data
   const dataShow = data?.map(item => {
@@ -18,14 +18,15 @@ export default function RouteTable() {
       status: item.status,
       school: item.school?.name,
       bus: item.bus?.RCNumber,
-      isRunning: item.isRunning ? "Running" : "Stopped",
+      isRunning: item.isRunning ? 'Running' : 'Stopped',
       morningDeparture: convertAMPM(item?.morningDeparture),
       morningArrival: convertAMPM(item?.morningArrival),
       eveningDeparture: convertAMPM(item?.eveningDeparture),
       startsFrom: item.startsFrom?.address,
-      avgDistance: item.avgDistance || "--",
-      avgMorningDuration: item.avgMorningDuration || "--",
-      avgEveningDuration: item.avgEveningDuration || "--",
+      avgDistance: item.avgDistance || '--',
+      avgMorningDuration: item.avgMorningDuration || '--',
+      avgEveningDuration: item.avgEveningDuration || '--',
+      raw: item,
     }
   })
 
@@ -47,35 +48,47 @@ export default function RouteTable() {
 
   //& Return UI
   return (
-    <div className="home">
-      <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
-        <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
-          <MaterialTable
-            icons={tableIcons}
-            className="mat-table"
-            options={{
-              exportButton: true,
-              filtering: true,
-              search: true,
-              exportAllData: true,
-              filtering: true,
-              showEmptyDataSourceMessage: true,
-              showFirstLastPageButtons: true,
-              showSelectAllCheckbox: true,
-              showTextRowsSelected: true,
-              searchAutoFocus: true,
-              sorting: true,
-              showTitle: true,
-              draggable: true,
-              pageSize: 5,
-              pageSizeOptions: [50, 100, 500, 1000],
-            }}
-            columns={column}
-            data={dataShow}
-            title="Route Report Table View"
-          />
+    <>
+      {!data && <Loading />}
+      <div className="home">
+        <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
+          <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
+            <MaterialTable
+              icons={tableIcons}
+              className="mat-table"
+              actions={[
+                {
+                  icon: tableIcons.Edit,
+                  tooltip: 'Edit',
+                  onClick: (event, rowData) =>
+                    router.push({ pathname: `/route/edit/${rowData.raw.id}`, query: { data: JSON.stringify(rowData.raw) } }),
+                },
+              ]}
+              options={{
+                actionsColumnIndex: -1,
+                exportButton: true,
+                filtering: true,
+                search: true,
+                exportAllData: true,
+                filtering: true,
+                showEmptyDataSourceMessage: true,
+                showFirstLastPageButtons: true,
+                showSelectAllCheckbox: true,
+                showTextRowsSelected: true,
+                searchAutoFocus: true,
+                sorting: true,
+                showTitle: true,
+                draggable: true,
+                pageSize: 10,
+                pageSizeOptions: [50, 100, 500, 1000],
+              }}
+              columns={column}
+              data={dataShow}
+              title="Route Report Table View"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

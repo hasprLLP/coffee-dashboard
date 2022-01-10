@@ -31,7 +31,7 @@ export default function Drawer() {
   }
 
   useEffect(() => {
-    if (dashboard) router.replace('/')
+    if (dashboard) router.replace('/dashboard')
     else if (report) router.replace('/report')
   }, [dashboard, report])
 

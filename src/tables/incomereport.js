@@ -1,27 +1,28 @@
 /* eslint-disable react/display-name */
-import MaterialTable from "material-table";
-import tableIcons from "@/utilities/tableIcons"
+import MaterialTable from 'material-table'
+import tableIcons from '@/utilities/tableIcons'
+import Loading from '@/blocks/loading'
 
 const IncomeReport = () => {
   const data = [
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-    { id: "ID001", name: "Student Name", school: "DMA", bus: "Bus Name", owner: "Owner Name", income: "500" },
-  ];
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+    { id: 'ID001', name: 'Student Name', school: 'DMA', bus: 'Bus Name', owner: 'Owner Name', income: '500' },
+  ]
 
   const column = [
-    { title: "Student ID", field: "id" },
-    { title: "Student Name", field: "name" },
-    { title: "School", field: "school" },
-    { title: "Bus", field: "bus" },
-    { title: "Owner", field: "owner" },
-    { title: "Income", field: "income" },
-  ];
+    { title: 'Student ID', field: 'id' },
+    { title: 'Student Name', field: 'name' },
+    { title: 'School', field: 'school' },
+    { title: 'Bus', field: 'bus' },
+    { title: 'Owner', field: 'owner' },
+    { title: 'Income', field: 'income' },
+  ]
 
   return (
     <MaterialTable
@@ -40,7 +41,7 @@ const IncomeReport = () => {
         sorting: true,
         showTitle: true,
         draggable: true,
-        pageSize: 5,
+        pageSize: 10,
         pageSizeOptions: [50, 100, 500, 1000],
       }}
       columns={column}
@@ -48,6 +49,6 @@ const IncomeReport = () => {
       title="Income Report"
     />
   )
-};
+}
 
-export default IncomeReport;
+export default IncomeReport

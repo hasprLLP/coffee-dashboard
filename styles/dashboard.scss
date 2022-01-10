@@ -1,8 +1,8 @@
 .dashboard {
   $root: &;
 
-  margin-left: 2.5vw;
-  margin-top: 1.5vw;
+  padding-left: 2.5vw;
+  padding-top: 1.5vw;
   width: 94%;
   height: 100%;
 
@@ -30,6 +30,15 @@
     align-items: flex-start;
     flex-wrap: wrap;
     margin-bottom: 2vw;
+  }
+
+  &-scroll {
+    @include scroll;
+    display: flex;
+    max-height: 30vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   &-verify {

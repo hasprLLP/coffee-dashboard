@@ -1,35 +1,19 @@
 //& Input Components [#IMPORTS#]
 import PhotoCard from '@/components/photoCard'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
 import TextField from '@/components/input'
+import useFetch from '@/hooks/useFetch'
 import Filler from '@/components/filler'
 import Fuse from 'fuse.js'
 import { useRouter } from 'next/router'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Passenger() {
-  const [student, setStudent] = useState('')
-  const [loading, setLoading] = useState(false)
-
   const router = useRouter()
-  const [passengers, setPassengers] = useState([])
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        setLoading(true)
-        const response = await axios.get(`/passenger/?populate=["route","school","lastTransaction","user","feePackage"]`)
-        setPassengers(response.data.data)
-        console.log(response.data.data)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-        console.log(error)
-      }
-    }
+  const [student, setStudent] = useState('')
 
-    fetch()
-  }, [])
+  const passengersData = useFetch(`passenger/?populate=["route","school","lastTransaction","user","feePackage"]`)
+  const data = passengersData?.data
 
   //$ States and Hooks [#STATES#]
   const onEdit = (id, data) => {
@@ -41,7 +25,7 @@ export default function Passenger() {
 
   //& Fuse JS [#FUSE#]
   //$ New Fuse Instance with Settings
-  const fuse = new Fuse(passengers, {
+  const fuse = new Fuse(data, {
     isCaseSensitive: false,
     includeScore: false,
     shouldSort: true,
@@ -53,17 +37,17 @@ export default function Passenger() {
 
   const result = student !== '' && fuse.search(student)
   const resultFilter = result && result.map(result => result.item)
-  const searchResultDisplay = resultFilter || passengers
+  const searchResultDisplay = resultFilter || data
 
   //& Return UI [#RETURN#]
   return (
-    <div className="home" style={{ backgroundColor: 'var(--chakra-colors-gray-100)' }}>
+    <div className="home" style={{ backgroundColor: 'var(--chakra-colors-gray-200)' }}>
       <div className="home-shift">
         <TextField title={'Search Student Name'} placeholder={'Type student name'} value={student} setter={setStudent} color={'white'} />
         <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
-          {loading && <Filler cards={4} />}
-          {!searchResultDisplay.length && !loading && <div className="home-empty">No Passengers Added</div>}
-          {searchResultDisplay.map((passenger, i) => {
+          {passengersData.loading && <Filler cards={4} />}
+          {!searchResultDisplay?.length && !passengersData.loading && <div className="home-empty">No Passengers Added</div>}
+          {searchResultDisplay?.map((passenger, i) => {
             return <PhotoCard key={i} id={passenger.id} onEdit={onEdit} onDetail={onDetail} passenger={passenger} />
           })}
         </div>

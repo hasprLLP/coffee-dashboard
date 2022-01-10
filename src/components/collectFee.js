@@ -42,7 +42,6 @@ const CollectFee = () => {
           colorScheme="red"
           color={"white"}
           onClick={() => onEdit(id, passenger)}
-          boxShadow={"0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"}
           _hover={{
             bg: "teal.500",
             transform: "translateY(-2px)",

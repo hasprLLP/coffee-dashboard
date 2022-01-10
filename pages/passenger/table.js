@@ -2,14 +2,14 @@
 import MaterialTable from 'material-table'
 import tableIcons from '@/utilities/tableIcons'
 import Loading from '@/blocks/loading'
-import useSWR from 'swr'
-import axios from 'axios'
-
-const fetcher = url => axios.get(url).then(res => res.data.data)
+import useFetch from '@/hooks/useFetch'
+import { useRouter } from 'next/router'
 
 export default function PassengerTable() {
+  const router = useRouter()
 
-  const { data, error } = useSWR(`passenger?populate=${JSON.stringify({ path: 'route feePackage school user' })}`, fetcher)
+  const studentData = useFetch(`passenger?populate=${JSON.stringify({ path: 'route feePackage school user' })}`)
+  const data = studentData?.data
 
   //$ Mapped Data
   const dataShow = data?.map(item => {
@@ -21,7 +21,7 @@ export default function PassengerTable() {
       route: item.route?.name,
       feePackage: item.feePackage?.name,
       pack: item.pack,
-      isVerified: item.isVerified ? "Verified" : "Not Verified",
+      isVerified: item.isVerified ? 'Verified' : 'Not Verified',
       status: item.status,
       DOB: item.DOB?.substring(0, 10),
       guardianName: item.user?.name,
@@ -30,9 +30,10 @@ export default function PassengerTable() {
       cls: item.cls,
       section: item.section,
       payDate: item.payDate?.substring(0, 10),
-      isStudent: item.isStudent ? "Student" : "Teacher",
+      isStudent: item.isStudent ? 'Student' : 'Teacher',
       joiningDate: item.joiningDate?.substring(0, 10),
-      distanceTravelled: item.distanceTravelled
+      distanceTravelled: item.distanceTravelled,
+      raw: item,
     }
   })
 
@@ -59,40 +60,48 @@ export default function PassengerTable() {
     { title: 'Distance Travelled', field: 'distanceTravelled' },
   ]
 
-
-  if (error) return <div className="home"><div>failed to load</div></div>
-  if (!data) return  <Loading />
-
   return (
-    <div className="home">
-      <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
-        <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
-          <MaterialTable
-            icons={tableIcons}
-            className="mat-table"
-            options={{
-              exportButton: true,
-              filtering: true,
-              search: true,
-              exportAllData: true,
-              filtering: true,
-              showEmptyDataSourceMessage: true,
-              showFirstLastPageButtons: true,
-              showSelectAllCheckbox: true,
-              showTextRowsSelected: true,
-              searchAutoFocus: true,
-              sorting: true,
-              showTitle: true,
-              draggable: true,
-              pageSize: 5,
-              pageSizeOptions: [50, 100, 500, 1000],
-            }}
-            columns={column}
-            data={dataShow}
-            title="Students Report Table View"
-          />
+    <>
+      {!data && <Loading />}
+      <div className="home">
+        <div style={{ marginLeft: '5vw', width: '85%', height: '100%', marginTop: '5vw' }}>
+          <div style={{ paddingBottom: '2vw', paddingTop: '2vw' }}>
+            <MaterialTable
+              icons={tableIcons}
+              className="mat-table"
+              actions={[
+                {
+                  icon: tableIcons.Edit,
+                  tooltip: 'Edit',
+                  onClick: (event, rowData) =>
+                    router.push({ pathname: `/passenger/edit/${rowData.raw.id}`, query: { data: JSON.stringify(rowData.raw) } }),
+                },
+              ]}
+              options={{
+                actionsColumnIndex: -1,
+                exportButton: true,
+                filtering: true,
+                search: true,
+                exportAllData: true,
+                filtering: true,
+                showEmptyDataSourceMessage: true,
+                showFirstLastPageButtons: true,
+                showSelectAllCheckbox: true,
+                showTextRowsSelected: true,
+                searchAutoFocus: true,
+                sorting: true,
+                showTitle: true,
+                draggable: true,
+                pageSize: 10,
+                pageSizeOptions: [50, 100, 500, 1000],
+              }}
+              columns={column}
+              data={dataShow}
+              title="Students Report Table View"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

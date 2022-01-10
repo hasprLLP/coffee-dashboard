@@ -168,7 +168,7 @@ export default function Details() {
                   alt="No Photo Available"
                   // src={data?.photo}
                   src="https://www.itwsf.com/Portals/0/Holographic-Passport-Film.jpg"
-                  style={{ width: '100%', height: '100%', resize: 'cover', borderRadius: '0.75vw' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0.75vw' }}
                 />
               </div>
             )

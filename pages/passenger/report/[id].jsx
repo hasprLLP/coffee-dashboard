@@ -236,7 +236,6 @@ export default function Details() {
                     height: "12vw",
                     marginTop: "1vw",
                     marginBottom: "2vw",
-                    resizeMode: "cover",
                   }}
                 >
                   <img
@@ -245,7 +244,7 @@ export default function Details() {
                     style={{
                       width: "100%",
                       height: "100%",
-                      resizeMode: "contain",
+                      objectFit: "cover",
                       borderRadius: "100%",
                     }}
                   />
