@@ -51,7 +51,6 @@ export default function Create() {
     { title: 'Confirm Password', value: passwordConfirm, placeholder: 'Confirm Password', setter: setPasswordConfirm },
   ]
 
-  // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
     <div className="home">

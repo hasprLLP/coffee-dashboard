@@ -1,18 +1,33 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Flex, Heading, Input, Button, InputGroup, Stack, InputLeftAddon, Box, Link, Avatar, FormControl, FormHelperText, InputRightElement, } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  Input,
+  Button,
+  InputGroup,
+  Stack,
+  InputLeftAddon,
+  Box,
+  Link,
+  Avatar,
+  FormControl,
+  FormHelperText,
+  InputRightElement,
+} from '@chakra-ui/react'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import Notification from '@/components/notification'
 var ls = require('local-storage')
 
 export default function Login() {
-
   const router = useRouter()
 
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
 
   const login = async e => {
     e.preventDefault()
@@ -38,7 +53,9 @@ export default function Login() {
       }
     } catch (err) {
       console.log(err)
+      setError(err?.response?.data?.message || err?.message)
       setLoading(false)
+      setError()
     }
   }
 
@@ -46,6 +63,7 @@ export default function Login() {
 
   return (
     <div className="login fixed">
+      <Notification type={error} />
       <Flex flexDirection="column" width="100wh" height="100vh" backgroundColor="white" justifyContent="center" alignItems="center">
         <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
           <Avatar bg="teal.500" />

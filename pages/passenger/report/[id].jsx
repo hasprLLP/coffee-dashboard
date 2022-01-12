@@ -215,15 +215,15 @@ export default function Details() {
           <GoBack />
           Details
         </div>
-        {/* //$ Students Info Left Row */}
-        <div
-          className="layout-sub-title"
-          style={{ color: "black", width: "40%" }}
-        >
-          STUDENT INFO
-        </div>
+        {/* //& Students Info Left Row */}
         <div className="layout-row" style={{ alignItems: "flex-start" }}>
           <div className="layout-row-item" style={{ flex: 1.25 }}>
+            <div
+              className="layout-sub-title"
+              style={{ color: "black", width: "40%" }}
+            >
+              STUDENT INFO
+            </div>
             <div
               className="layout-form"
               style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
@@ -306,9 +306,10 @@ export default function Details() {
                 placeholder={"No Duration"}
                 value={"3 Months"}
               />
-            </div>epo
+            </div>
+            epo
           </div>
-          {/* //$ Notifications Right Row */}
+          {/* //& Notifications Right Row */}
           <div className="layout-row-item">
             <div className="layout-sub-title" style={{ color: "black" }}>
               NOTIFICATIONS PANEL

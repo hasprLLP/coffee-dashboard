@@ -10,7 +10,7 @@ const DropDown = ({ title, options, value, setter, isRequired, type, fix, page }
   return (
     <div className="dropdown" style={{ marginRight: '1vw' }}>
       <FormControl isRequired={isRequired || false}>
-        <FormLabel>{title}</FormLabel>
+        {title && <FormLabel>{title}</FormLabel>}
         <Select
           placeholder="Select Option"
           bg="rgba(242, 242, 242, 0.4)"

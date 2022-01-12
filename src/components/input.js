@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const TextField = ({ title, placeholder, value, setter, type, prefix, color, isRequired }) => {
   const [invalid, setInvalid] = useState(false);
-  const size = useSize();  
+  const size = useSize();
   return (
     <div className="input">
       <FormControl isRequired={isRequired}>
@@ -19,7 +19,7 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
             value={value}
             onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
             isInvalid={invalid}
-            onChange={(e) => (!type === "show" ? null : setter(e.target.value))}
+            onChange={(e) => (type === "show" ? null : setter(e.target.value))}
             bg={color ? "white" : "rgba(242, 242, 242, 0.4)"}
             focusBorderColor="#38B2AC"
             type={type}
