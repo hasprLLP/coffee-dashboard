@@ -9,7 +9,7 @@ const DeleteButton = ({ collection, data }) => {
   const [status, setStatus] = useState(null);
 
   const onSave = async () => {
-    setStatus("success");
+    // setStatus("success");
     // const response = await axios.post(`${process.env.SERVER_URL}${collection}`, data);
     // console.log("response", response);
     // if (response.status === 201) {
@@ -20,9 +20,9 @@ const DeleteButton = ({ collection, data }) => {
   };
   return (
     <div className="button">
-      <Button onClick={onSave} colorScheme="red" size="md" isFullWidth>
+      {/* <Button onClick={onSave} colorScheme="red" size="md" isFullWidth>
         Delete
-      </Button>
+      </Button> */}
       <Notification type={status} />
     </div>
   );

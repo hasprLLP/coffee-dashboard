@@ -139,7 +139,7 @@ const InvoiceThankYouMsg = () => (
 // Create Document Component
 const MyDocument = ({ data, size, orientation }) => (
   <Document>
-    <Page size={size} style={styles.page} orientation={orientation.toLowerCase()}>
+    <Page size={size} style={styles.page} orientation={orientation?.toLowerCase()}>
       <Image style={styles.logo} src={'/icons/logo/logo.png'} />
       <InvoiceTitle title="Invoice" />
       <InvoiceNo invoice={invoiceData} />

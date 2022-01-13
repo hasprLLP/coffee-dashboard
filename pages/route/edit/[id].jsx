@@ -115,8 +115,8 @@ export default function EditRoute() {
   const details = [
     { title: 'Name', placeholder: 'Route Name', value: name, setter: setName },
     { title: 'Starts from', placeholder: 'Starting Point Address', value: startsFrom, setter: setStartsFrom },
-    { title: 'Destination (School)', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'dropdown' },
-    { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
+    { title: 'Destination (School)', options: schoolNames, value: school?.name, setter: setSchoolID, type: 'fix' },
+    { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'fix' },
   ];
 
   //& Return UI [#RETURN#]

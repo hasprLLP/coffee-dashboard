@@ -6,7 +6,6 @@ import CollectFee from '@/components/collectFee'
 import useFetch from '@/hooks/useFetch'
 import Loading from '@/blocks/loading'
 import { useRouter } from 'next/router'
-import PrintInvoice from '../invoice/printInvoice'
 
 export default function Dashboard() {
   const router = useRouter()
@@ -21,8 +20,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <PrintInvoice />
-      {/* {counts.loading && <Loading />}
+      {counts.loading && <Loading />}
       <div className="home" style={{ backgroundColor: 'var(--chakra-colors-gray-200)' }}>
         <div className="dashboard">
           <div className="dashboard-title">Dashboard</div>
@@ -57,7 +55,7 @@ export default function Dashboard() {
           <div className="dashboard-subtitle">Other Settings</div>
           <Logout />
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

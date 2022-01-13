@@ -70,9 +70,7 @@ export default function Details() {
 
   //$ Setters
   const setPackageID = (packageName) => {
-    const packageObj = packages?.find(
-      (_package) => _package?.name === packageName
-    );
+    const packageObj = packages?.find((_package) => _package?.name === packageName);
     setPackage(packageObj);
   };
 
@@ -107,9 +105,7 @@ export default function Details() {
   const assignRoute = async () => {
     setRouteLoading(true);
     try {
-      const res = await axios.post(
-        `passenger/assign_route/${data.id}?route=${route.id}`
-      );
+      const res = await axios.post(`passenger/assign_route/${data.id}?route=${route.id}`);
       setData((data) => ({ ...data, route: res.data.data }));
 
       setRouteLoading(false);
@@ -135,9 +131,7 @@ export default function Details() {
   const assignPackage = async () => {
     setPackageLoading(true);
     try {
-      const res = await axios.post(
-        `passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`
-      );
+      const res = await axios.post(`passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`);
       setData((data) => ({ ...data, feePackage: res.data.data }));
 
       setPackageLoading(false);
@@ -180,9 +174,7 @@ export default function Details() {
       alert("Please Enter Due Date");
     }
     try {
-      const res = await axios.post(
-        `passenger/extend_due_date/${data.id}?due_date=${dueDateChange}`
-      );
+      const res = await axios.post(`passenger/extend_due_date/${data.id}?due_date=${dueDateChange}`);
 
       setData((data) => ({ ...data, dueDate: res.data.data }));
 
@@ -218,16 +210,10 @@ export default function Details() {
         {/* //& Students Info Left Row */}
         <div className="layout-row" style={{ alignItems: "flex-start" }}>
           <div className="layout-row-item" style={{ flex: 1.25 }}>
-            <div
-              className="layout-sub-title"
-              style={{ color: "black", width: "40%" }}
-            >
+            <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
               STUDENT INFO
             </div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
               {/* //$ Student Info */}
               <div style={{ width: "100%" }}>
                 <div
@@ -240,7 +226,7 @@ export default function Details() {
                 >
                   <img
                     alt="No Photo Available"
-                    src={data?.photo}
+                    src={data?.photo?.url}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -250,63 +236,22 @@ export default function Details() {
                   />
                 </div>
               </div>
-              <TextField
-                type={"show"}
-                title={"Student Name"}
-                placeholder={"No Name"}
-                value={data?.name}
-              />
-              <TextField
-                type={"show"}
-                title={"Student ID"}
-                placeholder={"No ID"}
-                value={data?.passengerID}
-              />
-              <TextField
-                type={"show"}
-                title={"Student Address"}
-                placeholder={"No Address"}
-                value={data?.location?.address}
-              />
-              <TextField
-                type={"show"}
-                title={"Student DOB"}
-                placeholder={"No DOB"}
-                value={data?.DOB?.substring(0, 10)}
-              />
+              <TextField type={"show"} title={"Student Name"} placeholder={"No Name"} value={data?.name} />
+              <TextField type={"show"} title={"Student ID"} placeholder={"No ID"} value={data?.passengerID} />
+              <TextField type={"show"} title={"Student Address"} placeholder={"No Address"} value={data?.location?.address} />
+              <TextField type={"show"} title={"Student DOB"} placeholder={"No DOB"} value={data?.DOB?.substring(0, 10)} />
             </div>
             {/* //$ School Details */}
             <div className="layout-sub-title">School Details</div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
-              <TextField
-                type={"show"}
-                title={"School Name"}
-                placeholder={"No School"}
-                value={data?.school?.name}
-              />
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <TextField type={"show"} title={"School Name"} placeholder={"No School"} value={data?.school?.name} />
             </div>
             {/* //$ Package */}
             <div className="layout-sub-title">Package Information</div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start" }}
-            >
-              <TextField
-                type={"show"}
-                title={"Package"}
-                placeholder={"No Package"}
-                value={data?.feePackage?.name || "No Package"}
-              />
-              {/* //TODO Ye Nai Hai
-               <TextField
-                type={"show"}
-                title={"Duration"}
-                placeholder={"No Duration"}
-                value={"3 Months"}
-              /> */}
+            <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+              <TextField type={"show"} title={"Package"} placeholder={"No Package"} value={data?.feePackage?.name || "No Package"} />
+              <TextField type={"show"} title={"Duration"} placeholder={"No Duration"} value={data?.activeTransaction?.pack?.toUpperCase()} />
+              <TextField type={"show"} title={"Amount"} placeholder={"No Duration"} value={data?.activeTransaction?.amount} />
             </div>
           </div>
           {/* //& Notifications Right Row */}
@@ -316,39 +261,15 @@ export default function Details() {
             </div>
             {/* //$ Students Verified Route  */}
             <div className="layout-sub-title">
-              Assign/Change Route{" "}
-              <span style={{ color: "red" }}>{!data?.route ? "⚠️" : ""}</span>
+              Assign/Change Route <span style={{ color: "red" }}>{!data?.route ? "⚠️" : ""}</span>
             </div>
 
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
-              <div
-                className="layout-sub-title"
-                style={{ color: "teal", width: "100%" }}
-              >
-                Route Assigned :{" "}
-                {data?.route?.name ? data?.route?.name : "Nothing"}
-              </div>
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div style={{ color: "teal", width: "100%" }}>Route Assigned : {data?.route?.name ? data?.route?.name : "Nothing"}</div>
 
-              <DropDown
-                title={routeField.title}
-                options={routeField.options}
-                value={routeField.value}
-                setter={routeField.setter}
-              />
-              <div
-                className="button"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Button
-                  onClick={assignRoute}
-                  colorScheme="teal"
-                  size="md"
-                  isLoading={routeLoading}
-                  loadingText=""
-                >
+              <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
+              <div className="button" style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button onClick={assignRoute} size="md" isLoading={routeLoading} loadingText="">
                   ✔️
                 </Button>
                 {data?.route ? (
@@ -356,7 +277,7 @@ export default function Details() {
                     onClick={() => {
                       onOpenRoute.current.showAlert();
                     }}
-                    colorScheme="red"
+           
                     size="md"
                     isLoading={unsetRouteLoading}
                     loadingText=""
@@ -369,73 +290,29 @@ export default function Details() {
             </div>
             {/* //$ Due Date Change */}
             <div className="layout-sub-title">Payment Info</div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
-              <div
-                className="layout-sub-title"
-                style={{ color: "red", width: "100%" }}
-              >
-                {data?.dueDate
-                  ? `Due date is ${data?.payDate.substring(0, 10)}`
-                  : "No Dues"}
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div style={{ color: "red", width: "100%", marginBottom: "1vw" }} className="layout-sub-title">
+                {data?.activeTransaction ? `Due date is ${data?.activeTransaction?.dueDate?.substring(0, 10)}` : "No Active Transaction"}
               </div>
-              <TextField
-                type={"date"}
-                title={"Extend Due Date"}
-                value={dueDateChange}
-                setter={setDueDateChange}
-              />
-              <div className="button">
-                <Button
-                  onClick={extendDueDate}
-                  colorScheme="teal"
-                  size="md"
-                  isFullWidth
-                  isLoading={extendDueDateLoading}
-                  loadingText="Changing Due Date"
-                >
-                  Extend Date
-                </Button>
-                <Notification type={""} />
+
+              <div style={{ color: "teal", width: "100%", marginBottom: "1vw" }} className="layout-sub-title">
+                {data?.activeTransaction ? `Due date is ${data?.activeTransaction?.payDate?.substring(0, 10)}` : "No Active Transaction"}
               </div>
             </div>
             {/* //$ Package Assign */}
             <div className="layout-sub-title">
-              Assign/Change Package{" "}
-              <span style={{ color: "red" }}>
-                {!data?.feePackage ? "⚠️" : ""}
-              </span>
+              Assign/Change Package <span style={{ color: "red" }}>{!data?.feePackage ? "⚠️" : ""}</span>
             </div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
-              <div
-                className="layout-sub-title"
-                style={{ color: "teal", width: "100%" }}
-              >
-                Fee Package Assigned :{" "}
-                {data?.feePackage?.name ? data?.feePackage?.name : "Nothing"}
-              </div>
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div style={{ color: "teal", width: "100%" }}>Fee Package Assigned : {data?.feePackage?.name ? data?.feePackage?.name : "Nothing"}</div>
               <DropDown
                 title={feePackageField.title}
                 options={feePackageField.options}
                 value={feePackageField.value}
                 setter={feePackageField.setter}
               />
-              <div
-                className="button"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Button
-                  onClick={assignPackage}
-                  colorScheme="teal"
-                  size="md"
-                  isLoading={packageLoading}
-                  loadingText="Submitting"
-                >
+              <div className="button" style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button onClick={assignPackage} size="md" isLoading={packageLoading} loadingText="Submitting">
                   ✔️
                 </Button>
                 {data?.feePackage ? (
@@ -443,7 +320,7 @@ export default function Details() {
                     onClick={() => {
                       onOpenPackage.current.showAlert();
                     }}
-                    colorScheme="red"
+                 
                     size="md"
                     isLoading={unsetPackageLoading}
                     loadingText=""
@@ -457,18 +334,10 @@ export default function Details() {
             {/* //$Verify Passenger */}
             <div className="layout-sub-title">
               Verify/Unverify Passenger
-              <span style={{ color: "red" }}>
-                {!data?.feePackage ? "⚠️" : ""}
-              </span>
+              <span style={{ color: "red" }}>{!data?.feePackage ? "⚠️" : ""}</span>
             </div>
-            <div
-              className="layout-form"
-              style={{ justifyContent: "flex-start", alignItems: "flex-end" }}
-            >
-              <div
-                className="button"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
+            <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
+              <div className="button" style={{ display: "flex", justifyContent: "space-between" }}>
                 {data?.isVerified ? (
                   <Button
                     onClick={() => {
@@ -483,14 +352,7 @@ export default function Details() {
                     Unverify
                   </Button>
                 ) : (
-                  <Button
-                    onClick={verifyPassenger}
-                    colorScheme="teal"
-                    size="md"
-                    isFullWidth
-                    isLoading={verifyLoading}
-                    loadingText="Unverifing"
-                  >
+                  <Button onClick={verifyPassenger} colorScheme="teal" size="md" isFullWidth isLoading={verifyLoading} loadingText="Unverifing">
                     Verify
                   </Button>
                 )}

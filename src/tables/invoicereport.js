@@ -2,6 +2,8 @@
 import MaterialTable from 'material-table'
 import tableIcons from '@/utilities/tableIcons'
 import Loading from '@/blocks/loading'
+import PrintInvoice from '../../invoice/printInvoice'
+import { useState } from 'react'
 
 const InvoiceReport = () => {
   const data = [
@@ -25,38 +27,43 @@ const InvoiceReport = () => {
     { title: 'Print Invoice', field: 'print' },
   ]
 
+  const [invoice, setInvoice] = useState(false)
+
   return (
-    <MaterialTable
-      icons={tableIcons}
-      options={{
-        exportButton: true,
-        filtering: true,
-        search: true,
-        exportAllData: true,
-        filtering: true,
-        showEmptyDataSourceMessage: true,
-        showFirstLastPageButtons: true,
-        showSelectAllCheckbox: true,
-        showTextRowsSelected: true,
-        searchAutoFocus: true,
-        sorting: true,
-        showTitle: true,
-        draggable: true,
-        pageSize: 10,
-        pageSizeOptions: [50, 100, 500, 1000],
-        actionsColumnIndex: -1,
-      }}
-      columns={column}
-      data={data}
-      actions={[
-        {
-          icon: tableIcons.Print,
-          tooltip: 'Print',
-          onClick: (event, rowData) => alert('Print Invoice For ' + rowData.no),
-        },
-      ]}
-      title="Invoice Report"
-    />
+    <>
+      {invoice && <PrintInvoice />}
+      <MaterialTable
+        icons={tableIcons}
+        options={{
+          exportButton: true,
+          filtering: true,
+          search: true,
+          exportAllData: true,
+          filtering: true,
+          showEmptyDataSourceMessage: true,
+          showFirstLastPageButtons: true,
+          showSelectAllCheckbox: true,
+          showTextRowsSelected: true,
+          searchAutoFocus: true,
+          sorting: true,
+          showTitle: true,
+          draggable: true,
+          pageSize: 10,
+          pageSizeOptions: [50, 100, 500, 1000],
+          actionsColumnIndex: -1,
+        }}
+        columns={column}
+        data={data}
+        actions={[
+          {
+            icon: tableIcons.Print,
+            tooltip: 'Print',
+            onClick: (event, rowData) => setInvoice(true),
+          },
+        ]}
+        title="Invoice Report"
+      />
+    </>
   )
 }
 

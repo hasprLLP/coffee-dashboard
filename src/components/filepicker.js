@@ -31,14 +31,19 @@ const FilePicker = ({ title, value, setter }) => {
 
     onOpen()
 
-    const storageRef = ref(storage, file.name)
+    if (file) {
+      const storageRef = ref(storage, file.name)
 
-    uploadBytes(storageRef, file).then(snapshot => {
-      getDownloadURL(snapshot.ref).then(downloadURL => {
-        setPhoto(downloadURL)
-        setLoading(false)
+      uploadBytes(storageRef, file).then(snapshot => {
+        getDownloadURL(snapshot.ref).then(downloadURL => {
+          setPhoto(downloadURL)
+          setLoading(false)
+        })
       })
-    })
+    } else {
+      onClose()
+    }
+
   }
 
   const submitPhoto = () => {

@@ -82,7 +82,10 @@ export default function Details() {
 
   //$ Fetch Data with ID
   const fetchData = useFetch(`owner/${id}`)
-  const data = fetchData?.data
+  const data = fetchData?.data?.owner
+
+  console.log(data);
+  
 
   //$ Table Info
   //@ Data
@@ -120,7 +123,7 @@ export default function Details() {
                 <div style={{ width: '12vw', height: '12vw', marginTop: '1vw', marginBottom: '2vw', resizeMode: 'cover' }}>
                   <img
                     alt="No Photo Available"
-                    src={data?.photo || '/static/svg/user.svg'}
+                    src={data?.photo?.url || '/static/svg/user.svg'}
                     style={{ width: '12vw', height: '12vw', objectFit: 'cover', borderRadius: '100%', backgroundColor: 'lightgray' }}
                   />
                 </div>
