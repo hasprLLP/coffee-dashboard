@@ -24,7 +24,7 @@ export default function Create() {
   const [fitnessPhoto, setFitnessPhoto] = useState()
   const [insurancePhoto, setInsurancePhoto] = useState()
 
-  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto, setFitness, setInsurance]
+  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto, setFitnessPhoto, setInsurancePhoto]
 
   const getOwners = async () => {
     try {

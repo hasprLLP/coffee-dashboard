@@ -16,6 +16,13 @@
     color: $color-text;
   }
 
+  &-sub-small {
+   font-size: $h3;
+    font-weight: 900;
+    margin-bottom: 0.5vw;
+    color: $color-active;
+  }
+
   &-back {
     z-index: 100000;
     display: flex;
