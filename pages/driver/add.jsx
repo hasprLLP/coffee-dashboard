@@ -10,6 +10,7 @@ export default function Create() {
   const [name, setName] = useState()
   const [phone, setPhone] = useState()
   const [pin, setPin] = useState()
+  const [DOB, setDOB] = useState()
   const [photo, setPhoto] = useState()
   const [sign, setSign] = useState()
   const [drivingLicense, setDrivingLicense] = useState()
@@ -17,7 +18,7 @@ export default function Create() {
   const [aadharBack, setAadharBack] = useState()
   const [covid, setCovid] = useState()
 
-  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid]
+  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid, setDOB]
 
   //$ States and Hooks [#STATES#]
   const fields = [
@@ -33,6 +34,7 @@ export default function Create() {
       prefix: '+91',
     },
     { title: 'Pin', isRequired: true, placeholder: 'Pin', value: pin, setter: setPin },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
     { title: 'Upload Passport Size Photo', value: photo, setter: setPhoto, type: 'upload' },
     { title: 'Upload Aadhar Card Front', value: aadharFront, setter: setAadharFront, type: 'upload' },
     { title: 'Upload Aadhar Card Back', value: aadharBack, setter: setAadharBack, type: 'upload' },
@@ -41,7 +43,6 @@ export default function Create() {
     { title: 'Upload COVID Certificate', value: covid, setter: setCovid, type: 'upload' },
   ]
 
-  // FIXME:className 'driver', 'layout-form' & 'layout-title' are same for most of the pages, make something like className - 'title' , 'form' & 'container'
   //& Return UI [#RETURN#]
   return (
     <div className="home">
@@ -67,7 +68,7 @@ export default function Create() {
             )
           })}
         </div>
-        <SaveButton reset={setterArray} collection={'operator'} data={{ name, phone, pin, sign, photo, drivingLicense }} />
+        <SaveButton reset={setterArray} collection={'operator'} data={{ name, phone, DOB, pin, sign, photo, drivingLicense }} />
       </div>
     </div>
   )

@@ -16,6 +16,7 @@ export default function EditBus() {
   const [name, setName] = useState()
   const [phone, setPhone] = useState()
   const [pin, setPin] = useState()
+  const [DOB, setDOB] = useState()
   const [photo, setPhoto] = useState()
   const [sign, setSign] = useState()
   const [drivingLicense, setDrivingLicense] = useState()
@@ -23,14 +24,16 @@ export default function EditBus() {
   const [aadharBack, setAadharBack] = useState()
   const [covid, setCovid] = useState()
 
-  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid]
+  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid, setDOB]
 
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data)
+      const DOB = data?.DOB?.split('T') || ''
       setName(data?.name)
       setPhone(data?.phone)
       setPin(data?.pin)
+      setDOB(DOB[0])
       setPhoto(data?.photo)
       setSign(data?.sign)
       setAadharFront(data?.aadharFront)
@@ -54,6 +57,7 @@ export default function EditBus() {
       prefix: '+91',
     },
     { title: 'Pin', isRequired: true, placeholder: 'Pin', value: pin, setter: setPin },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
     { title: 'Upload Passport Size Photo', value: photo, setter: setPhoto, type: 'upload' },
     { title: 'Upload Aadhar Card Front', value: aadharFront, setter: setAadharFront, type: 'upload' },
     { title: 'Upload Aadhar Card Back', value: aadharBack, setter: setAadharBack, type: 'upload' },
@@ -97,6 +101,7 @@ export default function EditBus() {
               name,
               phone,
               pin,
+              DOB,
               photo,
               sign,
               drivingLicense,

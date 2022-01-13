@@ -1,49 +1,41 @@
-import {
-  Skeleton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import firebaseApp from '@/firebase/index';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+/* eslint-disable @next/next/no-img-element */
+import { Skeleton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure, } from '@chakra-ui/react'
+import { useState } from 'react'
+import firebaseApp from '@/firebase/index'
+import TextField from '@/components/input';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const FilePicker = ({ title, value, setter }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [loading, setLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [expiry, setExpiry] = useState()
+  const [loading, setLoading] = useState(false)
 
-  const storage = getStorage();
+  const storage = getStorage()
 
-  const onFilePick = async (e) => {
-    setLoading(true);
+  const onFilePick = async e => {
+    setLoading(true)
 
-    const file = e.target.files[0];
+    const file = e.target.files[0]
 
-    onOpen();
+    onOpen()
 
-    const storageRef = ref(storage, file.name);
+    const storageRef = ref(storage, file.name)
 
-    uploadBytes(storageRef, file).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        setter(downloadURL);
-        setLoading(false);
-      });
-    });
-  };
+    uploadBytes(storageRef, file).then(snapshot => {
+      getDownloadURL(snapshot.ref).then(downloadURL => {
+        setter(downloadURL)
+        setLoading(false)
+      })
+    })
+  }
 
   return (
-    <div className='dropdown' style={{ marginRight: '0.5vw' }}>
-      <div className='dropdown-title'>{title}</div>
+    <div className="dropdown" style={{ marginRight: '0.5vw' }}>
+      <div className="dropdown-title">{title}</div>
       <input
-        type='file'
-        accept='image/*'
-        className='file-picker css-13vuage'
+        type="file"
+        accept="image/*"
+        className="file-picker css-13vuage"
         onChange={onFilePick}
         style={{ marginBottom: '2vw', marginTop: '1vw' }}
       />
@@ -53,9 +45,9 @@ const FilePicker = ({ title, value, setter }) => {
           <ModalHeader>Verify Uploaded Photo</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Skeleton isLoaded={!loading} height='100%' rounded='xl'>
+            <Skeleton isLoaded={!loading} height="100%" rounded="xl">
               <img
-                alt='verify'
+                alt="verify"
                 src={value}
                 style={{
                   display: 'flex',
@@ -67,10 +59,11 @@ const FilePicker = ({ title, value, setter }) => {
                   objectFit: 'contain',
                 }}
               />
+              <TextField type={"date"} title={"Chooose Expiry"} placeholder={"Expiry Date"} value={expiry} setter={setExpiry} />
             </Skeleton>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='teal' mr={3} onClick={onClose}>
+            <Button colorScheme="teal" mr={3} onClick={onClose}>
               Verify
             </Button>
             <Button onClick={onClose}>Re-upload</Button>
@@ -78,7 +71,7 @@ const FilePicker = ({ title, value, setter }) => {
         </ModalContent>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default FilePicker;
+export default FilePicker
