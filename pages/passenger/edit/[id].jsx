@@ -35,7 +35,7 @@ export default function EditPassenger() {
   const [route, setRoute] = useState({});
   const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
-  const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState({});
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
@@ -47,8 +47,8 @@ export default function EditPassenger() {
   const [packageNames, setPackageNames] = useState([]);
 
   console.log("Current POack",package_);
-  
-  
+
+
 
   const [pack, setPack] = useState([]);
   const [clean, setClean] = useState(true);
@@ -237,7 +237,7 @@ export default function EditPassenger() {
     { title: "Route", isRequired: true, options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
   ];
   console.log(pack);
-  
+
   const feeDetails = [
     { title: "Select Package", isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: "dropdown" },
     { title: "Select Duration", isRequired: true, options: packType, value: pack, setter: setPack, type: "dropdown" },

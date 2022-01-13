@@ -29,7 +29,7 @@ export default function Create() {
   const [route, setRoute] = useState({})
   const [routes, setRoutes] = useState([])
   const [routeNames, setRouteNames] = useState([])
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [amount, setAmount] = useState(0)
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
@@ -39,7 +39,7 @@ export default function Create() {
   const [package_, setPackage] = useState({})
   const [packages, setPackages] = useState([])
   const [packageNames, setPackageNames] = useState([])
-
+  
   const [loading, setLoading] = useState(false)
 
   const [pack, setPack] = useState([])

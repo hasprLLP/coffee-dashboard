@@ -11,7 +11,7 @@ export default function Create() {
   const [phone, setPhone] = useState()
   const [pin, setPin] = useState()
   const [DOB, setDOB] = useState()
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [sign, setSign] = useState()
   const [drivingLicense, setDrivingLicense] = useState()
   const [aadharFront, setAadharFront] = useState()
@@ -68,7 +68,11 @@ export default function Create() {
             )
           })}
         </div>
-        <SaveButton reset={setterArray} collection={'operator'} data={{ name, phone, DOB, pin, sign, photo, drivingLicense }} />
+        <SaveButton
+          reset={setterArray}
+          collection={'operator'}
+          data={{ name, phone, DOB, pin, sign, photo, drivingLicense, aadharFront, aadharBack, covid }}
+        />
       </div>
     </div>
   )

@@ -1,13 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import { Skeleton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure, } from '@chakra-ui/react'
-import { useState } from 'react'
+import {
+  Skeleton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
 import firebaseApp from '@/firebase/index'
-import TextField from '@/components/input';
+import TextField from '@/components/input'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const FilePicker = ({ title, value, setter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [expiry, setExpiry] = useState()
+  const [photo, setPhoto] = useState({})
   const [loading, setLoading] = useState(false)
 
   const storage = getStorage()
@@ -23,10 +35,15 @@ const FilePicker = ({ title, value, setter }) => {
 
     uploadBytes(storageRef, file).then(snapshot => {
       getDownloadURL(snapshot.ref).then(downloadURL => {
-        setter(downloadURL)
+        setPhoto(downloadURL)
         setLoading(false)
       })
     })
+  }
+
+  const submitPhoto = () => {
+    setter({ date: expiry || null, url: photo })
+    onClose()
   }
 
   return (
@@ -48,7 +65,7 @@ const FilePicker = ({ title, value, setter }) => {
             <Skeleton isLoaded={!loading} height="100%" rounded="xl">
               <img
                 alt="verify"
-                src={value}
+                src={photo}
                 style={{
                   display: 'flex',
                   borderRadius: '0.5vw',
@@ -59,11 +76,11 @@ const FilePicker = ({ title, value, setter }) => {
                   objectFit: 'contain',
                 }}
               />
-              <TextField type={"date"} title={"Chooose Expiry"} placeholder={"Expiry Date"} value={expiry} setter={setExpiry} />
+              <TextField type={'date'} title={'Chooose Expiry'} placeholder={'Expiry Date'} value={expiry} setter={setExpiry} />
             </Skeleton>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={onClose}>
+            <Button colorScheme="teal" mr={3} onClick={submitPhoto}>
               Verify
             </Button>
             <Button onClick={onClose}>Re-upload</Button>

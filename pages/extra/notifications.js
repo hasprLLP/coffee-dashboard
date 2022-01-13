@@ -16,7 +16,7 @@ export default function Notifications() {
   const [routeList, setRouteList] = useState([])
   const [message, setMessage] = useState()
   const [heading, setHeading] = useState()
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [status, setStatus] = useState()
 
   const getSchools = async () => {

@@ -17,14 +17,14 @@ export default function EditBus() {
   const [phone, setPhone] = useState()
   const [pin, setPin] = useState()
   const [DOB, setDOB] = useState()
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [sign, setSign] = useState()
   const [drivingLicense, setDrivingLicense] = useState()
   const [aadharFront, setAadharFront] = useState()
   const [aadharBack, setAadharBack] = useState()
   const [covid, setCovid] = useState()
 
-  const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid, setDOB]
+const setterArray = [setName, setPhone, setPin, setPhoto, setSign, setDrivingLicense, setAadharFront, setAadharBack, setCovid, setDOB]
 
   useEffect(() => {
     if (router.query.data) {
@@ -97,15 +97,7 @@ export default function EditBus() {
         <div className="layout-edit-row">
           <UpdateButton
             collection={`operator/${id}`}
-            data={{
-              name,
-              phone,
-              pin,
-              DOB,
-              photo,
-              sign,
-              drivingLicense,
-            }}
+          data={{ name, phone, DOB, pin, sign, photo, drivingLicense, aadharFront, aadharBack, covid }}v
           />
           <DeleteButton
             collection={'bus'}

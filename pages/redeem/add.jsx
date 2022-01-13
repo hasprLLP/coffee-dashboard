@@ -10,7 +10,7 @@ export default function Create() {
   const [name, setName] = useState()
   const [phone, setPhone] = useState()
   const [pin, setPin] = useState()
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [note, setNote] = useState()
   const [password, setPassword] = useState()
   const [passwordConfirm, setPasswordConfirm] = useState()
@@ -20,16 +20,14 @@ export default function Create() {
   const [clean, setClean] = useState(false)
 
   useEffect(() => {
-    setName("")
-    setPhone("")
-    setPin("")
-    setPhoto("")
-    setNote("")
-    setPassword("")
-    setPasswordConfirm("")
+    setName('')
+    setPhone('')
+    setPin('')
+    setPhoto('')
+    setNote('')
+    setPassword('')
+    setPasswordConfirm('')
   }, [clean])
-
-
 
   //$ States and Hooks [#STATES#]
   const fields = [

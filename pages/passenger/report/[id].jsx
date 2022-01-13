@@ -298,16 +298,16 @@ export default function Details() {
                 type={"show"}
                 title={"Package"}
                 placeholder={"No Package"}
-                value={"0-4KM"}
+                value={data?.feePackage?.name || "No Package"}
               />
-              <TextField
+              {/* //TODO Ye Nai Hai
+               <TextField
                 type={"show"}
                 title={"Duration"}
                 placeholder={"No Duration"}
                 value={"3 Months"}
-              />
+              /> */}
             </div>
-            epo
           </div>
           {/* //& Notifications Right Row */}
           <div className="layout-row-item">

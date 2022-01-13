@@ -1,53 +1,53 @@
 //& Input Components [#IMPORTS#]
-import TextField from '@/components/input';
-import DropDown from '@/components/dropdown';
-import SaveButton from '@/components/saveButton';
-import FilePicker from '@/components/filepicker';
-import { useEffect, useState } from 'react';
-import { Switch } from '@chakra-ui/react';
-import axios from 'axios';
+import TextField from '@/components/input'
+import DropDown from '@/components/dropdown'
+import SaveButton from '@/components/saveButton'
+import FilePicker from '@/components/filepicker'
+import { useEffect, useState } from 'react'
+import { Switch } from '@chakra-ui/react'
+import axios from 'axios'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
-  const [RCNumber, setRCNumber] = useState();
-  const [name, setName] = useState();
-  const [owner, setOwner] = useState({});
-  const [owners, setOwners] = useState();
-  const [ownerNames, setOwnerNames] = useState([]);
-  const [capacity, setCapacity] = useState(40);
-  const [commission, setCommission] = useState(10);
-  const [vehicleType, setVehicleType] = useState('Bus');
-  const [selfOwn, setSelfOwn] = useState(false);
-  const [RCPhoto, setRCPhoto] = useState();
-  const [permitPhoto, setPermitPhoto] = useState();
-  const [pucPhoto, setPucPhoto] = useState();
+  const [RCNumber, setRCNumber] = useState()
+  const [name, setName] = useState()
+  const [owner, setOwner] = useState({})
+  const [owners, setOwners] = useState()
+  const [ownerNames, setOwnerNames] = useState([])
+  const [capacity, setCapacity] = useState(40)
+  const [commission, setCommission] = useState(10)
+  const [vehicleType, setVehicleType] = useState('Bus')
+  const [selfOwn, setSelfOwn] = useState(false)
+  const [RCPhoto, setRCPhoto] = useState()
+  const [permitPhoto, setPermitPhoto] = useState()
+  const [pucPhoto, setPucPhoto] = useState()
+  const [fitnessPhoto, setFitnessPhoto] = useState()
+  const [insurancePhoto, setInsurancePhoto] = useState()
 
-  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto];
-
-
+  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto, setFitness, setInsurance]
 
   const getOwners = async () => {
     try {
-      const response = await axios.get(`owner`);
-      setOwners(response.data.data);
-      const tempOwnerName = [];
-      response.data.data.map((owner) => {
-        tempOwnerName.push(owner.name);
-      });
-      setOwnerNames(tempOwnerName);
+      const response = await axios.get(`owner`)
+      setOwners(response.data.data)
+      const tempOwnerName = []
+      response.data.data.map(owner => {
+        tempOwnerName.push(owner.name)
+      })
+      setOwnerNames(tempOwnerName)
     } catch (error) {
-      console.log('Error while fetching Owner: ', error);
+      console.log('Error while fetching Owner: ', error)
     }
-  };
+  }
 
-  const setOwnerID = (ownerName) => {
-    const ownerObj = owners?.find((owner) => owner?.name === ownerName);
-    setOwner(ownerObj);
-  };
+  const setOwnerID = ownerName => {
+    const ownerObj = owners?.find(owner => owner?.name === ownerName)
+    setOwner(ownerObj)
+  }
 
   useEffect(() => {
-    getOwners();
-  }, []);
+    getOwners()
+  }, [])
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
@@ -58,7 +58,9 @@ export default function Create() {
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
-  ];
+    { title: 'Fitness Photo', value: fitnessPhoto, setter: setFitnessPhoto, type: 'upload' },
+    { title: 'Insurance Photo', value: insurancePhoto, setter: setInsurancePhoto, type: 'upload' },
+  ]
   const ownerFields = [
     {
       title: 'Owner',
@@ -70,7 +72,7 @@ export default function Create() {
       setter: setOwnerID,
     },
     { title: 'Commission', placeholder: 'Owner Commission', type: 'number', value: commission, setter: setCommission, type: selfOwn ? 'fix' : null },
-  ];
+  ]
 
   //& Return UI [#RETURN#]
   return (
@@ -137,6 +139,11 @@ export default function Create() {
             selfOwn,
             vehicleType,
             commission,
+            RCPhoto,
+            permitPhoto,
+            pucPhoto,
+            fitnessPhoto,
+            insurancePhoto,
           }}
         />
       </div>

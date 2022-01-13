@@ -16,7 +16,7 @@ export default function EditSchool() {
 
   const [name, setName] = useState()
   const [phone, setPhone] = useState()
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState({})
   const [note, setNote] = useState()
   const [password, setPassword] = useState()
   const [passwordConfirm, setPasswordConfirm] = useState()
