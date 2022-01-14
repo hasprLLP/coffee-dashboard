@@ -25,7 +25,7 @@ module.exports = withPWA({
       util: require.resolve('util'),
       buffer: require.resolve('buffer'),
       asset: require.resolve('assert'),
-      crypto: false,
+      crypto: require.resolve('crypto-browserify'),
     }
     config.plugins.push(
       new webpack.ProvidePlugin({

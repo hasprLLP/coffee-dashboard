@@ -44,7 +44,10 @@ export default function MyApp({ Component, pageProps }) {
       router.push('/')
     } else {
       const is_auth = verify(authorization)
+      console.log('token', authorization)
+
       if (is_auth.id) {
+
         axios.defaults.headers.common['authorization'] = authorization
         router.pathname === '/login' || (router.pathname === '/' ? router.push('/dashboard') : null)
       } else {
