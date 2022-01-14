@@ -1,7 +1,8 @@
 import React from 'react'
 import { Page, Text, View, Image, Document, StyleSheet, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer'
 import BasicButton from '@/components/button'
-import InvoiceItemTable from "./table"
+import InvoiceItemTable from './table'
+// const PDFViewer = dynamic(import('../../components/PDFViewer'), { ssr: false });
 
 //$ Sample Data
 const invoiceData = {
@@ -127,19 +128,16 @@ const BillTo = ({ invoice }) => (
   </View>
 )
 
-
-
 const InvoiceThankYouMsg = () => (
   <View style={styles.titleContainer}>
     <Text style={styles.reportTitle}>Thank you for your business</Text>
   </View>
 )
 
-
 // Create Document Component
 const MyDocument = ({ data, size, orientation }) => (
   <Document>
-    <Page size={size} style={styles.page} orientation={orientation?.toLowerCase()}>
+    <Page size={size} style={styles.page || 'A4'} orientation={orientation?.toLowerCase() || 'portrait'}>
       <Image style={styles.logo} src={'/icons/logo/logo.png'} />
       <InvoiceTitle title="Invoice" />
       <InvoiceNo invoice={invoiceData} />
