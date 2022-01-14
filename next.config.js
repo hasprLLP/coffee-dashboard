@@ -16,25 +16,24 @@ module.exports = withPWA({
     runtimeCaching,
     disable: process.env.NODE_ENV === 'development',
   },
-  resolve: {
-    fallback: {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Important: return the modified config
+    config.resolve.fallback = {
       process: require.resolve('process/browser'),
       zlib: require.resolve('browserify-zlib'),
       stream: require.resolve('stream-browserify'),
       util: require.resolve('util'),
       buffer: require.resolve('buffer'),
       asset: require.resolve('assert'),
-    },
-  },
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    }
     config.plugins.push(
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser',
       })
     )
-
     return config
   },
+
   swcMinify: true,
 })
