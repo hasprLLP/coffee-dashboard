@@ -15,7 +15,7 @@ export default function Create() {
   const [owners, setOwners] = useState()
   const [ownerNames, setOwnerNames] = useState([])
   const [capacity, setCapacity] = useState(40)
-  const [commission, setCommission] = useState(10)
+  const [commission, setCommission] = useState(0)
   const [vehicleType, setVehicleType] = useState('Bus')
   const [selfOwn, setSelfOwn] = useState(false)
   const [RCPhoto, setRCPhoto] = useState()
@@ -138,7 +138,7 @@ export default function Create() {
             capacity,
             selfOwn,
             vehicleType,
-            commission,
+            commission :  owner ? commission : 0,
             RCPhoto,
             permitPhoto,
             pucPhoto,
