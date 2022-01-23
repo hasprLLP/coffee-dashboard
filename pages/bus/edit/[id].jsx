@@ -71,6 +71,8 @@ export default function EditBus() {
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
+    { title: 'Fitness Photo', value: fitnessPhoto, setter: setFitnessPhoto, type: 'upload' },
+    { title: 'Insurance Photo', value: insurancePhoto, setter: setInsurancePhoto, type: 'upload' },
   ]
   const ownerFields = [
     {
