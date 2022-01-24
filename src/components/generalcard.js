@@ -1,7 +1,10 @@
 import { Box, Avatar, Heading, Text, Stack, List, ListItem, ListIcon, Button, useColorModeValue } from '@chakra-ui/react'
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
 
-const GeneralCard = ({}) => {
+const GeneralCard = ({ id, page, first, second, third }) => {
+  const router = useRouter()
+
   return (
     <Box
       maxW={'310px'}
@@ -12,7 +15,7 @@ const GeneralCard = ({}) => {
       bg={'gray.200'}
       rounded={'lg'}
       overflow={'hidden'}
-      onClick={() => alert("open bus panel")}
+      onClick={() => router.push({ pathname: `/${page}/report/${id}` })}
       _hover={{
         cursor: 'pointer',
         bg: 'gray.400',
@@ -30,14 +33,14 @@ const GeneralCard = ({}) => {
           <Stack direction={'column'} align={'flex-start'} justify={'space-between'} p={4}>
             <Stack direction={'row'} align={'center'} justify={'space-between'}>
               <Heading fontSize={'md'} fontFamily={'Gilroy'}>
-                Bus Name
+                {first}
               </Heading>
               <Text fontSize={'xs'} fontFamily={'Gilroy'} fontWeight={600} bg={'white'} px={3} py={0.5} color={'teal'} rounded={'full'}>
-                58 Passengers
+                {second}
               </Text>
             </Stack>
             <Heading fontSize={'sm'} fontWeight={500} color={'gray.600'} fontFamily={'Gilroy'}>
-              Redeem : ₹500
+              {third}
             </Heading>
           </Stack>
         </Stack>
