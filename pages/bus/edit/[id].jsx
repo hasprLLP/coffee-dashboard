@@ -71,6 +71,8 @@ export default function EditBus() {
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
+    { title: 'Fitness Photo', value: fitnessPhoto, setter: setFitnessPhoto, type: 'upload' },
+    { title: 'Insurance Photo', value: insurancePhoto, setter: setInsurancePhoto, type: 'upload' },
   ]
   const ownerFields = [
     {
@@ -92,17 +94,6 @@ export default function EditBus() {
         <div className="layout-title">
           <GoBack />
           Modify Bus Details
-        </div>
-        <div className="layout-not-student">
-          <h1>Self Own Bus ?</h1>
-          <Switch
-            onChange={e => {
-              setSelfOwn(e.target.checked)
-            }}
-            value={selfOwn}
-            size="md"
-            defaultIsChecked={false}
-          />
         </div>
         <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {basicFields.map((item, i) => {

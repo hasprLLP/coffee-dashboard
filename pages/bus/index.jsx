@@ -55,7 +55,7 @@ export default function ViewBus() {
                   name={item.name}
                   id={item._id}
                   heading={['Owner', 'RC']}
-                  info={[item?.owner?.name || '', item?.RCNumber || '']}
+                  info={[item?.owner?.name || 'Owner Bus', item?.RCNumber || '']}
                   data={item}
                   onEdit={onEdit}
                   onDetails={onDetails}
