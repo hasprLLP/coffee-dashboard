@@ -2,7 +2,7 @@ import { Box, Avatar, Heading, Text, Stack, List, ListItem, ListIcon, Button, us
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 
-const GeneralCard = ({ id, page, first, second, third }) => {
+const GeneralCard = ({ id, page, first, second, third,photo }) => {
   const router = useRouter()
 
   return (
@@ -29,7 +29,7 @@ const GeneralCard = ({ id, page, first, second, third }) => {
     >
       <Stack direction={'row'} pl={4} align={'center'} justify={'space-between'}>
         <Stack direction={'row'} align={'center'} justify={'space-between'}>
-          <Avatar size={'md'} src={'/static/svg/bus.svg'} alt={'Avatar Alt'} pos={'relative'} />
+          <Avatar size={'md'} src={photo||page==="bus" ? '/static/svg/bus.svg' :'/static/svg/user.svg'} alt={'Avatar Alt'} pos={'relative'} />
           <Stack direction={'column'} align={'flex-start'} justify={'space-between'} p={4}>
             <Stack direction={'row'} align={'center'} justify={'space-between'}>
               <Heading fontSize={'md'} fontFamily={'Gilroy'}>

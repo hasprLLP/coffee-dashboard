@@ -9,7 +9,7 @@ export default function PhotoCard({ passenger, id, onEdit, onDetail, onFeeDetail
     <Box maxW={'280px'} pos="relative" mb={6} mr={6} w={'full'} bg={useColorModeValue('white', 'gray.900')} rounded={'xl'} p={6} textAlign={'center'}>
       <Avatar
         size={'xl'}
-        src={passenger.photo || '/static/svg/user.svg'}
+        src={passenger?.photo?.url || '/static/svg/user.svg'}
         alt={'Avatar Alt'}
         mb={4}
         pos={'relative'}
