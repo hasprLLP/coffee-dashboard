@@ -7,6 +7,7 @@ import TextField from '@/components/input'
 import Notification from '@/components/notification'
 import { Button } from '@chakra-ui/react'
 import axios from 'axios'
+import useFetch from '@/hooks/useFetch'
 import BasicModal from '@/components/basicModal'
 import getMidPoint from '@/utilities/getMidPoint'
 import GeneralCard from '@/components/generalcard'
@@ -207,6 +208,8 @@ export default function Details() {
   //! New Panel
   //! Code Starts Here
   //$ 3: List of Buses
+  // const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
+  // const data = fetchData?.data?.owner //` Response from API
   //@ Data
   const buses = [
     { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
@@ -354,6 +357,11 @@ export default function Details() {
 
   //$ 7: Previous Transactions
   //@ Data
+    const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
+  const dataTrans = fetchDataTrans?.data //` Response from API
+  // const fetchDataTrans = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
+  // const dataTrans = fetchDataTrans?.data //` Response from API
+  
   const tableData = [
     { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
     { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
@@ -606,16 +614,7 @@ export default function Details() {
               Fee Statistics
             </div>
           </div>
-          <FeesView />
-          {/* //& 5: List of Students */}
-          <StudentsView />
-          {/* //& 6: View Uploaded Documents */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '1vw', marginBottom: '1vw' }}>
-              View Uploaded Documents
-            </div>
-            <DocumentsView />
-          </div>
+          <FeesView />  
           {/* //& 7: Bus Owner Transactions */}
           <div style={{ width: '100%' }}>
             <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>

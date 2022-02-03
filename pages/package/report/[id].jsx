@@ -24,8 +24,8 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
-  const data = fetchData?.data?.owner //` Response from API
+  const fetchData = useFetch(`package/${id}`) //` Get Owner Details API
+  const data = fetchData?.data //` Response from API
   //@ UI
   function BasicView() {
     return (
@@ -160,6 +160,8 @@ export default function Details() {
 
   //$ 5: List of Students
   //@ Data
+  const fetchDataKids = useFetch(`passenger?feePackage=${id}`) //` Get Owner Details API
+  const dataKids = fetchDataKids?.data //` Response from API
   const kids = [
     { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
     { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
@@ -246,6 +248,7 @@ export default function Details() {
 
   //$ 7: Previous Transactions
   //@ Data
+
   const tableData = [
     { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
     { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
@@ -349,40 +352,10 @@ export default function Details() {
             <ControlsView />
           </div>
         </div>
-        {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <BusesView />
-          {/* //& 4: Fee Statistics */}
-          <div style={{ width: '100%', marginTop: '2vw' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-              Fee Statistics
-            </div>
-          </div>
-          <FeesView />
           {/* //& 5: List of Students */}
           <StudentsView />
-          {/* //& 6: View Uploaded Documents */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '1vw', marginBottom: '1vw' }}>
-              View Uploaded Documents
-            </div>
-            <DocumentsView />
-          </div>
-          {/* //& 7: Bus Owner Transactions */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>
-              Previous Transactions
-            </div>
-            <GeneralTable title="Transactions" data={tableData} column={tableColumn} />
-          </div>
         </div>
-        {/* //& 8: Route Display */}
-        <div style={{ width: '100%', marginTop: '2vw' }}>
-          <div className="layout-sub-title" style={{ color: 'black', width: '100%', marginBottom: '1vw' }}>
-            Route On Map
-          </div>
-        </div>
-        <RouteView />
         <br />
       </div>
     </div>

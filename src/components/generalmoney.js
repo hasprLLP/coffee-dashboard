@@ -1,7 +1,7 @@
 import { Box, Center, Text, Stack, List, ListItem, ListIcon, Button, useColorModeValue } from '@chakra-ui/react'
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 
-export default function Pricing({ type, title, amount,line1,line2 }) {
+export default function Pricing({ type, title, amount,amount2,line1,line2 }) {
   return (
     <Box maxW={'240px'} w={'full'} mb={3} mr={3} bg={'gray.100'} rounded={'xl'} overflow={'hidden'}>
       <Stack textAlign={'center'} p={4} color={useColorModeValue('gray.800', 'white')} align={'center'}>
@@ -21,7 +21,14 @@ export default function Pricing({ type, title, amount,line1,line2 }) {
           <Text fontSize={'6xl'} fontWeight={800}>
             {Math.round(amount)||0}
           </Text>
-          <Text color={'gray.500'}>/month</Text>
+          <Text color={'gray.500'}></Text>
+        </Stack>
+        <Stack direction={'row'} align={'center'} justify={'center'}>
+          <Text fontSize={'xl'}>₹</Text>
+          <Text fontSize={'xl'} fontWeight={800}>
+            {Math.round(amount2)||0} Discount
+          </Text>
+          <Text color={'gray.500'}></Text>
         </Stack>
       </Stack>
 

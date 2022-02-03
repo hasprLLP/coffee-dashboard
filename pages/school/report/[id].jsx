@@ -24,8 +24,8 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
-  const data = fetchData?.data?.owner //` Response from API
+  const fetchData = useFetch(`school/${id}`) //` Get Owner Details API
+  const data = fetchData?.data //` Response from API
   //@ UI
   function BasicView() {
     return (
@@ -78,7 +78,7 @@ export default function Details() {
   function ControlsView() {
     return (
       <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-        <DropDown title={'Control 1'} options={[]} value={''} setter={null} />
+         <TextField title={'Chage Prefix'} placeholder={'Input Prefix'} />
         <div className="button">
           <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
             Modify
@@ -86,19 +86,23 @@ export default function Details() {
           <Notification type={''} />
         </div>
         <BasicModal Head="Warning 1!⚠️" Message="Message 1." ref={ref1} fun={change1} type="warning" />
-        <DropDown title={'Control 2'} options={[]} value={''} setter={null} />
+        {/* <DropDown title={'Control 2'} options={[]} value={''} setter={null} />
         <div className="button">
           <Button onClick={() => ref2.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
             Modify
           </Button>
           <Notification type={''} />
         </div>
-        <BasicModal Head="Warning 2 ! ⚠️" Message="Message 2." ref={ref2} fun={change2} type="warning" />
+        <BasicModal Head="Warning 2 ! ⚠️" Message="Message 2." ref={ref2} fun={change2} type="warning" /> */}
       </div>
     )
   }
 
   //$ 3: List of Buses
+  const fetchDataBus = useFetch(`route?school=${id}`) //` Get Owner Details API //! TODO DONOW
+  const dataBus = fetchDataBus?.data //` Response from API
+  console.log(dataBus);
+  
   //@ Data
   const buses = [
     { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
@@ -160,6 +164,9 @@ export default function Details() {
 
   //$ 5: List of Students
   //@ Data
+  const fetchDataPass = useFetch(`passenger?school=${id}`) //` Get Owner Details API
+  const dataPass = fetchDataPass?.data //` Response from API
+  
   const kids = [
     { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
     { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
@@ -352,29 +359,8 @@ export default function Details() {
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           <BusesView />
-          {/* //& 4: Fee Statistics */}
-          <div style={{ width: '100%', marginTop: '2vw' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-              Fee Statistics
-            </div>
-          </div>
-          <FeesView />
           {/* //& 5: List of Students */}
           <StudentsView />
-          {/* //& 6: View Uploaded Documents */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '1vw', marginBottom: '1vw' }}>
-              View Uploaded Documents
-            </div>
-            <DocumentsView />
-          </div>
-          {/* //& 7: Bus Owner Transactions */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>
-              Previous Transactions
-            </div>
-            <GeneralTable title="Transactions" data={tableData} column={tableColumn} />
-          </div>
         </div>
         {/* //& 8: Route Display */}
         <div style={{ width: '100%', marginTop: '2vw' }}>

@@ -24,7 +24,7 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`owner/${id}`); //` Get Owner Details API
+  const fetchData = useFetch(`passenger?${id}`); //` Get Owner Details API
   const data = fetchData?.data?.owner; //` Response from API
   //@ UI
   function BasicView() {
@@ -78,7 +78,7 @@ export default function Details() {
   function ControlsView() {
     return (
       <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-        <DropDown title={"Control 1"} options={[]} value={""} setter={null} />
+        <DropDown title={"Change Owner"} options={[]} value={""} setter={null} />
         <div className="button">
           <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
             Modify
@@ -86,14 +86,14 @@ export default function Details() {
           <Notification type={""} />
         </div>
         <BasicModal Head="Warning 1!⚠️" Message="Message 1." ref={ref1} fun={change1} type="warning" />
-        <DropDown title={"Control 2"} options={[]} value={""} setter={null} />
+        {/* <DropDown title={"Control 2"} options={[]} value={""} setter={null} />
         <div className="button">
           <Button onClick={() => ref2.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
             Modify
           </Button>
           <Notification type={""} />
         </div>
-        <BasicModal Head="Warning 2 ! ⚠️" Message="Message 2." ref={ref2} fun={change2} type="warning" />
+        <BasicModal Head="Warning 2 ! ⚠️" Message="Message 2." ref={ref2} fun={change2} type="warning" /> */}
       </div>
     );
   }
@@ -370,18 +370,7 @@ export default function Details() {
             <ControlsView />
           </div>
         </div>
-        {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-          <BusesView />
-          {/* //& 4: Fee Statistics */}
-          <div style={{ width: "100%", marginTop: "2vw" }}>
-            <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
-              Fee Statistics
-            </div>
-          </div>
-          <FeesView />
-          {/* //& 5: List of Students */}
-          <StudentsView />
           {/* //& 6: View Uploaded Documents */}
           <div style={{ width: "100%" }}>
             <div className="layout-sub-title" style={{ color: "black", width: "40%", marginTop: "1vw", marginBottom: "1vw" }}>
@@ -389,21 +378,7 @@ export default function Details() {
             </div>
             <DocumentsView />
           </div>
-          {/* //& 7: Bus Owner Transactions */}
-          <div style={{ width: "100%" }}>
-            <div className="layout-sub-title" style={{ color: "black", width: "40%", marginTop: "2vw" }}>
-              Previous Transactions
-            </div>
-            <GeneralTable title="Transactions" data={tableData} column={tableColumn} />
-          </div>
         </div>
-        {/* //& 8: Route Display */}
-        <div style={{ width: "100%", marginTop: "2vw" }}>
-          <div className="layout-sub-title" style={{ color: "black", width: "100%", marginBottom: "1vw" }}>
-            Route On Map
-          </div>
-        </div>
-        <RouteView />
         <br />
       </div>
     </div>

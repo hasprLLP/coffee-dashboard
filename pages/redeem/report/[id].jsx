@@ -13,6 +13,8 @@ import { Button } from "@chakra-ui/react";
 import BasicModal from "@/components/basicModal";
 import getMidPoint from "@/utilities/getMidPoint";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import GoogleMapReact from "google-map-react";
 
 //& Create & Export Driver [#FUNCTION#]
@@ -61,8 +63,9 @@ export default function Details() {
     //@ Current Month
     const [month, setMonth] = useState();
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const currentMonth = monthNames[new Date().getMonth() + 1];
-    const finalMonth = month || currentMonth;
+    const currentMonth = monthNames[new Date().getMonth()];
+    const finalMonthNo = monthNames.indexOf(month || currentMonth) + 1;
+    
 
     //@ Current Year
     const [year, setYear] = useState();
@@ -75,7 +78,7 @@ export default function Details() {
     const data = fetchData?.data; //` Response from API
 
     //@ Get Stats Bus Owner
-    const fetchDataStats = useFetch(`owner/redeem/${id}?month=${finalMonth}&year=${finalYear}`); //` Get Owner Details API
+    const fetchDataStats = useFetch(`owner/redeem/${id}?month=${finalMonthNo}&year=${finalYear}`); //` Get Owner Details API
     const dataStats = fetchDataStats?.data; //` Response from API
     console.log(dataStats);
 
@@ -83,16 +86,20 @@ export default function Details() {
     const ref1 = useRef(); //` Modal Ref 1
     const ref2 = useRef(); //` Modal Ref 2
     //@ Function 1
-    const change1 = async() => {
+    const change1 = async () => {
       try {
-        console.log("semding this",dataStats?.routes_stats);
-        const res = await axios.post(`owner/redeem/${id}?redeems=${JSON.stringify(dataStats?.routes_stats)}`);
-        if(res.data.data){
-          alert("SUCCESS")
+        const res = await axios.post(`owner/redeem/${id}`, {
+          redeems: dataStats?.routes_stats,
+        });
+        if (res.data.data) {
+          toast.success(`${res.data.data.invoice.amount} has been paid`, {
+            position: toast.POSITION.TOP_CENTER,
+          })
         }
       } catch (error) {
-        // Notification(error);
-        console.log(error);
+        toast.error(`There was a Problem : ${error.message}`, {
+          position: toast.POSITION.TOP_CENTER,
+        })
       }
     };
     //@ Function 2
@@ -136,6 +143,9 @@ export default function Details() {
 
   //$ 3: List of Buses
   //@ Data
+  const dataBus = fetchData?.data?.buses; //` Response from API
+  console.log(dataBus);
+  
   const buses = [
     { id: "0123", name: "Red Bus 1", passengers: "58 Passengers", redeem: "Redeem : ₹500" },
     { id: "0123", name: "Red Bus 2", passengers: "59 Passengers", redeem: "Redeem : ₹600" },
@@ -156,8 +166,8 @@ export default function Details() {
         </div>
         {/* //@ Buses Mapped */}
         <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
-          {buses.map((bus, i) => {
-            return <GeneralCard key={i} id={bus.id} page={"bus"} first={bus.name} second={bus.passengers} third={bus.redeem} />;
+          {dataBus?.map((bus, i) => {
+            return <GeneralCard key={i} id={bus.id} page={"bus"} first={bus.bus.RCNumber} second={bus.bus.name} third={`Commission ₹ ${bus.bus.commission}`} />;
           })}
         </div>
       </>
@@ -281,17 +291,18 @@ export default function Details() {
   }
 
   //$ 7: Previous Transactions
-  //@ Data
-  const tableData = [
-    { id: 0, name: "Transaction", phone: 9874654123, date: "02-01-2022" },
-    { id: 0, name: "Transaction", phone: 9874654123, date: "02-01-2022" },
-    { id: 0, name: "Transaction", phone: 9874654123, date: "02-01-2022" },
-  ];
+    //@ Data
+    const fetchDataTrans = useFetch(`owner/get_redeem_receipt/${id}`); //` Get Owner Details API
+    const dataTrans = fetchDataTrans?.data; //` Response from API
+    
+    const transactionData = dataTrans?.map((data,i)=>{
+      return {amount: data.invoice.amount,invoice: i,date: data.date_.formattedDate}
+    })
+
   //@ Columns
   const tableColumn = [
-    { title: "ID", field: "id" },
-    { title: "Name", field: "name" },
-    { title: "Phone", field: "phone" },
+    { title: "Amount", field: "amount" },
+    { title: "Invoice No", field: "invoice" },
     { title: "Date", field: "date" },
   ];
 
@@ -388,37 +399,14 @@ export default function Details() {
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
           <BusesView />
-          {/* //& 4: Fee Statistics */}
-          <div style={{ width: "100%", marginTop: "2vw" }}>
-            <div className="layout-sub-title" style={{ color: "black", width: "40%" }}>
-              Fee Statistics
-            </div>
-          </div>
-          <FeesView />
-          {/* //& 5: List of Students */}
-          <StudentsView />
-          {/* //& 6: View Uploaded Documents */}
-          <div style={{ width: "100%" }}>
-            <div className="layout-sub-title" style={{ color: "black", width: "40%", marginTop: "1vw", marginBottom: "1vw" }}>
-              View Uploaded Documents
-            </div>
-            <DocumentsView />
-          </div>
           {/* //& 7: Bus Owner Transactions */}
           <div style={{ width: "100%" }}>
             <div className="layout-sub-title" style={{ color: "black", width: "40%", marginTop: "2vw" }}>
               Previous Transactions
             </div>
-            <GeneralTable title="Transactions" data={tableData} column={tableColumn} />
+            <GeneralTable title="Transactions" data={transactionData} column={tableColumn} />
           </div>
         </div>
-        {/* //& 8: Route Display */}
-        <div style={{ width: "100%", marginTop: "2vw" }}>
-          <div className="layout-sub-title" style={{ color: "black", width: "100%", marginBottom: "1vw" }}>
-            Route On Map
-          </div>
-        </div>
-        <RouteView />
         <br />
       </div>
     </div>

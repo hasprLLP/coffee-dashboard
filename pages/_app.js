@@ -28,7 +28,6 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isVerified, setIsVerified] = useState(false)
   const device = useDeviceType()
-  console.log('device', device)
 
   //$ Run on Page Load - Scroll Jack
   useLayoutEffect(() => {

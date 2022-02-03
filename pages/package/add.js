@@ -83,7 +83,7 @@ export default function AddRoute() {
             name,
             monthly,
             quarterly,
-            halfYearly,
+            halfYearly: Number(halfYearly),
             annually,
           }}
         />

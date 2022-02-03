@@ -22,9 +22,6 @@ export default function Report() {
             <Radio value="Invoice" colorScheme="teal" pr="6">
               Invoice Report
             </Radio>
-            <Radio value="Income" colorScheme="teal" pr="6">
-              Income Report
-            </Radio>
             <Radio value="Redeem" colorScheme="teal" pr="6">
               Redeem Report
             </Radio>

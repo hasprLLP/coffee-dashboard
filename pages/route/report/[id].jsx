@@ -162,12 +162,31 @@ export default function Details() {
               type={"green"}
               title={"Collected Fee"}
               amount={dataStats.collectedMonthlyFeeByPackage}
+              amount2={dataStats.totalDiscountMonthly}
               line1={dataStats.totalActivePassengers + " Active Passengers"}
               line2={dataStats.paidPassengers + " Passengers Paid Already"}
             />
-            <GeneralMoney type={"green"} title={"Cashback"} />
-            <GeneralMoney type={"blue"} title={"Unverified"} />
-            <GeneralMoney type={"red"} title={"Pending"} />
+            <GeneralMoney
+              type={"green"}
+              title={"CLF Fee"}
+              amount={dataStats.clfAmount}
+              line1={dataStats.clfPassengers + " CLF Passengers"}
+              line2={dataStats.paidPassengers + " Passengers Paid Already"}
+            />
+            <GeneralMoney
+              type={"blue"}
+              title={"Redeem Fee"}
+              amount={dataStats.redeemableAmountOnCollectedFeeWithActiveUser}
+              line1={dataStats.totalActivePassengers + " Active Passengers"}
+              line2={dataStats.paidPassengers + " Passengers Paid Already"}
+            />
+            <GeneralMoney
+              type={"red"}
+              title={"Pending Fee"}
+              amount={dataStats.diffActiveUserFeeAndCollectedFee}
+              line1={dataStats.unPaidPassengers + " Unpaid Passengers"}
+              line2={dataStats.paidPassengers + " Passengers Paid Already"}
+            />
           </div>
         )}
       </>
@@ -202,6 +221,7 @@ export default function Details() {
 
   //$ 7: Previous Transactions
   //@ Data
+  
   const tableData = [
     { id: 0, name: "Transaction", phone: 9874654123, date: "02-01-2022" },
     { id: 0, name: "Transaction", phone: 9874654123, date: "02-01-2022" },
@@ -253,9 +273,8 @@ export default function Details() {
     },
   ];
 
-
   const routeMapped = route.map((path) => {
-    return { lat: path.coordinates[0], lng: path.coordinates[1],passenger: path.passenger };
+    return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger };
   });
 
   //@ Function To Draw Path
