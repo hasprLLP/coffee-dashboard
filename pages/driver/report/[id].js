@@ -24,7 +24,7 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`operator/${id}`) //` Get Bus Details API
+  const fetchData = useFetch('operator/' + id) //` Get Bus Details API
   const data = fetchData?.data //` Response from API
   //@ UI
   function BasicView() {
@@ -193,28 +193,34 @@ export default function Details() {
   const documents = [
     {
       id: '0123',
-      name: 'Aadhar Card Front',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      name: 'Aadhar Front',
+      date: data?.aadharFront?.date,
+      url: data?.aadharFront?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
-      name: 'Aadhar Card Back',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      name: 'Aadhar Back',
+      date: data?.aadharBack?.date,
+      url: data?.aadharBack?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
-      name: 'PAN Card',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      name: 'Signature',
+      date: data?.sign?.date,
+      url: data?.sign?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Driving License',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      date: data?.drivingLicense?.date,
+      url:
+        data?.drivingLicense?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
-      name: 'PUC',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      name: 'Covid Certificate',
+      date: data?.covid?.date,
+      url: data?.covid?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
   ]
   //@ UI
@@ -237,6 +243,20 @@ export default function Details() {
               }}
             >
               {doc.name}
+              <br />
+              <span
+                style={{
+                  fontSize: '0.85vw',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  color: 'red',
+                  textDecoration: 'none',
+                  padding: '1vw',
+                  marginLeft: '-1vw',
+                }}
+              >
+                Expiry: {doc?.date?.substring(0, 10)}
+              </span>
             </div>
           )
         })}

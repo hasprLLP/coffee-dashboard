@@ -32,7 +32,7 @@ export default function Details() {
       <div className="layout-row-item">
         {/* //$ Bus Owner Title */}
         <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-          BUS OWNER INFO
+          PACKAGE INFO
         </div>
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           {/* //$ Bus Owner Info */}
@@ -45,10 +45,11 @@ export default function Details() {
               />
             </div>
           </div>
-          <TextField type={'show'} title={'Bus Owner Name'} placeholder={'No Name'} value={data?.name} />
-          <TextField type={'show'} title={'Phone No'} placeholder={'No Phone'} value={data?.phone} />
-          <TextField type={'show'} title={'Password'} placeholder={'No Password'} value={data?.password} />
-          <TextField type={'show'} title={'Note'} placeholder={'No Note'} value={data?.note} />
+          <TextField type={'show'} title={'Package Name'} placeholder={'No Name'} value={data?.name} />
+          <TextField type={'show'} title={'Monthly'} placeholder={'No Monthly'} value={data?.monthly} />
+          <TextField type={'show'} title={'Quarterly'} placeholder={'No Quarterly'} value={data?.quarterly} />
+          <TextField type={'show'} title={'Half Yearly'} placeholder={'No Half Yearly'} value={data?.halfYearly} />
+          <TextField type={'show'} title={'Annually'} placeholder={'No Annually'} value={data?.annually} />
         </div>
       </div>
     )
@@ -345,16 +346,16 @@ export default function Details() {
           <BasicView />
           {/* //& 2: Notifications Right Row */}
           <div className="layout-row-item">
-            <div className="layout-sub-title" style={{ color: 'black' }}>
+            {/* <div className="layout-sub-title" style={{ color: 'black' }}>
               CONTROL PANEL
-            </div>
+            </div> */}
             {/* //$ Bus Owner Verified  */}
-            <ControlsView />
+            {/* <ControlsView /> */}
           </div>
         </div>
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           {/* //& 5: List of Students */}
-          <StudentsView />
+          {/* <StudentsView /> */}
         </div>
         <br />
       </div>

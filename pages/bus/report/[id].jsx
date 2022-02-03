@@ -194,32 +194,32 @@ export default function Details() {
     {
       id: '0123',
       name: 'RC Photo',
-      date: '2022-02-01T21:55:35.759+00:00',
+      date: data?.RCPhoto?.date,
       url: data?.RCPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Permit Photo',
-      date: '2022-02-01T21:55:35.759+00:00',
+      date: data?.RCPhoto?.date,
       url: data?.permitPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'PUC Photo',
-      date: '2022-02-01T21:55:35.759+00:00',
+      date: data?.RCPhoto?.date,
       url: data?.pucPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Fitness Photo',
-      date: '2022-02-01T21:55:35.759+00:00',
+      date: data?.RCPhoto?.date,
       url:
         data?.fitnessPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Insurance Photo',
-      date: '2022-02-01T21:55:35.759+00:00',
+      date: data?.RCPhoto?.date,
       url:
         data?.insurancePhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
@@ -257,7 +257,7 @@ export default function Details() {
                     marginLeft: '-1vw',
                   }}
                 >
-                  Expiry: {doc.date.substring(0, 10)}
+                  Expiry: {doc?.date?.substring(0, 10)}
                 </span>
               </div>
             </>
