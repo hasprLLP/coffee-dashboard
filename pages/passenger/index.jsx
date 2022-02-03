@@ -15,6 +15,7 @@ export default function Passenger() {
   const passengersData = useFetch(`passenger/?populate=["route","school","lastTransaction","user","feePackage"]`)
   const data = passengersData?.data
 
+
   //$ States and Hooks [#STATES#]
   const onEdit = (id, data) => {
     router.push({ pathname: `/passenger/edit/${id}`, query: { data: JSON.stringify(data) } })

@@ -3,6 +3,8 @@ import MaterialTable from 'material-table'
 import tableIcons from '@/utilities/tableIcons'
 import useFetch from '@/hooks/useFetch'
 import Loading from '@/blocks/loading'
+import { useState } from 'react'
+import PrintInvoice from '../../invoice/printInvoice'
 
 const FeeReport = () => {
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -10,6 +12,8 @@ const FeeReport = () => {
   const feeData = useFetch(
     `transaction?populate=${JSON.stringify({ path: 'route passenger appUser ', populate: { path: 'feePackage bus school lastTransaction' } })}`
   )
+
+  const [invoice, setInvoice] = useState(false)
 
   //$ Mapped Data
   const data = feeData?.data?.map(item => {
@@ -52,6 +56,7 @@ const FeeReport = () => {
   return (
     <>
       {feeData.loading && <Loading />}
+      {invoice && <PrintInvoice />}
       <MaterialTable
         icons={tableIcons}
         className="mat-table"
@@ -59,7 +64,7 @@ const FeeReport = () => {
           {
             icon: tableIcons.Print,
             tooltip: 'Print',
-            onClick: (event, rowData) => alert('Print Invoice For ' + rowData.no),
+            onClick: (event, rowData) => setInvoice(true),
           },
         ]}
         options={{

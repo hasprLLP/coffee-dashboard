@@ -208,32 +208,24 @@ export default function Details() {
   //! New Panel
   //! Code Starts Here
   //$ 3: List of Buses
-  // const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
-  // const data = fetchData?.data?.owner //` Response from API
-  //@ Data
-  const buses = [
-    { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
-    { id: '0123', name: 'Red Bus 2', passengers: '59 Passengers', redeem: 'Redeem : ₹600' },
-    { id: '0123', name: 'Red Bus 3', passengers: '60 Passengers', redeem: 'Redeem : ₹700' },
-    { id: '0123', name: 'Red Bus 4', passengers: '51 Passengers', redeem: 'Redeem : ₹800' },
-    { id: '0123', name: 'Red Bus 5', passengers: '52 Passengers', redeem: 'Redeem : ₹900' },
-    { id: '0123', name: 'Red Bus 6', passengers: '53 Passengers', redeem: 'Redeem : ₹250' },
-    { id: '0123', name: 'Red Bus 7', passengers: '54 Passengers', redeem: 'Redeem : ₹100' },
-  ]
-  //@ UI
+
   function BusesView() {
     return (
       <>
         <div style={{ width: '100%' }}>
           <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginBottom: '1vw' }}>
-            Buses under {data?.name}
+            {data?.name}&apos; Bus
           </div>
         </div>
         {/* //@ Buses Mapped */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {buses.map((bus, i) => {
-            return <GeneralCard key={i} id={bus.id} page={'bus'} first={bus.name} second={bus.passengers} third={bus.redeem} />
-          })}
+          <GeneralCard
+            id={data?.route?.bus?.id}
+            page={'bus'}
+            first={data?.route?.bus?.name}
+            second={data?.route?.bus?.RCNumber}
+            third={data?.route?.bus?.commission}
+          />
         </div>
       </>
     )
@@ -357,21 +349,35 @@ export default function Details() {
 
   //$ 7: Previous Transactions
   //@ Data
-    const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
+  const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
   const dataTrans = fetchDataTrans?.data //` Response from API
-  // const fetchDataTrans = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
-  // const dataTrans = fetchDataTrans?.data //` Response from API
-  
-  const tableData = [
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-  ]
+  const dataTransMap = dataTrans.map((item, i) => {
+    return {
+      id: i,
+      clf: item?.withClf ? 'CLF' : 'NA',
+      total: item?.noDiscountAmount,
+      discount: item?.discount,
+      amount: item?.amount,
+      invoice: item?.invoice,
+      mode: item?.mode?.toUpperCase(),
+      pack: item?.pack?.toUpperCase(),
+      date: item?.payDate?.substring(0, 10),
+    }
+  })
+  const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
+  const dataClf = fetchDataClf?.data //` Response from API
+  console.log('clf', dataClf)
+
   //@ Columns
   const tableColumn = [
-    { title: 'ID', field: 'id' },
-    { title: 'Name', field: 'name' },
-    { title: 'Phone', field: 'phone' },
+    { title: 'SNo', field: 'id' },
+    { title: 'CLF', field: 'clf' },
+    { title: 'Total', field: 'total' },
+    { title: 'Discount', field: 'discount' },
+    { title: 'Amount', field: 'amount' },
+    { title: 'Invoice', field: 'invoice' },
+    { title: 'Mode', field: 'mode' },
+    { title: 'Pack', field: 'pack' },
     { title: 'Date', field: 'date' },
   ]
 
@@ -506,13 +512,15 @@ export default function Details() {
               NOTIFICATIONS PANEL
             </div>
             {/* //$ Students Verified Route  */}
-            <div className="layout-sub-title">
-              Assign/Change Route <span style={{ color: 'red' }}>{!data?.route ? '⚠️' : ''}</span>
+            <div>
+              <b>
+                Assign Route <span style={{ color: 'red' }}>{!data?.route ? '⚠️' : ''}</span>
+              </b>
             </div>
-
             <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-              <div style={{ color: 'teal', width: '100%' }}>Route Assigned : {data?.route?.name ? data?.route?.name : 'Nothing'}</div>
-
+              <div style={{ color: 'gray', width: '100%', marginTop: '0.5vw' }}>
+                Current Route - <span style={{ color: 'teal' }}>{data?.route?.name ? data?.route?.name : 'Nothing'}</span>
+              </div>
               <DropDown title={routeField.title} options={routeField.options} value={routeField.value} setter={routeField.setter} />
               <div className="button" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button onClick={assignRoute} size="md" isLoading={routeLoading} loadingText="">
@@ -533,23 +541,16 @@ export default function Details() {
                 <Notification type={''} />
               </div>
             </div>
-            {/* //$ Due Date Change */}
-            <div className="layout-sub-title">Payment Info</div>
-            <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-              <div style={{ color: 'red', width: '100%', marginBottom: '1vw' }} className="layout-sub-title">
-                {data?.activeTransaction ? `Due date is ${data?.activeTransaction?.dueDate?.substring(0, 10)}` : 'No Active Transaction'}
-              </div>
-
-              <div style={{ color: 'teal', width: '100%', marginBottom: '1vw' }} className="layout-sub-title">
-                {data?.activeTransaction ? `Due date is ${data?.activeTransaction?.payDate?.substring(0, 10)}` : 'No Active Transaction'}
-              </div>
-            </div>
             {/* //$ Package Assign */}
-            <div className="layout-sub-title">
-              Assign/Change Package <span style={{ color: 'red' }}>{!data?.feePackage ? '⚠️' : ''}</span>
+            <div>
+              <b>
+                Assign Package <span style={{ color: 'red' }}>{!data?.feePackage ? '⚠️' : ''}</span>
+              </b>
             </div>
             <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-              <div style={{ color: 'teal', width: '100%' }}>Fee Package Assigned : {data?.feePackage?.name ? data?.feePackage?.name : 'Nothing'}</div>
+              <div style={{ color: 'gray', width: '100%', marginTop: '0.5vw' }}>
+                Current Package : <span style={{ color: 'teal' }}>{data?.feePackage?.name ? data?.feePackage?.name : 'Nothing'}</span>
+              </div>
               <DropDown
                 title={feePackageField.title}
                 options={feePackageField.options}
@@ -575,9 +576,18 @@ export default function Details() {
                 <Notification type={''} />
               </div>
             </div>
+            {/* //$ Due Date Change */}
+            <div>
+              <b>Payment Info</b>
+            </div>
+            <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+              <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>
+                {data?.activeTransaction ? `Due date is ${data?.activeTransaction?.dueDate?.substring(0, 10)}` : 'No Active Transaction'}
+              </div>
+            </div>
             {/* //$Verify Passenger */}
-            <div className="layout-sub-title">
-              Verify/Unverify Passenger
+            <div>
+              <b>Passenger Status</b>
               <span style={{ color: 'red' }}>{!data?.feePackage ? '⚠️' : ''}</span>
             </div>
             <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
@@ -609,18 +619,18 @@ export default function Details() {
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           <BusesView />
           {/* //& 4: Fee Statistics */}
-          <div style={{ width: '100%', marginTop: '2vw' }}>
+          {/* <div style={{ width: '100%', marginTop: '2vw' }}>
             <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
               Fee Statistics
             </div>
           </div>
-          <FeesView />  
+          <FeesView /> */}
           {/* //& 7: Bus Owner Transactions */}
           <div style={{ width: '100%' }}>
             <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>
               Previous Transactions
             </div>
-            <GeneralTable title="Transactions" data={tableData} column={tableColumn} />
+            <GeneralTable title="Transactions" data={dataTransMap} column={tableColumn} />
           </div>
         </div>
         {/* //& 8: Route Display */}

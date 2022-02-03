@@ -29,10 +29,10 @@ export default function PhotoCard({ passenger, id, onEdit, onDetail, onFeeDetail
         {passenger.name}
       </Heading>
       <Text fontWeight={600} color={'gray.500'} mb={4}>
-        Monthly Fee - ₹ {Math.round(passenger?.lastTransaction?.monthlyAmount) || 0}
+        Monthly Fee - ₹ {Math.round(passenger?.feePackage?.monthly) || 0}
       </Text>
       <Text textAlign={'center'} color={useColorModeValue('gray.700', 'gray.400')} px={3}>
-        {passenger?.route?.slug || 'No Route'}
+        Route : {passenger?.route?.name || 'No Route'}
       </Text>
 
       <Stack mt={6} direction={'row'} spacing={4}>
