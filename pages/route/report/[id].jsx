@@ -156,7 +156,7 @@ export default function Details() {
           </div>
         </div>
         {/* //@ Show Money Cards */}
-        {data && (
+        {dataStats && (
           <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
             <GeneralMoney
               type={"green"}
