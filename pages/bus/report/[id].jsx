@@ -200,26 +200,26 @@ export default function Details() {
     {
       id: '0123',
       name: 'Permit Photo',
-      date: data?.RCPhoto?.date,
+      date: data?.permitPhoto?.date,
       url: data?.permitPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'PUC Photo',
-      date: data?.RCPhoto?.date,
+      date: data?.pucPhoto?.date,
       url: data?.pucPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Fitness Photo',
-      date: data?.RCPhoto?.date,
+      date: data?.fitnessPhoto?.date,
       url:
         data?.fitnessPhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
     {
       id: '0123',
       name: 'Insurance Photo',
-      date: data?.RCPhoto?.date,
+      date: data?.insurancePhoto?.date,
       url:
         data?.insurancePhoto?.url || 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
     },
