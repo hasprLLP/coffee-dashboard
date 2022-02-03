@@ -14,6 +14,9 @@ import { ChakraProvider, theme } from '@chakra-ui/react'
 import verify from '../src/backend/node/verify'
 import Cookies from 'js-cookie'
 import ls from 'local-storage'
+import Lottie from 'react-lottie-player'
+import lottie_data from '@/helpers/rotate-device.json'
+import useDeviceType from '@/hooks/useDeviceType'
 import axios from 'axios'
 
 axios.defaults.baseURL = process.env.SERVER_URL
@@ -24,6 +27,8 @@ axios.defaults.timeout = 10000
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isVerified, setIsVerified] = useState(false)
+  const device = useDeviceType()
+  console.log('device', device)
 
   //$ Run on Page Load - Scroll Jack
   useLayoutEffect(() => {
@@ -91,23 +96,39 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="preload" href="/static/fonts/Gilroy-SemiBold.woff2" as="font" type="font/woff2" crossOrigin="" />
       </Head>
       {/* //& Site Code */}
-      {
-        <ChakraProvider theme={theme}>
-          {/* //$ Global Context API */}
-          {/* //$ Dashboard */}
-          <Drawer />
-          {/* //$ Header */}
-          <Header />
-          {/* //$ Footer */}
-          <Footer />
-          {/* //$ App Entry Point */}
-          <div id="view-main">
-            <Global>
-              <Component {...pageProps} />
-            </Global>
+      {device <= 768 && (
+        <div
+          style={{
+            zIndex: 110000,
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: 'white',
+            position: 'absolute',
+          }}
+        >
+          <div style={{ width: '45vw', height: 'auto' }}>
+            <Lottie loop={true} speed={1} play={true} animationData={lottie_data} />
           </div>
-        </ChakraProvider>
-      }
+        </div>
+      )}
+      <ChakraProvider theme={theme}>
+        {/* //$ Global Context API */}
+        {/* //$ Dashboard */}
+        <Drawer />
+        {/* //$ Header */}
+        <Header />
+        {/* //$ Footer */}
+        <Footer />
+        {/* //$ App Entry Point */}
+        <div id="view-main">
+          <Global>
+            <Component {...pageProps} />
+          </Global>
+        </div>
+      </ChakraProvider>
     </>
   )
 }
