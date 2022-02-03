@@ -351,7 +351,7 @@ export default function Details() {
   //@ Data
   const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
   const dataTrans = fetchDataTrans?.data //` Response from API
-  const dataTransMap = dataTrans.map((item, i) => {
+  const dataTransMap = dataTrans?.map((item, i) => {
     return {
       id: i,
       clf: item?.withClf ? 'CLF' : 'NA',

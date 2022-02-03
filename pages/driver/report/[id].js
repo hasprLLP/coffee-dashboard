@@ -24,15 +24,15 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
-  const data = fetchData?.data?.owner //` Response from API
+  const fetchData = useFetch(`operator/${id}`) //` Get Bus Details API
+  const data = fetchData?.data //` Response from API
   //@ UI
   function BasicView() {
     return (
       <div className="layout-row-item">
         {/* //$ Bus Owner Title */}
         <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-          BUS OWNER INFO
+          DRIVER INFO
         </div>
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           {/* //$ Bus Owner Info */}
@@ -45,10 +45,10 @@ export default function Details() {
               />
             </div>
           </div>
-          <TextField type={'show'} title={'Bus Owner Name'} placeholder={'No Name'} value={data?.name} />
+          <TextField type={'show'} title={'Driver Name'} placeholder={'No Name'} value={data?.name} />
           <TextField type={'show'} title={'Phone No'} placeholder={'No Phone'} value={data?.phone} />
-          <TextField type={'show'} title={'Password'} placeholder={'No Password'} value={data?.password} />
-          <TextField type={'show'} title={'Note'} placeholder={'No Note'} value={data?.note} />
+          <TextField type={'show'} title={'DOB'} placeholder={'No DOB'} value={data?.DOB?.formattedDate} />
+          <TextField type={'show'} title={'PIN'} placeholder={'No Pin'} value={data?.pin} />
         </div>
       </div>
     )

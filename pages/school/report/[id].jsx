@@ -32,7 +32,7 @@ export default function Details() {
       <div className="layout-row-item">
         {/* //$ Bus Owner Title */}
         <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-          BUS OWNER INFO
+          SCHOOL INFO
         </div>
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           {/* //$ Bus Owner Info */}
@@ -45,10 +45,10 @@ export default function Details() {
               />
             </div>
           </div>
-          <TextField type={'show'} title={'Bus Owner Name'} placeholder={'No Name'} value={data?.name} />
+          <TextField type={'show'} title={'School Name'} placeholder={'No Name'} value={data?.name} />
           <TextField type={'show'} title={'Phone No'} placeholder={'No Phone'} value={data?.phone} />
-          <TextField type={'show'} title={'Password'} placeholder={'No Password'} value={data?.password} />
-          <TextField type={'show'} title={'Note'} placeholder={'No Note'} value={data?.note} />
+          <TextField type={'show'} title={'Prefix'} placeholder={'No Password'} value={data?.prefix} />
+          <TextField type={'show'} title={'City'} placeholder={'No Note'} value={data?.city} />
         </div>
       </div>
     )
@@ -78,7 +78,7 @@ export default function Details() {
   function ControlsView() {
     return (
       <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-         <TextField title={'Chage Prefix'} placeholder={'Input Prefix'} />
+        <TextField title={'Change Prefix'} placeholder={'Input Prefix'} />
         <div className="button">
           <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
             Modify
@@ -101,8 +101,8 @@ export default function Details() {
   //$ 3: List of Buses
   const fetchDataBus = useFetch(`route?school=${id}`) //` Get Owner Details API //! TODO DONOW
   const dataBus = fetchDataBus?.data //` Response from API
-  console.log(dataBus);
-  
+  console.log(dataBus)
+
   //@ Data
   const buses = [
     { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
@@ -166,7 +166,7 @@ export default function Details() {
   //@ Data
   const fetchDataPass = useFetch(`passenger?school=${id}`) //` Get Owner Details API
   const dataPass = fetchDataPass?.data //` Response from API
-  
+
   const kids = [
     { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
     { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
