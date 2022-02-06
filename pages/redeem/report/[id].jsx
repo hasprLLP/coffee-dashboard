@@ -9,6 +9,7 @@ import Notification from '@/components/notification'
 import GeneralCard from '@/components/generalcard'
 import GeneralTable from '@/components/generaltable'
 import GeneralMoney from '@/components/generalmoney'
+import GeneralStats from '@/components/generalstats'
 import { Button } from '@chakra-ui/react'
 import BasicModal from '@/components/basicModal'
 import getMidPoint from '@/utilities/getMidPoint'
@@ -114,28 +115,50 @@ export default function Details() {
       <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
         <DropDown title={'Select Month'} options={monthNames} value={month || currentMonth} setter={setMonth} />
         <DropDown title={'Select Year'} options={yearNames} value={year || currentYear} setter={setYear} />
-
-        <div className="layout-form-row">
-          <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
-            REDEEM
-          </Button>
-          <Notification type={''} />
-          <BasicModal
-            Head="Are you sure you want to continue ?"
-            Message={`About to pay ${dataStats?.redeemableAmountOnCollectedFeeWithPaidPassengers} to ${data?.owner?.name}`}
-            ref={ref1}
-            fun={change1}
-            type="warning"
-          />
+        <div
+          style={{
+            width: '100%',
+            height: '17vw',
+            marginTop: '1vw',
+            marginRight: '1.5vw',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            position: 'relative',
+          }}
+        >
+          <GeneralStats type={'green'} title={'Money'} />
+          <GeneralStats type={'green'} title={'Money'} />
+          <GeneralStats type={'red'} title={'Pending'} />
+          {/* {dataStats && ( */}
+          <div className="layout-form-row" style={{ position: 'absolute', bottom: '-15%', right: '2%' }}>
+            <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
+              REDEEM
+            </Button>
+            <Notification type={''} />
+            <BasicModal
+              Head="Are you sure you want to continue ?"
+              Message={`About to pay ${dataStats?.redeemableAmountOnCollectedFeeWithPaidPassengers} to ${data?.owner?.name}`}
+              ref={ref1}
+              fun={change1}
+              type="warning"
+            />
+          </div>
+          {/* )} */}
+          <div className="layout-form-row" style={{ position: 'absolute', bottom: '-15%', right: '18%' }}>
+            <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
+              PRINT
+            </Button>
+            <Notification type={''} />
+            <BasicModal
+              Head="Are you sure you want to continue ?"
+              Message={`About to pay ${dataStats?.redeemableAmountOnCollectedFeeWithPaidPassengers} to ${data?.owner?.name}`}
+              ref={ref1}
+              fun={change1}
+              type="warning"
+            />
+          </div>
         </div>
-        {/* <DropDown title={"Control 2"} options={[]} value={""} setter={null} />
-        <div className="button">
-          <Button onClick={() => ref2.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
-            Modify
-          </Button>
-          <Notification type={""} />
-        </div>
-        <BasicModal Head="Warning 2 ! ⚠️" Message="Message 2." ref={ref2} fun={change2} type="warning" /> */}
       </div>
     )
   }

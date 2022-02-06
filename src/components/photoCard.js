@@ -12,17 +12,26 @@ export default function PhotoCard({ passenger, id, onEdit, onDetail, onFeeDetail
         src={passenger?.photo?.url || '/static/svg/user.svg'}
         alt={'Avatar Alt'}
         mb={4}
+        mt={4}
         pos={'relative'}
         _after={{
-          content: '""',
-          w: 4,
-          h: 4,
-          bg: 'green.300',
+          content: `${!passenger?.isVerified ? '"Unverified"' : '"Verified"'}`,
+          w: 'auto',
+          h: 6,
+          fontSize: 10,
+          lineHeight: 5,
+          textAlign: 'center',
+          verticalAlign: 'middle',
+          paddingLeft: 2,
+          paddingRight: 2,
+          fontWeight: 'bold',
+          display: 'inline-block',
+          color: 'white',
+          bg: `${!passenger?.isVerified ? 'red.400' : 'teal.400'}`,
           border: '2px solid white',
           rounded: 'full',
           pos: 'absolute',
-          bottom: 0,
-          right: 3,
+          top: -7,
         }}
       />
       <Heading fontSize={'2xl'} fontFamily={'body'}>

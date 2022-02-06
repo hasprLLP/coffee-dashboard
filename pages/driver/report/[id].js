@@ -24,8 +24,10 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch('operator/' + id) //` Get Bus Details API
-  const data = fetchData?.data //` Response from API
+  const fetchData = useFetch(`operator/${id}`) //` Get Bus Details API
+  const data2 = fetchData?.data //` Response from API
+  const data = (data2?.length && data2[0]) || {}
+
   //@ UI
   function BasicView() {
     return (

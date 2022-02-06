@@ -1,15 +1,15 @@
-import { Input, InputGroup, InputLeftAddon, FormControl, FormLabel } from "@chakra-ui/react";
-import useSize from "@/utilities/useSize";
-import { useState } from "react";
+import { Input, InputGroup, InputLeftAddon, FormControl, FormLabel } from '@chakra-ui/react'
+import useSize from '@/utilities/useSize'
+import { useState } from 'react'
 
 const TextField = ({ title, placeholder, value, setter, type, prefix, color, isRequired }) => {
-  const [invalid, setInvalid] = useState(false);
-  const size = useSize();
+  const [invalid, setInvalid] = useState(false)
+  const size = useSize()
   return (
     <div className="input">
       <FormControl isRequired={isRequired}>
         <FormLabel>{title}</FormLabel>
-        <InputGroup size={size > 1600 ? "lg" : size > 1280 ? "md" : size > 1024 ? "sm" : "xs"}>
+        <InputGroup size={size > 1600 ? 'lg' : size > 1280 ? 'md' : size > 1024 ? 'sm' : 'xs'}>
           {prefix && (
             <InputLeftAddon marginBottom="2vw" marginTop="0.5vw" fontSize="0.9vw">
               {prefix}
@@ -19,11 +19,11 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
             value={value}
             onBlur={() => (!value && isRequired ? setInvalid(true) : setInvalid(false))}
             isInvalid={invalid}
-            onChange={(e) => (type === "show" ? null : setter(e.target.value))}
-            bg={color ? "white" : "rgba(242, 242, 242, 0.4)"}
-            focusBorderColor="#38B2AC"
+            onChange={e => (type === 'show' ? null : setter(e.target.value))}
+            bg={color ? 'white' : 'rgba(242, 242, 242, 0.4)'}
+            focusBorderColor={type === 'show' ? 'transparent' : '#38B2AC'}
             type={type}
-            isDisabled={type === "fix" || false}
+            isDisabled={type === 'fix' || false}
             isRequired={isRequired || false}
             marginBottom="2vw"
             marginTop="0.5vw"
@@ -34,7 +34,7 @@ const TextField = ({ title, placeholder, value, setter, type, prefix, color, isR
         </InputGroup>
       </FormControl>
     </div>
-  );
-};
+  )
+}
 
-export default TextField;
+export default TextField

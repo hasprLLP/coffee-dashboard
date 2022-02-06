@@ -1,11 +1,41 @@
-import { Heading, Box, Text, Stack, Button, useColorModeValue } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { Heading, Box, Text, Stack, Button, Avatar, useColorModeValue } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
-export default function SimpleCard({ name, heading, info, onEdit, id, data, onDetails }) {
-  const router = useRouter();
+export default function SimpleCard({ name, heading, info, onEdit, id, data, onDetails, badge }) {
+  const router = useRouter()
 
   return (
     <Box maxW={'240px'} w={'full'} mb={4} mr={4} bg={useColorModeValue('white', 'gray.800')} rounded={'xl'} overflow={'hidden'}>
+      {badge && (
+        <Box
+          w={'full'}
+          h={6}
+          mt={4}
+          mb={-4}
+          justify={'center'}
+          align={'center'}
+          pos={'relative'}
+          _after={{
+            content: `"${badge}"`,
+            w: 20,
+            h: 6,
+            fontSize: 10,
+            lineHeight: 5,
+            paddingLeft: 2,
+            paddingRight: 2,
+            fontWeight: 'bold',
+            color: 'white',
+            bg: badge === 'Stopped' ? 'red.400' : 'teal.400',
+            border: '2px solid white',
+            rounded: 'full',
+            pos: 'absolute',
+            left: 0,
+            right: 0,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        />
+      )}
       <Box p={6}>
         <Stack spacing={0} direction={'row'} justify={'center'} align={'center'} mb={5}>
           <Heading fontSize={'xl'} fontWeight={500} fontFamily={'body'} align={'center'}>
@@ -66,5 +96,5 @@ export default function SimpleCard({ name, heading, info, onEdit, id, data, onDe
         </Stack>
       </Box>
     </Box>
-  );
+  )
 }

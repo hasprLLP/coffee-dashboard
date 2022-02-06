@@ -59,6 +59,7 @@ export default function ViewBus() {
                   data={item}
                   onEdit={onEdit}
                   onDetails={onDetails}
+                  badge={item?.selfOwn ? 'Self Own' : null}
                 />
               )
             })}

@@ -59,6 +59,7 @@ export default function ViewRoute() {
                 info={[route?.startsFrom?.address, route?.school?.name]}
                 onEdit={onEdit}
                 onDetails={onDetails}
+                badge={'Stopped'}
               />
             )
           })}

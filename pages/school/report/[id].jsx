@@ -25,7 +25,9 @@ export default function Details() {
   //$ 1: Basic Details
   //@ Data
   const fetchData = useFetch(`school/${id}`) //` Get Owner Details API
-  const data = fetchData?.data //` Response from API
+  const data2 = fetchData?.data //` Response from API
+  const data = (data2?.length && data2[0]) || {}
+
   //@ UI
   function BasicView() {
     return (
@@ -358,9 +360,9 @@ export default function Details() {
         </div>
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <BusesView />
+          {/* <BusesView /> */}
           {/* //& 5: List of Students */}
-          <StudentsView />
+          {/* <StudentsView /> */}
         </div>
         {/* //& 8: Route Display */}
         <div style={{ width: '100%', marginTop: '2vw' }}>

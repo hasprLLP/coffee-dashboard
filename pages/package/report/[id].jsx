@@ -25,7 +25,9 @@ export default function Details() {
   //$ 1: Basic Details
   //@ Data
   const fetchData = useFetch(`package/${id}`) //` Get Owner Details API
-  const data = fetchData?.data //` Response from API
+  const data2 = fetchData?.data //` Response from API
+  const data = (data2?.length && data2[0]) || {}
+
   //@ UI
   function BasicView() {
     return (
