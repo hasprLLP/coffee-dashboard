@@ -29,7 +29,7 @@ export default function Create() {
   const [route, setRoute] = useState({});
   const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
-  const [photo, setPhoto] = useState({});
+  const [photo, setPhoto] = useState({ url: '/static/svg/user.svg' ,date: null});
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
