@@ -29,7 +29,7 @@ export default function Create() {
   const [route, setRoute] = useState({});
   const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
-  const [photo, setPhoto] = useState({ url: '/static/svg/user.svg' ,date: null});
+  const [photo, setPhoto] = useState({ url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' ,date: null});
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
   const [discount, setDiscount] = useState(0);

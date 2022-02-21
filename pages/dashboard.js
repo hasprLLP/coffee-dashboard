@@ -12,7 +12,10 @@ export default function Dashboard() {
 
   const counts = useFetch(`details/counts`)
   const unverifiedPassengers = useFetch(`details/unverified_passengers`)
-  const pendingCashRequests = useFetch(`details/get_pending_payment_request`)
+  const pendingCashRequests = useFetch(`payment`)
+
+  console.log(pendingCashRequests);
+  
 
   const onButton = (id, data) => {
     router.push({ pathname: `/passenger/report/${id}`, query: { data: JSON.stringify(data) } })
