@@ -81,7 +81,7 @@ const FilePicker = ({ title, value, setter }) => {
                   objectFit: 'contain',
                 }}
               />
-              <TextField type={'date'} title={'Chooose Expiry'} placeholder={'Expiry Date'} value={expiry} setter={setExpiry} />
+              <TextField type={'date'} title={'Choose Expiry'} placeholder={'Expiry Date'} value={expiry} setter={setExpiry} />
             </Skeleton>
           </ModalBody>
           <ModalFooter>
