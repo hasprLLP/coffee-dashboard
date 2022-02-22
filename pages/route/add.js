@@ -24,6 +24,8 @@ export default function AddRoute() {
 
   const setterArray = [setName, setMorningDeparture, setMorningArrival, setEveningDeparture, setStartsFrom, setSchool, setBus];
 
+    const [clean, setClean] = useState(true)
+
   const getSchools = useCallback(async () => {
     try {
       const response = await axios.get(`school/`);
@@ -98,37 +100,48 @@ export default function AddRoute() {
     { title: 'Assign Bus', options: busNames, value: bus?.name, setter: setBusID, type: 'dropdown' },
   ];
 
+
+  useEffect(() => {
+    setName('');
+    setMorningDeparture('06:00 AM');
+    setMorningArrival('08:00 AM');
+    setEveningDeparture('02:00 PM');
+    setStartsFrom('');
+    setSchool({ name: '' })
+    setBus({ name: '' })
+  }, [clean])
+
   //& Return UI [#RETURN#]
   return (
-    <div className='home'>
-      <div className='home-shift'>
-        <div className='layout-title'>
+    <div className="home">
+      <div className="home-shift">
+        <div className="layout-title">
           <GoBack />
           Add Route
         </div>
-        <div className='layout-sub-title'>Timing Details</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        <div className="layout-sub-title">Timing Details</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {timing.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField type={item.type} key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
-            );
+            )
           })}
         </div>
-        <div className='layout-sub-title'>Basic Details</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        <div className="layout-sub-title">Basic Details</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {details.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
             ) : (
               <TextField type={item.type} key={i} title={item.title} placeholder={item.placeholder} value={item.value} setter={item.setter} />
-            );
+            )
           })}
         </div>
         <SaveButton
           collection={'route'}
-          reset={setterArray}
+          reset={setClean}
           data={{
             name,
             morningDeparture,
@@ -145,5 +158,5 @@ export default function AddRoute() {
         />
       </div>
     </div>
-  );
+  )
 }
