@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB4C5zzavz4CB8KH8VhUQ6tiVdAhtTfUhU",
-  authDomain: "coffee-4ee41.firebaseapp.com",
-  projectId: "coffee-4ee41",
-  storageBucket: "coffee-4ee41.appspot.com",
-  messagingSenderId: "451251549138",
-  appId: "1:451251549138:web:e64d24c13218839cfece0b",
-  measurementId: "G-J5SD4TG68C",
-};
+  apiKey: 'AIzaSyDOErppj70OHVt9hjYe8YECU82Ea1eVU40',
+  authDomain: 'schoolbuskaro.firebaseapp.com',
+  projectId: 'schoolbuskaro',
+  storageBucket: 'schoolbuskaro.appspot.com',
+  messagingSenderId: '107627644799',
+  appId: '1:107627644799:web:80787406757af364927c4a',
+  measurementId: 'G-G1RHZK1KZN',
+}
 
 // Initialize Firebase
 
