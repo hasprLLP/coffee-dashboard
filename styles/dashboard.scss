@@ -13,8 +13,6 @@
     margin-bottom: 2vw;
   }
 
-
-
   &-subtitle {
     @include row;
     font-size: $h4;
@@ -47,6 +45,10 @@
     @include column;
     justify-content: flex-start;
     align-items: flex-start;
+    flex: 1;
     margin-bottom: 2vw;
   }
+}
+.flex-more {
+  flex: 1.15;
 }
