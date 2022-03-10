@@ -15,6 +15,7 @@ import GeneralTable from '@/components/generaltable'
 import GeneralMoney from '@/components/generalmoney'
 import GoogleMapReact from 'google-map-react'
 import CollectFee from '@/components/collectFee'
+import sendNotification from '@/components/sendNotification'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
@@ -43,6 +44,8 @@ export default function Details() {
       console.log(error)
     }
   }, [id])
+
+  const fcmToken = data?.appUser?.fcmToken
 
   //@ Fetch Packages
   const getPackages = useCallback(async () => {
@@ -113,7 +116,16 @@ export default function Details() {
     try {
       const res = await axios.post(`passenger/assign_route/${data.id}?route=${route.id}`)
       setData(data => ({ ...data, route: res.data.data }))
-
+      sendNotification(
+        {
+          title: 'Congratulations',
+          body: `${data?.name} been assigned a new route`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+          data: data
+        },
+        [fcmToken]
+      )
       setRouteLoading(false)
     } catch (error) {
       console.log(error)
@@ -139,7 +151,16 @@ export default function Details() {
     try {
       const res = await axios.post(`passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`)
       setData(data => ({ ...data, feePackage: res.data.data }))
-
+      sendNotification(
+        {
+          title: 'Congratulations',
+          body: `${data?.name} been assigned ${res.data.data.name}`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+          data: data,
+        },
+        [fcmToken]
+      )
       setPackageLoading(false)
     } catch (error) {
       console.log(error)
@@ -164,9 +185,16 @@ export default function Details() {
     setVerifyLoading(true)
     try {
       const res = await axios.post(`passenger/verify/${data.id}`)
-
       setData(data => ({ ...data, isVerified: res.data.data }))
-
+      sendNotification(
+        {
+          title: `Congratulations ${data?.name}`,
+          body: `Make Payment and Let's Start your child's new Journey`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
       setVerifyLoading(false)
     } catch (error) {
       console.log(error)
@@ -203,14 +231,20 @@ export default function Details() {
   //$ Accept Payment
   const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
 
-  console.log(pendingCashRequests)
-
   const acceptPayment = async () => {
     try {
-      console.log('this id', data.id)
       const response = await axios.post(`payment/${data?.paymentRequest}`, {
         deposit: pendingCashRequests?.data?.bill?.total,
       })
+      sendNotification(
+        {
+          title: `Congratulations ${data?.name}`,
+          body: `Payment has been processed and you can now Track Bus, View Attendance and make payments Online`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
       console.log(response)
     } catch (error) {
       console.log(error)

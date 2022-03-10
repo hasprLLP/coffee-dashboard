@@ -14,8 +14,6 @@ export default function Dashboard() {
   const unverifiedPassengers = useFetch(`details/unverified_passengers`)
   const pendingCashRequests = useFetch(`payment?populate=["passenger"]`)
 
-  console.log(pendingCashRequests?.data)
-
   const onButton = (id, data) => {
     router.push({ pathname: `/passenger/report/${id}`, query: { data: JSON.stringify(data) } })
   }
@@ -49,7 +47,7 @@ export default function Dashboard() {
               <div className="dashboard-subtitle">Verify Fee Payment</div>
               {pendingCashRequests?.data?.length > 0
                 ? pendingCashRequests?.data?.map((item, index) => {
-                    return <CollectFee key={index} item={item} onButton={onButton} />
+                    return item?.bill?.resolved !== 'approved' ? <CollectFee key={index} item={item} onButton={onButton} /> : null
                   })
                 : 'No pending requests'}
             </div>
