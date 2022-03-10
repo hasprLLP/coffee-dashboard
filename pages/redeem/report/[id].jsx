@@ -29,7 +29,8 @@ export default function Details() {
   //$ 1: Basic Details
   //@ Data
   const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
-  const data = fetchData?.data?.owner //` Response from API
+  const data = fetchData?.data //` Response from API
+  console.log(data)
   //@ UI
   function BasicView() {
     return (

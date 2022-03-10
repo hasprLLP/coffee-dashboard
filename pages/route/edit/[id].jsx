@@ -21,7 +21,7 @@ export default function EditRoute() {
   const [name, setName] = useState();
   const [morningDeparture, setMorningDeparture] = useState();
   const [morningArrival, setMorningArrival] = useState();
-  const [eveningDeparture, setEveningDeparture] = useState();
+  const [afternoonDeparture, setEveningDeparture] = useState();
   const [startsFrom, setStartsFrom] = useState();
   const [school, setSchool] = useState({});
   const [schools, setSchools] = useState([]);
@@ -36,7 +36,7 @@ export default function EditRoute() {
       setName(data?.name);
       setMorningDeparture(data?.morningDeparture);
       setMorningArrival(data?.morningArrival);
-      setEveningDeparture(data?.eveningDeparture);
+      setEveningDeparture(data?.afternoonDeparture);
       setStartsFrom(data?.startsFrom?.address);
       setSchool(data?.school);
       setBus(data?.bus);
@@ -81,7 +81,7 @@ export default function EditRoute() {
     const schoolObj = schools?.find((school) => school?.name === schoolName);
     setSchool(schoolObj);
   };
- 
+
   useEffect(() => {
     getSchools();
     getBuses();
@@ -107,7 +107,7 @@ export default function EditRoute() {
       title: 'Bus Leaves School (Evening)',
       type: 'time',
       placeholder: 'Time of departure in evening',
-      value: eveningDeparture,
+      value: afternoonDeparture,
       setter: setEveningDeparture,
     },
   ];
@@ -157,7 +157,7 @@ export default function EditRoute() {
               name,
               morningDeparture,
               morningArrival,
-              eveningDeparture,
+              afternoonDeparture,
               startsFrom: {
                 type: 'Point',
                 coordinates: [],

@@ -1,21 +1,21 @@
 //& Input Components [#IMPORTS#]
-import TextField from '@/components/input';
-import DropDown from '@/components/dropdown';
-import SaveButton from '@/components/saveButton';
-import axios from 'axios';
-import { LoadScript } from '@react-google-maps/api';
-import Map from '@/utilities/map';
-import { useState, useEffect } from 'react';
+import TextField from '@/components/input'
+import DropDown from '@/components/dropdown'
+import SaveButton from '@/components/saveButton'
+import axios from 'axios'
+import { LoadScript } from '@react-google-maps/api'
+import Map from '@/utilities/map'
+import { useState, useEffect } from 'react'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function AddRoute() {
-  const [name, setName] = useState();
-  const [monthly, setMonthly] = useState();
-  const [quarterly, setQuarterly] = useState();
-  const [halfYearly, setHalfYearly] = useState();
-  const [annually, setAnnually] = useState();
+  const [name, setName] = useState()
+  const [monthly, setMonthly] = useState()
+  const [quarterly, setQuarterly] = useState()
+  const [halfYearly, setHalfYearly] = useState()
+  const [annually, setAnnually] = useState()
 
-  const setterArray = [setName, setMonthly, setQuarterly, setHalfYearly, setAnnually];
+  const setterArray = [setName, setMonthly, setQuarterly, setHalfYearly, setAnnually]
 
   //$ States and Hooks [#STATES#]
   const basic = [
@@ -26,21 +26,21 @@ export default function AddRoute() {
       value: name,
       setter: setName,
     },
-  ];
+  ]
   const fee = [
     { title: 'Monthly', isRequired: true, placeholder: '1 Month Fee', value: monthly, setter: setMonthly, prefix: '₹' },
     { title: 'Quarterly', isRequired: true, placeholder: '3 Month Fee', value: quarterly, setter: setQuarterly, prefix: '₹' },
     { title: 'Half Yearly', isRequired: true, placeholder: '6 Month Fee', value: halfYearly, setter: setHalfYearly, prefix: '₹' },
     { title: 'Annually', isRequired: true, placeholder: '12 Month Fee', value: annually, setter: setAnnually, prefix: '₹' },
-  ];
+  ]
 
   //& Return UI [#RETURN#]
   return (
-    <div className='home'>
-      <div className='home-shift'>
-        <div className='layout-title'>Add Package</div>
-        <div className='layout-sub-title'>Package Details</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+    <div className="home">
+      <div className="home-shift">
+        <div className="layout-title">Add Package</div>
+        <div className="layout-sub-title">Package Details</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {basic.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
@@ -54,11 +54,11 @@ export default function AddRoute() {
                 value={item.value}
                 setter={item.setter}
               />
-            );
+            )
           })}
         </div>
-        <div className='layout-sub-title'>Fee Details</div>
-        <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
+        <div className="layout-sub-title">Fee Details</div>
+        <div className="layout-form" style={{ justifyContent: 'flex-start' }}>
           {fee.map((item, i) => {
             return item.type === 'dropdown' ? (
               <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
@@ -73,7 +73,7 @@ export default function AddRoute() {
                 value={item.value}
                 setter={item.setter}
               />
-            );
+            )
           })}
         </div>
         <SaveButton
@@ -81,13 +81,13 @@ export default function AddRoute() {
           reset={setterArray}
           data={{
             name,
-            monthly,
-            quarterly,
+            monthly: Number(monthly),
+            quarterly: Number(quarterly),
             halfYearly: Number(halfYearly),
-            annually,
+            annually: Number(annually),
           }}
         />
       </div>
     </div>
-  );
+  )
 }

@@ -18,13 +18,14 @@ export default function Create() {
   const [commission, setCommission] = useState(0)
   const [vehicleType, setVehicleType] = useState('Bus')
   const [selfOwn, setSelfOwn] = useState(false)
+  const [photos,setPhotos] = useState()
   const [RCPhoto, setRCPhoto] = useState()
   const [permitPhoto, setPermitPhoto] = useState()
   const [pucPhoto, setPucPhoto] = useState()
   const [fitnessPhoto, setFitnessPhoto] = useState()
   const [insurancePhoto, setInsurancePhoto] = useState()
 
-  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto, setFitnessPhoto, setInsurancePhoto]
+  const setterArray = [setRCNumber, setName, setOwner, setRCPhoto, setPermitPhoto, setFitnessPhoto, setInsurancePhoto, setPhotos]
 
   const getOwners = async () => {
     try {
@@ -55,6 +56,7 @@ export default function Create() {
     { title: 'Bus No (RC)', isRequired: true, placeholder: 'Provide Registration No', value: RCNumber, setter: setRCNumber },
     { title: 'Capacity', placeholder: 'Bus Seating Capacity', type: 'number', value: capacity, setter: setCapacity },
     { title: 'Vehicle Type', options: ['Bus', 'Mini-Bus', 'Van'], value: vehicleType, setter: setVehicleType, type: 'dropdown' },
+    { title: 'Bus Photos', value: photos, setter: setPhotos, type: 'upload' },
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
@@ -138,7 +140,8 @@ export default function Create() {
             capacity,
             selfOwn,
             vehicleType,
-            commission :  owner ? commission : 0,
+            commission: owner ? commission : 0,
+            photos: [photos],
             RCPhoto,
             permitPhoto,
             pucPhoto,

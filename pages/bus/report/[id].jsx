@@ -26,6 +26,7 @@ export default function Details() {
   //@ Data
   const fetchData = useFetch(`bus/${id}`) //` Get Bus Details API
   const data = fetchData?.data //` Response from API
+
   //@ UI
   function BasicView() {
     return (
@@ -40,7 +41,7 @@ export default function Details() {
             <div style={{ width: '12vw', height: '12vw', marginTop: '1vw', marginBottom: '2vw', resizeMode: 'cover' }}>
               <img
                 alt="No Photo Available"
-                src={data?.photo?.url || '/static/svg/user.svg'}
+                src={data?.photos[0]?.url || '/static/svg/user.svg'}
                 style={{ width: '12vw', height: '12vw', objectFit: 'cover', borderRadius: '100%', backgroundColor: 'lightgray' }}
               />
             </div>
