@@ -9,7 +9,7 @@ const CollectFee = ({ item }) => {
           <Avatar
             size={'md'}
             src={
-              'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
+              item?.passenger?.photo?.url || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
             }
             alt={'Avatar Alt'}
             pos={'relative'}
@@ -17,7 +17,7 @@ const CollectFee = ({ item }) => {
           <Stack direction={'column'} align={'flex-start'} justify={'space-between'} p={4}>
             <Stack direction={'row'} align={'center'} justify={'space-between'}>
               <Heading fontSize={'lg'} fontFamily={'Gilroy'}>
-                Abhay Rohit
+                {item?.passenger?.name} - {item?.passenger?.passengerID}
               </Heading>
               <Text
                 fontSize={'xs'}
@@ -29,11 +29,27 @@ const CollectFee = ({ item }) => {
                 color={'teal.500'}
                 rounded={'full'}
               >
-                Gold Pack - 3 Months
+                {item?.bill?.data?.name} - {item?.pack?.toUpperCase()}
+              </Text>
+              <Text
+                fontSize={'xs'}
+                fontFamily={'Gilroy'}
+                fontWeight={600}
+                bg={useColorModeValue('teal.50', 'teal.900')}
+                px={3}
+                py={0.5}
+                color={'teal.500'}
+                rounded={'full'}
+              >
+                {item?.bill?.data?.payDate?.substring(0, 10)}
               </Text>
             </Stack>
+            <Heading fontSize={'med'} fontWeight={500} fontFamily={'Gilroy'}>
+              <b>₹{item?.bill?.total}</b> paid using Offline Mode
+            </Heading>
             <Heading fontSize={'sm'} fontWeight={500} fontFamily={'Gilroy'}>
-              <b>₹8547</b> paid using Offline Mode
+              Amount : <b>₹{item?.bill?.amount}</b>
+              &nbsp;&nbsp;CLF : <b>₹{item?.bill?.clfAmount || 0}</b> with Due Date <b>{item?.bill?.data?.dueDate?.substring(0, 10)}</b>
             </Heading>
           </Stack>
         </Stack>
