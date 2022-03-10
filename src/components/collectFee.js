@@ -3,15 +3,7 @@ import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 
 const CollectFee = ({ item, type, student, onButton }) => {
   return (
-    <Box
-      maxW={'98%'}
-      w={'full'}
-      h={'100%'}
-      my={0.5}
-      bg={type === 'solo' ? 'gray.200' : useColorModeValue('white', 'gray.800')}
-      rounded={'lg'}
-      overflow={'hidden'}
-    >
+    <Box maxW={'98%'} w={'full'} h={'100%'} my={0.5} bg={type === 'solo' ? 'gray.200' : 'white'} rounded={'lg'} overflow={'hidden'}>
       <Stack direction={'row'} px={4} align={'center'} justify={'space-between'}>
         <Stack direction={'row'} align={'center'} justify={'space-between'}>
           <Avatar
