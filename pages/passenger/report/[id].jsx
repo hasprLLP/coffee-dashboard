@@ -14,6 +14,7 @@ import GeneralCard from '@/components/generalcard'
 import GeneralTable from '@/components/generaltable'
 import GeneralMoney from '@/components/generalmoney'
 import GoogleMapReact from 'google-map-react'
+import CollectFee from '@/components/collectFee'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
@@ -62,7 +63,6 @@ export default function Details() {
   const getRoutes = useCallback(async () => {
     try {
       const response = await axios.get(`route?school=${data?.school?.id}`)
-      console.log(response?.data?.data)
       setRoutes(response?.data?.data)
       let tempRoutesName = []
       response?.data?.data.map(route => {
@@ -199,6 +199,23 @@ export default function Details() {
     getStudentData()
     getRoutes()
   }, [getPackages, getStudentData, getRoutes])
+
+  //$ Accept Payment
+  const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
+
+  console.log(pendingCashRequests)
+
+  const acceptPayment = async () => {
+    try {
+      console.log('this id', data.id)
+      const response = await axios.post(`payment/${data?.paymentRequest}`, {
+        deposit: pendingCashRequests?.data?.bill?.total,
+      })
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   //$ Modal
   const onOpenRoute = useRef()
@@ -366,7 +383,6 @@ export default function Details() {
   })
   const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
   const dataClf = fetchDataClf?.data //` Response from API
-  console.log('clf', dataClf)
 
   //@ Columns
   const tableColumn = [
@@ -415,6 +431,8 @@ export default function Details() {
 
   //@ Get Middle Point of All Students
   const { midLat, midLng } = getMidPoint(students)
+
+  console.log('help plix', pendingCashRequests)
 
   //@ UI
   function RouteView() {
@@ -591,7 +609,7 @@ export default function Details() {
               <span style={{ color: 'red' }}>{!data?.feePackage ? '⚠️' : ''}</span>
             </div>
             <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-              <div className="button" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="button" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1vw' }}>
                 {data?.isVerified ? (
                   <Button
                     onClick={() => {
@@ -612,6 +630,16 @@ export default function Details() {
                 )}
                 <Notification type={''} />
               </div>
+            </div>
+            <div>
+              <b>Accept Payment</b>
+            </div>
+            <div style={{ width: '100%' }}>
+              {pendingCashRequests?.data && pendingCashRequests?.data?.bill?.resolved !== 'approved' ? (
+                <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={acceptPayment} />
+              ) : (
+                <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>Fees not Payed Yet</div>
+              )}
             </div>
           </div>
         </div>

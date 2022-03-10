@@ -1,15 +1,25 @@
 import { Box, Avatar, Heading, Text, Stack, List, ListItem, ListIcon, Button, useColorModeValue } from '@chakra-ui/react'
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 
-const CollectFee = ({ item }) => {
+const CollectFee = ({ item, type, student, onButton }) => {
   return (
-    <Box maxW={'98%'} w={'full'} h={'100%'} my={0.5} bg={useColorModeValue('white', 'gray.800')} rounded={'lg'} overflow={'hidden'}>
+    <Box
+      maxW={'98%'}
+      w={'full'}
+      h={'100%'}
+      my={0.5}
+      bg={type === 'solo' ? 'gray.200' : useColorModeValue('white', 'gray.800')}
+      rounded={'lg'}
+      overflow={'hidden'}
+    >
       <Stack direction={'row'} px={4} align={'center'} justify={'space-between'}>
         <Stack direction={'row'} align={'center'} justify={'space-between'}>
           <Avatar
             size={'md'}
             src={
-              item?.passenger?.photo?.url || 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
+              student?.photo?.url ||
+              item?.passenger?.photo?.url ||
+              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
             }
             alt={'Avatar Alt'}
             pos={'relative'}
@@ -17,7 +27,7 @@ const CollectFee = ({ item }) => {
           <Stack direction={'column'} align={'flex-start'} justify={'space-between'} p={4}>
             <Stack direction={'row'} align={'center'} justify={'space-between'}>
               <Heading fontSize={'lg'} fontFamily={'Gilroy'}>
-                {item?.passenger?.name} - {item?.passenger?.passengerID}
+                {student?.name || item?.passenger?.name} - {student?.passengerID || item?.passenger?.passengerID}
               </Heading>
               <Text
                 fontSize={'xs'}
@@ -57,7 +67,7 @@ const CollectFee = ({ item }) => {
           fontSize={'sm'}
           colorScheme="red"
           color={'white'}
-          onClick={() => onEdit(id, passenger)}
+          onClick={() => onButton(item?.passenger?.id)}
           _hover={{
             bg: 'teal.500',
             transform: 'translateY(-2px)',
