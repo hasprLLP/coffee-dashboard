@@ -47,7 +47,7 @@ export default function Dashboard() {
               <div className="dashboard-subtitle">Verify Fee Payment</div>
               {pendingCashRequests?.data?.length > 0
                 ? pendingCashRequests?.data?.map((item, index) => {
-                    return item?.bill?.resolved !== 'approved' ? <CollectFee key={index} item={item} onButton={onButton} /> : null
+                    return !item?.isResolved ? <CollectFee key={index} item={item} onButton={onButton} /> : null
                   })
                 : 'No pending requests'}
             </div>

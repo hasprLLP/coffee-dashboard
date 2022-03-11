@@ -122,7 +122,7 @@ export default function Details() {
           body: `${data?.name} been assigned a new route`,
           android_channel_id: 'notification',
           image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
-          data: data
+          data: data,
         },
         [fcmToken]
       )
@@ -665,11 +665,12 @@ export default function Details() {
                 <Notification type={''} />
               </div>
             </div>
+            {/* //$ Accept Payment */}
             <div>
               <b>Accept Payment</b>
             </div>
             <div style={{ width: '100%' }}>
-              {pendingCashRequests?.data && pendingCashRequests?.data?.bill?.resolved !== 'approved' ? (
+              {pendingCashRequests?.data && !pendingCashRequests?.data?.isResolved ? (
                 <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={acceptPayment} />
               ) : (
                 <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>Fees not Payed Yet</div>
