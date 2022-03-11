@@ -122,7 +122,6 @@ export default function Details() {
           body: `${data?.name} been assigned a new route`,
           android_channel_id: 'notification',
           image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
-          data: data,
         },
         [fcmToken]
       )
@@ -157,7 +156,6 @@ export default function Details() {
           body: `${data?.name} been assigned ${res.data.data.name}`,
           android_channel_id: 'notification',
           image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
-          data: data,
         },
         [fcmToken]
       )
@@ -255,6 +253,7 @@ export default function Details() {
   const onOpenRoute = useRef()
   const onOpenPackage = useRef()
   const onOpenVerify = useRef()
+  const onOpenPayment = useRef()
 
   //! New Panel
   //! Code Starts Here
@@ -671,7 +670,7 @@ export default function Details() {
             </div>
             <div style={{ width: '100%' }}>
               {pendingCashRequests?.data && !pendingCashRequests?.data?.isResolved ? (
-                <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={acceptPayment} />
+                <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={() => onOpenPayment.current.showAlert()} />
               ) : (
                 <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>Fees not Payed Yet</div>
               )}
@@ -725,6 +724,13 @@ export default function Details() {
         Message="Passenger no longer will be able to use Application."
         ref={onOpenVerify}
         fun={verifyPassenger}
+        type="warning"
+      />
+      <BasicModal
+        Head="Verify as Payment Received!"
+        Message="Please Make Sure Money is Received Before Continuing."
+        ref={onOpenPayment}
+        fun={acceptPayment}
         type="warning"
       />
     </div>
