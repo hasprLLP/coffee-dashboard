@@ -1,13 +1,13 @@
 //& Input Components [#IMPORTS#]
-import TextField from "@/components/input";
-import DropDown from "@/components/dropdown";
-import FilePicker from "@/components/filepicker";
-import SaveButton from "@/components/saveButton";
-import { Switch } from "@chakra-ui/react";
-import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import Loading from "@/blocks/loading";
-import { format } from "date-fns";
+import TextField from '@/components/input';
+import DropDown from '@/components/dropdown';
+import FilePicker from '@/components/filepicker';
+import SaveButton from '@/components/saveButton';
+import { Switch } from '@chakra-ui/react';
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import Loading from '@/blocks/loading';
+import { format } from 'date-fns';
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Create() {
@@ -15,7 +15,7 @@ export default function Create() {
   const [isStudent, setIsStudent] = useState(true);
   const [clf, setClf] = useState(false);
   const [DOB, setDOB] = useState();
-  const [gender, setGender] = useState("Male");
+  const [gender, setGender] = useState('Male');
   const [joiningDate, setJoiningDate] = useState();
   const [dueDate, setDueDate] = useState();
   const [guardian, setGuardian] = useState();
@@ -30,14 +30,14 @@ export default function Create() {
   const [routes, setRoutes] = useState([]);
   const [routeNames, setRouteNames] = useState([]);
   const [photo, setPhoto] = useState({
-    url: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
-    date: new Date("10/23/2030"),
+    url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541',
+    date: new Date('10/23/2030'),
   });
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [cls, setCls] = useState();
-  const [section, setSection] = useState("A");
+  const [section, setSection] = useState('A');
   const [passengerID, setPassengerID] = useState();
   const [package_, setPackage] = useState({});
   const [packages, setPackages] = useState([]);
@@ -48,7 +48,7 @@ export default function Create() {
   const [pack, setPack] = useState([]);
   const [clean, setClean] = useState(true);
 
-  const packType = ["annually", "monthly", "halfYearly", "quarterly"];
+  const packType = ['annually', 'monthly', 'halfYearly', 'quarterly'];
 
   const getPackages = useCallback(async () => {
     try {
@@ -61,7 +61,7 @@ export default function Create() {
       });
       setPackageNames(tempPackageNames);
     } catch (error) {
-      console.log("Error while fetching Packages: ", error);
+      console.log('Error while fetching Packages: ', error);
     }
   }, []);
   const setPackageID = (packageName) => {
@@ -79,17 +79,17 @@ export default function Create() {
       });
       setSchoolNames(tempSchoolNames);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   }, []);
 
   const setSchoolID = async (schoolName) => {
-    if (schoolName !== "") {
+    if (schoolName !== '') {
       try {
         const schoolObj = schools?.find((school) => school?.name === schoolName);
         setSchool(schoolObj);
         setLoading(true);
-        const response = await axios.get(`route${schoolObj ? `?school=${schoolObj?.id}` : ""}`);
+        const response = await axios.get(`route${schoolObj ? `?school=${schoolObj?.id}` : ''}`);
         // const res = await axios.get(`misc/generate_passenger_id/${schoolObj.id}`);
         // setPassengerID(res.data.data);
         setRoutes(response.data.data);
@@ -100,16 +100,16 @@ export default function Create() {
         });
         setRouteNames(tempRoutesName);
       } catch (error) {
-        console.log("error", error);
-        setPassengerID("");
+        console.log('error', error);
+        setPassengerID('');
         setRoutes([]);
         setLoading(false);
       }
     } else {
-      console.log("Here !");
-      setSchool({ name: "" });
+      console.log('Here !');
+      setSchool({ name: '' });
 
-      setRoute({ name: "" });
+      setRoute({ name: '' });
     }
   };
   const setRouteID = (routeName) => {
@@ -118,30 +118,30 @@ export default function Create() {
   };
 
   useEffect(() => {
-    setName("");
+    setName('');
     setIsStudent(true);
-    setDOB("");
-    setJoiningDate("");
-    setDueDate("");
-    setGuardian("");
-    setPhone("");
-    setLandline("");
-    setAddress("");
-    setLocation("");
-    setSchool({ name: "" });
-    setGender("");
-    setRoute({ name: "" });
+    setDOB('');
+    setJoiningDate('');
+    setDueDate('');
+    setGuardian('');
+    setPhone('');
+    setLandline('');
+    setAddress('');
+    setLocation('');
+    setSchool({ name: '' });
+    setGender('');
+    setRoute({ name: '' });
     setRoutes([]);
     setRouteNames([]);
     setPhoto({
-      url: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
-      date: new Date("10/23/2030"),
+      url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541',
+      date: new Date('10/23/2030'),
     });
     setAmount(0);
     setTotal(0);
     setDiscount(0);
-    setCls("");
-    setPackage({ name: "" });
+    setCls('');
+    setPackage({ name: '' });
     setClf(false);
 
     setPack([]);
@@ -158,127 +158,127 @@ export default function Create() {
       const dueDate = new Date(joiningDate);
       dueDate.setDate(10);
 
-      if (pack === "monthly") {
+      if (pack === 'monthly') {
         setDiscount(0);
         setAmount(monthly);
         // Extend date by one month
         dueDate.setMonth(dueDate.getMonth() + 1);
-      } else if (pack === "annually") {
+      } else if (pack === 'annually') {
         setDiscount(monthly * 12 - annually);
         setAmount(monthly * 12);
         dueDate.setMonth(dueDate.getMonth() + 12);
-      } else if (pack === "halfYearly") {
+      } else if (pack === 'halfYearly') {
         setDiscount(monthly * 6 - halfYearly);
         setAmount(monthly * 6);
         dueDate.setMonth(dueDate.getMonth() + 6);
-      } else if (pack === "quarterly") {
+      } else if (pack === 'quarterly') {
         setDiscount(monthly * 3 - quarterly);
         setAmount(monthly * 3);
         dueDate.setMonth(dueDate.getMonth() + 3);
       }
-      const formattedDueDate = format(dueDate, "dd-MM-yyyy");
+      const formattedDueDate = format(dueDate, 'dd-MM-yyyy');
       setDueDate(formattedDueDate);
     }
   }, [pack, package_, joiningDate]);
 
-  console.log("p[ack duration", pack);
+  console.log('p[ack duration', pack);
 
   useEffect(() => {
     setTotal(amount - discount);
   }, [amount, discount]);
   const classesList = [
-    "Pre-School",
-    "Nursery",
-    "LKG",
-    "UKG",
-    "Class I (1)",
-    "Class II (2)",
-    "Class III (3)",
-    "Class IV (4)",
-    "Class V (5)",
-    "Class VI (6)",
-    "Class VII (7)",
-    "Class VIII (8)",
-    "Class IX (9)",
-    "Class X (10)",
-    "Class XI (11)",
-    "Class XII (12)",
+    'Pre-School',
+    'Nursery',
+    'LKG',
+    'UKG',
+    'Class I (1)',
+    'Class II (2)',
+    'Class III (3)',
+    'Class IV (4)',
+    'Class V (5)',
+    'Class VI (6)',
+    'Class VII (7)',
+    'Class VIII (8)',
+    'Class IX (9)',
+    'Class X (10)',
+    'Class XI (11)',
+    'Class XII (12)',
   ];
 
   //$ States and Hooks [#STATES#]
   const basicFields = [
-    { title: "Name", isRequired: true, placeholder: "Enter Passenger name", value: name, setter: setName },
+    { title: 'Name', isRequired: true, placeholder: 'Enter Passenger name', value: name, setter: setName },
     {
-      title: `${isStudent ? "Student" : "Teacher"} ID`,
+      title: `${isStudent ? 'Student' : 'Teacher'} ID`,
       isRequired: true,
-      placeholder: `Enter ${isStudent ? "Student" : "Teacher"} ID`,
+      placeholder: `Enter ${isStudent ? 'Student' : 'Teacher'} ID`,
       value: passengerID,
       setter: setPassengerID,
     },
-    { title: "Upload Photo", value: photo, setter: setPhoto, type: "upload" },
-    { title: "Gender", isRequired: true, options: ["Male", "Female"], value: gender, setter: setGender, type: "dropdown" },
-    { title: "Date of Birth", type: "date", placeholder: "eg 02/07/2003", value: DOB, setter: setDOB },
+    { title: 'Upload Photo', value: photo, setter: setPhoto, type: 'upload' },
+    { title: 'Gender', isRequired: true, options: ['Male', 'Female'], value: gender, setter: setGender, type: 'dropdown' },
+    { title: 'Date of Birth', type: 'date', placeholder: 'eg 02/07/2003', value: DOB, setter: setDOB },
   ];
 
   const guardianDetails = [
-    { title: "Guardian Name", isRequired: true, placeholder: "Father/Mother etc", value: guardian, setter: setGuardian },
+    { title: 'Guardian Name', isRequired: true, placeholder: 'Father/Mother etc', value: guardian, setter: setGuardian },
     {
-      title: "Guardian Mobile",
+      title: 'Guardian Mobile',
       isRequired: true,
-      placeholder: "Parent Contact No",
+      placeholder: 'Parent Contact No',
       value: phone,
       setter: setPhone,
-      type: "tel",
-      prefix: "+91",
+      type: 'tel',
+      prefix: '+91',
     },
-    { title: "Whatsapp (Optional)", placeholder: "Whatsapp no", value: landline, setter: setLandline, type: "tel" },
+    { title: 'Whatsapp (Optional)', placeholder: 'Whatsapp no', value: landline, setter: setLandline, type: 'tel' },
   ];
 
   const boardingDetails = [
-    { title: "Full Address", isRequired: true, placeholder: "Boarding Point Address", value: address, setter: setAddress },
+    { title: 'Full Address', isRequired: true, placeholder: 'Boarding Point Address', value: address, setter: setAddress },
     {
-      title: "School",
+      title: 'School',
       isRequired: true,
-      page: "/school/add",
+      page: '/school/add',
       options: schoolNames,
       value: school?.name,
       setter: setSchoolID,
-      type: "dropdown",
+      type: 'dropdown',
     },
-    { title: "Route", isRequired: true, options: routeNames, type: "number", value: route?.name, setter: setRouteID, type: "dropdown" },
+    { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ];
   const feeDetails = [
-    { title: "Select Package", isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: "dropdown" },
-    { title: "Select Duration", isRequired: true, options: packType, value: pack, setter: setPack, type: "dropdown" },
-    { title: "Joining Date", type: "date", placeholder: "eg 02/07/2003", value: joiningDate, setter: setJoiningDate },
+    { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },
+    { title: 'Select Duration', isRequired: true, options: packType, value: pack, setter: setPack, type: 'dropdown' },
+    { title: 'Joining Date', type: 'date', placeholder: 'eg 02/07/2003', value: joiningDate, setter: setJoiningDate },
   ];
 
   //& Return UI [#RETURN#]
   return (
     <>
       {loading && <Loading />}
-      <div className="home">
-        <div className="home-shift">
-          <div className="layout-title">Add {isStudent ? "Student" : "Teacher"}</div>
-          <div className="layout-not-student">
+      <div className='home'>
+        <div className='home-shift'>
+          <div className='layout-title'>Add {isStudent ? 'Student' : 'Teacher'}</div>
+          <div className='layout-not-student'>
             <h1>Adding Teacher/Passenger ?</h1>
             <Switch
               onChange={(e) => {
                 setIsStudent(!e.target.checked);
               }}
               value={!isStudent}
-              size="md"
+              size='md'
               defaultIsChecked={false}
             />
           </div>
           {isStudent ? (
             <>
-              <div className="layout-sub-title">Guardian Details</div>
-              <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+              <div className='layout-sub-title'>Guardian Details</div>
+              <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
                 {guardianDetails.map((item, i) => {
-                  return item.type === "dropdown" ? (
+                  return item.type === 'dropdown' ? (
                     <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} />
-                  ) : item.type === "upload" ? (
+                  ) : item.type === 'upload' ? (
                     <FilePicker title={item.title} value={item.value} setter={item.setter} />
                   ) : (
                     <TextField
@@ -295,15 +295,15 @@ export default function Create() {
               </div>
             </>
           ) : null}
-          <div className="layout-sub-title">{isStudent ? "Student" : "Teacher"} Details</div>
-          <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+          <div className='layout-sub-title'>{isStudent ? 'Student' : 'Teacher'} Details</div>
+          <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
             {!isStudent ? (
-              <TextField type={"tel"} title={"Mobile"} placeholder={"Contact No"} value={phone} setter={setPhone} prefix={"+91"} isRequired={true} />
+              <TextField type={'tel'} title={'Mobile'} placeholder={'Contact No'} value={phone} setter={setPhone} prefix={'+91'} isRequired={true} />
             ) : null}
             {basicFields.map((item, i) => {
-              return item.type === "dropdown" ? (
+              return item.type === 'dropdown' ? (
                 <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} onChange={item.onChange} />
-              ) : item.type === "upload" ? (
+              ) : item.type === 'upload' ? (
                 <FilePicker title={item.title} value={item.value} setter={item.setter} />
               ) : (
                 <TextField
@@ -318,14 +318,14 @@ export default function Create() {
                 />
               );
             })}
-            {!isStudent ? <TextField type={"tel"} title={"Whatsapp"} placeholder={"Landline no"} value={landline} setter={setLandline} /> : null}
-            {isStudent ? <DropDown title={"Class"} options={classesList} value={cls} setter={setCls} /> : null}
-            {isStudent ? <TextField title={"Section"} placeholder={"Enter Section"} value={section} setter={setSection} /> : null}
+            {!isStudent ? <TextField type={'tel'} title={'Whatsapp'} placeholder={'Landline no'} value={landline} setter={setLandline} /> : null}
+            {isStudent ? <DropDown title={'Class'} options={classesList} value={cls} setter={setCls} /> : null}
+            {isStudent ? <TextField title={'Section'} placeholder={'Enter Section'} value={section} setter={setSection} /> : null}
           </div>
-          <div className="layout-sub-title">Boarding Details</div>
-          <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+          <div className='layout-sub-title'>Boarding Details</div>
+          <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
             {boardingDetails.map((item, i) => {
-              return item.type === "dropdown" ? (
+              return item.type === 'dropdown' ? (
                 <DropDown
                   key={i}
                   page={item.page}
@@ -335,7 +335,7 @@ export default function Create() {
                   setter={item.setter}
                   isRequired={item.isRequired}
                 />
-              ) : item.type === "upload" ? (
+              ) : item.type === 'upload' ? (
                 <FilePicker title={item.title} value={item.value} setter={item.setter} />
               ) : (
                 <TextField
@@ -350,12 +350,12 @@ export default function Create() {
               );
             })}
           </div>
-          <div className="layout-sub-title">Fee Details</div>
-          <div className="layout-form" style={{ justifyContent: "flex-start" }}>
+          <div className='layout-sub-title'>Fee Details</div>
+          <div className='layout-form' style={{ justifyContent: 'flex-start' }}>
             {feeDetails.map((item, i) => {
-              return item.type === "dropdown" ? (
+              return item.type === 'dropdown' ? (
                 <DropDown key={i} title={item.title} options={item.options} value={item.value} setter={item.setter} onChange={item.onChange} />
-              ) : item.type === "upload" ? (
+              ) : item.type === 'upload' ? (
                 <FilePicker title={item.title} value={item.value} setter={item.setter} />
               ) : (
                 <TextField
@@ -370,45 +370,47 @@ export default function Create() {
               );
             })}
           </div>
-          <div className="layout-not-student">
+          <div className='layout-not-student'>
             <h1>Add CLF Subscription </h1>
             <Switch
               onChange={(e) => {
                 setClf((state) => !state);
               }}
               value={!clf}
-              size="md"
+              size='md'
               defaultIsChecked={false}
             />
           </div>
           <div
-            className="layout-form"
+            className='layout-form'
             style={{
-              width: "80%",
-              flexWrap: "wrap",
+              width: '80%',
+              flexWrap: 'wrap',
             }}
           >
-            <div className="layout-sub-small" style={{ flex: 1 }}>
+            <div className='layout-sub-small' style={{ flex: 1 }}>
               Amount - ₹{amount}/-
             </div>
-            <div className="layout-sub-small" style={{ flex: 1 }}>
+            <div className='layout-sub-small' style={{ flex: 1 }}>
               Discount - ₹{discount}/-
             </div>
-            <div className="layout-sub-small" style={{ flex: 1 }}>
+            <div className='layout-sub-small' style={{ flex: 1 }}>
               Total - ₹{total}/-
             </div>
-            <div className="layout-sub-small" style={{ flex: 1 }}>
+            <div className='layout-sub-small' style={{ flex: 1 }}>
               Due Date - {dueDate}
             </div>
           </div>
           {clf ? (
-            <div className="layout-sub-small" style={{ flex: 1 }}>
+            <div className='layout-sub-small' style={{ flex: 1 }}>
               CLF - ₹500/-
             </div>
           ) : null}
           <SaveButton
-            collection={"passenger"}
-            reset={setClean}
+            collection={'passenger'}
+            reset={() => {
+              console.log('reset');
+            }}
             data={{
               name,
               phone: `+91${phone}`,
@@ -422,7 +424,7 @@ export default function Create() {
               passengerID,
               school: school?.id,
               location: {
-                type: "Point",
+                type: 'Point',
                 coordinates: [0, 0],
                 address,
               },
