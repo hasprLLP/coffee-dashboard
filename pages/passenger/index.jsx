@@ -12,8 +12,9 @@ export default function Passenger() {
   const router = useRouter()
   const [student, setStudent] = useState('')
 
-  const passengersData = useFetch(`passenger?populate=["route","school","activeTransaction","appUser","feePackage"]`)
+  const passengersData = useFetch(`passenger`)
   const data = passengersData?.data
+
 
   //$ States and Hooks [#STATES#]
   const onEdit = (id, data) => {

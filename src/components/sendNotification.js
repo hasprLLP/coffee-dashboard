@@ -4,7 +4,7 @@ const sendNotification = (data_, user) => {
   // Loop for all students
   try {
     user.forEach(async token => {
-      console.log('Token: ', token)
+    
       // Send Photo from FCM Cloud Messaging
 
       var data = {
