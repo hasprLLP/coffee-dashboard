@@ -228,6 +228,7 @@ export default function Details() {
 
   //$ Accept Payment
   const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
+  console.log('going', data?.paymentRequest)
 
   const acceptPayment = async () => {
     try {
@@ -414,8 +415,8 @@ export default function Details() {
       date: item?.payDate?.substring(0, 10),
     }
   })
-  const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
-  const dataClf = fetchDataClf?.data //` Response from API
+  // const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
+  // const dataClf = fetchDataClf?.data //` Response from API
 
   //@ Columns
   const tableColumn = [
