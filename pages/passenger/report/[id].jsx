@@ -14,6 +14,8 @@ import GeneralCard from '@/components/generalcard'
 import GeneralTable from '@/components/generaltable'
 import GeneralMoney from '@/components/generalmoney'
 import GoogleMapReact from 'google-map-react'
+import CollectFee from '@/components/collectFee'
+import sendNotification from '@/components/sendNotification'
 
 //& Create & Export Driver [#FUNCTION#]
 export default function Details() {
@@ -43,6 +45,8 @@ export default function Details() {
     }
   }, [id])
 
+  const fcmToken = data?.appUser?.fcmToken
+
   //@ Fetch Packages
   const getPackages = useCallback(async () => {
     try {
@@ -62,7 +66,6 @@ export default function Details() {
   const getRoutes = useCallback(async () => {
     try {
       const response = await axios.get(`route?school=${data?.school?.id}`)
-      console.log(response?.data?.data)
       setRoutes(response?.data?.data)
       let tempRoutesName = []
       response?.data?.data.map(route => {
@@ -113,7 +116,15 @@ export default function Details() {
     try {
       const res = await axios.post(`passenger/assign_route/${data.id}?route=${route.id}`)
       setData(data => ({ ...data, route: res.data.data }))
-
+      sendNotification(
+        {
+          title: 'Congratulations',
+          body: `${data?.name} been assigned a new route`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
       setRouteLoading(false)
     } catch (error) {
       console.log(error)
@@ -139,7 +150,15 @@ export default function Details() {
     try {
       const res = await axios.post(`passenger/assign_fee_package/${data.id}?fee_package=${package_.id}`)
       setData(data => ({ ...data, feePackage: res.data.data }))
-
+      sendNotification(
+        {
+          title: 'Congratulations',
+          body: `${data?.name} been assigned ${res.data.data.name}`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
       setPackageLoading(false)
     } catch (error) {
       console.log(error)
@@ -164,9 +183,16 @@ export default function Details() {
     setVerifyLoading(true)
     try {
       const res = await axios.post(`passenger/verify/${data.id}`)
-
       setData(data => ({ ...data, isVerified: res.data.data }))
-
+      sendNotification(
+        {
+          title: `Congratulations ${data?.name}`,
+          body: `Make Payment and Let's Start your child's new Journey`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
       setVerifyLoading(false)
     } catch (error) {
       console.log(error)
@@ -200,10 +226,34 @@ export default function Details() {
     getRoutes()
   }, [getPackages, getStudentData, getRoutes])
 
+  //$ Accept Payment
+  const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
+
+  const acceptPayment = async () => {
+    try {
+      const response = await axios.post(`payment/${data?.paymentRequest}`, {
+        deposit: pendingCashRequests?.data?.bill?.total,
+      })
+      sendNotification(
+        {
+          title: `Congratulations ${data?.name}`,
+          body: `Payment has been processed and you can now Track Bus, View Attendance and make payments Online`,
+          android_channel_id: 'notification',
+          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
+        },
+        [fcmToken]
+      )
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   //$ Modal
   const onOpenRoute = useRef()
   const onOpenPackage = useRef()
   const onOpenVerify = useRef()
+  const onOpenPayment = useRef()
 
   //! New Panel
   //! Code Starts Here
@@ -366,7 +416,6 @@ export default function Details() {
   })
   const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
   const dataClf = fetchDataClf?.data //` Response from API
-  console.log('clf', dataClf)
 
   //@ Columns
   const tableColumn = [
@@ -415,6 +464,8 @@ export default function Details() {
 
   //@ Get Middle Point of All Students
   const { midLat, midLng } = getMidPoint(students)
+
+  console.log('help plix', pendingCashRequests)
 
   //@ UI
   function RouteView() {
@@ -591,7 +642,7 @@ export default function Details() {
               <span style={{ color: 'red' }}>{!data?.feePackage ? '⚠️' : ''}</span>
             </div>
             <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-              <div className="button" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="button" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1vw' }}>
                 {data?.isVerified ? (
                   <Button
                     onClick={() => {
@@ -612,6 +663,17 @@ export default function Details() {
                 )}
                 <Notification type={''} />
               </div>
+            </div>
+            {/* //$ Accept Payment */}
+            <div>
+              <b>Accept Payment</b>
+            </div>
+            <div style={{ width: '100%' }}>
+              {pendingCashRequests?.data && !pendingCashRequests?.data?.isResolved ? (
+                <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={() => onOpenPayment.current.showAlert()} />
+              ) : (
+                <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>Fees not Payed Yet</div>
+              )}
             </div>
           </div>
         </div>
@@ -662,6 +724,13 @@ export default function Details() {
         Message="Passenger no longer will be able to use Application."
         ref={onOpenVerify}
         fun={verifyPassenger}
+        type="warning"
+      />
+      <BasicModal
+        Head="Verify as Payment Received!"
+        Message="Please Make Sure Money is Received Before Continuing."
+        ref={onOpenPayment}
+        fun={acceptPayment}
         type="warning"
       />
     </div>

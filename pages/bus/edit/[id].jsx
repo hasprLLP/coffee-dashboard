@@ -23,6 +23,7 @@ export default function EditBus() {
   const [commission, setCommission] = useState(10)
   const [vehicleType, setVehicleType] = useState('')
   const [selfOwn, setSelfOwn] = useState(false)
+  const [photos, setPhotos] = useState()
   const [RCPhoto, setRCPhoto] = useState()
   const [permitPhoto, setPermitPhoto] = useState()
   const [pucPhoto, setPucPhoto] = useState()
@@ -68,6 +69,7 @@ export default function EditBus() {
     { title: 'Bus No (RC)', isRequired: true, placeholder: 'Provide Registration No', value: RCNumber, setter: setRCNumber },
     { title: 'Capacity', placeholder: 'Bus Seating Capacity', type: 'number', value: capacity, setter: setCapacity },
     { title: 'Vehicle Type', options: ['Bus', 'Mini-Bus', 'Van'], value: vehicleType, setter: setVehicleType, type: 'dropdown' },
+    { title: 'Bus Photos', value: photos, setter: setPhotos, type: 'upload' },
     { title: 'RC Photo', value: RCPhoto, setter: setRCPhoto, type: 'upload' },
     { title: 'Permit Photo', value: permitPhoto, setter: setPermitPhoto, type: 'upload' },
     { title: 'PUC Photo', value: pucPhoto, setter: setPucPhoto, type: 'upload' },
@@ -137,7 +139,7 @@ export default function EditBus() {
         <div className="layout-edit-row">
           <UpdateButton
             collection={`bus/${id}`}
-            data={{ name, RCNumber, capacity, vehicleType, RCPhoto, permitPhoto, pucPhoto, fitnessPhoto, insurancePhoto }}
+            data={{ name, RCNumber, capacity, vehicleType, photos: [photos], RCPhoto, permitPhoto, pucPhoto, fitnessPhoto, insurancePhoto }}
           />
           <DeleteButton
             collection={'bus'}

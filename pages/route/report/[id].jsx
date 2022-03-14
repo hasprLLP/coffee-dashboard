@@ -27,6 +27,7 @@ export default function Details() {
   //@ Data
   const fetchData = useFetch(`route/${id}`); //` Get Owner Details API
   const data = fetchData?.data; //` Response from API
+  console.log(data);
 
   //@ UI
   function BasicView() {
@@ -61,7 +62,7 @@ export default function Details() {
           <div className="layout-form" style={{ justifyContent: "flex-start", alignItems: "flex-end" }}>
             <TextField type={"show"} title={"Route Name"} placeholder={"No Name"} value={convertAMPM(data?.morningDeparture)} />
             <TextField type={"show"} title={"Starts From"} placeholder={"No Start Address"} value={convertAMPM(data?.morningArrival)} />
-            <TextField type={"show"} title={"Departure"} placeholder={"No Password"} value={convertAMPM(data?.eveningDeparture)} />
+            <TextField type={"show"} title={"Departure"} placeholder={"No Password"} value={convertAMPM(data?.afternoonDeparture)} />
           </div>
         )}
       </div>

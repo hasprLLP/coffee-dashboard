@@ -24,9 +24,13 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const fetchData = useFetch(`school/${id}`) //` Get Owner Details API
-  const data2 = fetchData?.data //` Response from API
-  const data = (data2?.length && data2[0]) || {}
+  const populateRoute = {
+    path: "routes",
+    select: "upTrace,downTrace",
+  }
+  const fetchData = useFetch(`school/${id}?populate=${JSON.stringify(populateRoute)}`) //` Get Owner Details API
+  const data = fetchData?.data //` Response from API
+  console.log(data)
 
   //@ UI
   function BasicView() {

@@ -16,7 +16,7 @@ import firebaseApp from '@/firebase/index'
 import TextField from '@/components/input'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-const FilePicker = ({ title, value, setter }) => {
+const FilePicker = ({ title, value, setter, multiple }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [expiry, setExpiry] = useState()
   const [photo, setPhoto] = useState({})

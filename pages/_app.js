@@ -29,6 +29,7 @@ export default function MyApp({ Component, pageProps }) {
   const [isVerified, setIsVerified] = useState(false)
   const device = useDeviceType()
 
+
   //$ Run on Page Load - Scroll Jack
   useLayoutEffect(() => {
     const view = document.querySelector('.home') //` Declare View Reference to be Jellyfied

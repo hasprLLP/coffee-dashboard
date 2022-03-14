@@ -12,10 +12,7 @@ export default function Dashboard() {
 
   const counts = useFetch(`details/counts`)
   const unverifiedPassengers = useFetch(`details/unverified_passengers`)
-  const pendingCashRequests = useFetch(`payment`)
-
-  console.log(pendingCashRequests);
-  
+  const pendingCashRequests = useFetch(`payment?populate=["passenger"]`)
 
   const onButton = (id, data) => {
     router.push({ pathname: `/passenger/report/${id}`, query: { data: JSON.stringify(data) } })
@@ -46,11 +43,11 @@ export default function Dashboard() {
                   })
                 : 'No Pending Verifications'}
             </div>
-            <div className="dashboard-verify">
+            <div className="dashboard-verify flex-more">
               <div className="dashboard-subtitle">Verify Fee Payment</div>
               {pendingCashRequests?.data?.length > 0
                 ? pendingCashRequests?.data?.map((item, index) => {
-                    return <CollectFee key={index} item={item} />
+                    return !item?.isResolved ? <CollectFee key={index} item={item} onButton={onButton} /> : null
                   })
                 : 'No pending requests'}
             </div>

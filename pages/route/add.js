@@ -13,7 +13,7 @@ export default function AddRoute() {
   const [name, setName] = useState();
   const [morningDeparture, setMorningDeparture] = useState("06:00 AM");
   const [morningArrival, setMorningArrival] = useState("08:00 AM");
-  const [eveningDeparture, setEveningDeparture] = useState("02:00 PM");
+  const [afternoonDeparture, setEveningDeparture] = useState("02:00 PM");
   const [startsFrom, setStartsFrom] = useState();
   const [school, setSchool] = useState({});
   const [schools, setSchools] = useState([]);
@@ -89,7 +89,7 @@ export default function AddRoute() {
       title: 'Bus Leaves School (Evening)',
       type: 'time',
       placeholder: 'Time of departure in evening',
-      value: eveningDeparture,
+      value: afternoonDeparture,
       setter: setEveningDeparture,
     },
   ];
@@ -146,7 +146,7 @@ export default function AddRoute() {
             name,
             morningDeparture,
             morningArrival,
-            eveningDeparture,
+            afternoonDeparture,
             startsFrom: {
               type: 'Point',
               coordinates: [0, 0],

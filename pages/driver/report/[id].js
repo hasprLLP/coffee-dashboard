@@ -25,8 +25,7 @@ export default function Details() {
   //$ 1: Basic Details
   //@ Data
   const fetchData = useFetch(`operator/${id}`) //` Get Bus Details API
-  const data2 = fetchData?.data //` Response from API
-  const data = (data2?.length && data2[0]) || {}
+  const data = fetchData?.data //` Response from API
 
   //@ UI
   function BasicView() {
@@ -49,7 +48,7 @@ export default function Details() {
           </div>
           <TextField type={'show'} title={'Driver Name'} placeholder={'No Name'} value={data?.name} />
           <TextField type={'show'} title={'Phone No'} placeholder={'No Phone'} value={data?.phone} />
-          <TextField type={'show'} title={'DOB'} placeholder={'No DOB'} value={data?.DOB?.formattedDate} />
+          <TextField type={'show'} title={'DOB'} placeholder={'No DOB'} value={data?.DOB.substring(0,10)} />
           <TextField type={'show'} title={'PIN'} placeholder={'No Pin'} value={data?.pin} />
         </div>
       </div>
