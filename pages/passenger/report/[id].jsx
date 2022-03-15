@@ -236,9 +236,15 @@ export default function Details() {
     getRoutes()
   }, [getPackages, getStudentData, getRoutes])
 
+  useEffect(() => {
+    if (!data) {
+      getStudentData()
+    }
+  }, [data])
+
   //$ Accept Payment
   const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
-  console.log('going', data)
+  // console.log('going', data)
 
   const acceptPayment = async () => {
     try {
@@ -258,6 +264,7 @@ export default function Details() {
         },
         [fcmToken]
       )
+      setData(null) //! Testing Fix if Works Keeping Else Remove
       console.log(response)
     } catch (error) {
       console.log(error)
