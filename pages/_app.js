@@ -6,7 +6,7 @@ import Footer from '@/blocks/footer'
 import Drawer from '@/blocks/drawer'
 import Login from '@/pages/login'
 import { Global } from '@/global/global'
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 import Scrollbar from 'smooth-scrollbar'
 import EdgeDamping from '@/helpers/edgeDamping'
 import { useRouter } from 'next/router'
@@ -28,6 +28,10 @@ export default function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isVerified, setIsVerified] = useState(false)
   const device = useDeviceType()
+
+  if (typeof document === 'undefined') {
+    useLayoutEffect = useEffect
+  }
 
 
   //$ Run on Page Load - Scroll Jack

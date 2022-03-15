@@ -12,7 +12,7 @@ export default function Passenger() {
   const router = useRouter()
   const [student, setStudent] = useState('')
 
-  const passengersData = useFetch(`passenger/?populate=["route","school","lastTransaction","user","feePackage"]`)
+  const passengersData = useFetch(`passenger`)
   const data = passengersData?.data
 
 
