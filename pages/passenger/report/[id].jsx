@@ -672,7 +672,7 @@ export default function Details() {
               {pendingCashRequests?.data && !pendingCashRequests?.data?.isResolved ? (
                 <CollectFee type={'solo'} item={pendingCashRequests?.data} student={data} onButton={() => onOpenPayment.current.showAlert()} />
               ) : (
-                <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>Fees not Payed Yet</div>
+                <div style={{ color: 'red', width: '100%', marginBottom: '2vw' }}>No New Fees Yet</div>
               )}
             </div>
           </div>
