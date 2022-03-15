@@ -128,9 +128,9 @@ export default function Details() {
             position: 'relative',
           }}
         >
+          {/* <GeneralStats type={'green'} title={'Money'} />
           <GeneralStats type={'green'} title={'Money'} />
-          <GeneralStats type={'green'} title={'Money'} />
-          <GeneralStats type={'red'} title={'Pending'} />
+          <GeneralStats type={'red'} title={'Pending'} /> */}
           {/* {dataStats && ( */}
           <div className="layout-form-row" style={{ position: 'absolute', bottom: '-15%', right: '2%' }}>
             <Button onClick={() => ref1.current.showAlert()} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
@@ -195,9 +195,9 @@ export default function Details() {
                 key={i}
                 id={bus.id}
                 page={'bus'}
-                first={bus.bus.RCNumber}
-                second={bus.bus.name}
-                third={`Commission ₹ ${bus.bus.commission}`}
+                first={bus?.bus?.RCNumber}
+                second={bus?.bus?.name}
+                third={`Commission ₹ ${bus?.bus?.commission}`}
               />
             )
           })}

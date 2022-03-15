@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getStorage, ref } from "firebase/storage";
+import { initializeApp } from 'firebase/app'
+import { getStorage, ref } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDOErppj70OHVt9hjYe8YECU82Ea1eVU40',
@@ -13,10 +13,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig)
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
-var storage = getStorage();
-var storageRef = ref(storage, "/images");
+var storage = getStorage()
+var storageRef = ref(storage, '/')
 
-export { storage, storageRef, firebaseApp as default };
+export { storage, storageRef, firebaseApp as default }

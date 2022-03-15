@@ -25,12 +25,11 @@ export default function Details() {
   //$ 1: Basic Details
   //@ Data
   const populateRoute = {
-    path: "routes",
-    select: "upTrace,downTrace",
+    path: 'routes',
+    select: 'upTrace,downTrace',
   }
   const fetchData = useFetch(`school/${id}?populate=${JSON.stringify(populateRoute)}`) //` Get Owner Details API
   const data = fetchData?.data //` Response from API
-  console.log(data)
 
   //@ UI
   function BasicView() {
@@ -54,7 +53,7 @@ export default function Details() {
           <TextField type={'show'} title={'School Name'} placeholder={'No Name'} value={data?.name} />
           <TextField type={'show'} title={'Phone No'} placeholder={'No Phone'} value={data?.phone} />
           <TextField type={'show'} title={'Prefix'} placeholder={'No Password'} value={data?.prefix} />
-          <TextField type={'show'} title={'City'} placeholder={'No Note'} value={data?.city} />
+          <TextField type={'show'} title={'Address'} placeholder={'No Address'} value={data?.location?.address} />
         </div>
       </div>
     )
@@ -273,39 +272,6 @@ export default function Details() {
   ]
 
   //$ 8: View Route
-  //@ Route Data
-  const route = [
-    { lat: 23.846, lng: 78.801 },
-    { lat: 23.856, lng: 78.811 },
-    { lat: 23.866, lng: 78.821 },
-    { lat: 23.876, lng: 78.831 },
-    { lat: 23.896, lng: 78.841 },
-  ]
-
-  //@ Student Boarding Points
-  const students = [
-    { name: 'Pradhyum Upadhyay', lat: 23.896, lng: 78.841 },
-    { name: 'Sanjay Kumar', lat: 23.866, lng: 78.821 },
-    { name: 'Harsh Dangi', lat: 23.876, lng: 78.831 },
-    { name: 'Sanjay Kumar', lat: 23.856, lng: 78.811 },
-    { name: 'Abhay Rohit', lat: 23.846, lng: 78.801 },
-  ]
-
-  //@ Function To Draw Path
-  const drawPath = google => {
-    var flightPath = new google.maps.Polyline({
-      path: route,
-      geodesic: true,
-      strokeColor: '#38b2ac',
-      strokeOpacity: 0.3,
-      strokeWeight: 7,
-    })
-
-    flightPath.setMap(google.map)
-  }
-
-  //@ Get Middle Point of All Students
-  const { midLat, midLng } = getMidPoint(students)
 
   //@ UI
   function RouteView() {
@@ -318,25 +284,20 @@ export default function Details() {
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.MAP_KEY, libraries: ['places', 'geometry', 'drawing', 'visualization'] }}
           defaultCenter={{
-            lat: midLat || 0,
-            lng: midLng || 0,
+            lat: data?.location?.coordinates[0] || 0,
+            lng: data?.location?.coordinates[1] || 0,
           }}
-          defaultZoom={13}
+          defaultZoom={17}
           yesIWantToUseGoogleMapApiInternals={true}
-          onGoogleApiLoaded={drawPath}
+          // onGoogleApiLoaded={drawPath}
         >
-          {/* //@ Students on Map */}
-          {students.map((student, i) => {
-            return (
-              <div key={i} lat={student.lat} lng={student.lng} text="My Marker">
-                <img
-                  alt="tracking"
-                  style={{ width: '2.5vw', height: '100%', objectFit: 'contain', transform: 'translate(-50%,-90%)' }}
-                  src={'/static/svg/tracking.svg'}
-                />
-              </div>
-            )
-          })}
+          <div lat={data?.location?.coordinates[0] || 0} lng={data?.location?.coordinates[1] || 0} text="School Location">
+            <img
+              alt="tracking"
+              style={{ width: '2.5vw', height: '100%', objectFit: 'contain', transform: 'translate(-50%,-90%)' }}
+              src={'/static/svg/tracking.svg'}
+            />
+          </div>
         </GoogleMapReact>
       </div>
     )
@@ -371,7 +332,7 @@ export default function Details() {
         {/* //& 8: Route Display */}
         <div style={{ width: '100%', marginTop: '2vw' }}>
           <div className="layout-sub-title" style={{ color: 'black', width: '100%', marginBottom: '1vw' }}>
-            Route On Map
+            Bus Location On Map
           </div>
         </div>
         <RouteView />
