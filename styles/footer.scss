@@ -1,7 +1,7 @@
 //& Footer
 .footer {
   $root: &;
-  
+
   position: fixed;
   z-index: 5000;
   bottom: 2%;
@@ -9,4 +9,5 @@
   font-size: $h5;
   color: $color-disabled;
   cursor: pointer;
+  pointer-events: none;
 }
