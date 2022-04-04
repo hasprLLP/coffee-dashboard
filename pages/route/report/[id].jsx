@@ -27,7 +27,6 @@ export default function Details() {
   //@ Data
   const fetchData = useFetch(`route/${id}`) //` Get Owner Details API
   const data = fetchData?.data //` Response from API
-  console.log(data)
 
   //@ UI
   function BasicView() {
@@ -70,27 +69,27 @@ export default function Details() {
   }
 
   //$ 2: Control Panel Actions
-  //@ Data
-  const ref1 = useRef() //` Modal Ref 1
-  const ref2 = useRef() //` Modal Ref 2
-  //@ Function 1
-  const change1 = () => {
-    try {
-      alert('Do Something')
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  //@ Function 2
-  const change2 = () => {
-    try {
-      alert('Do Something')
-    } catch (error) {
-      console.log(error)
-    }
-  }
   //@ UI
   function ControlsView() {
+    //@ Data
+    const ref1 = useRef() //` Modal Ref 1
+    const ref2 = useRef() //` Modal Ref 2
+    //@ Function 1
+    const change1 = () => {
+      try {
+        alert('Do Something')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    //@ Function 2
+    const change2 = () => {
+      try {
+        alert('Do Something')
+      } catch (error) {
+        console.log(error)
+      }
+    }
     return (
       <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
         <DropDown title={'Change Bus'} options={[]} value={''} setter={null} />
@@ -106,10 +105,10 @@ export default function Details() {
   }
 
   //$ 3: List of Passengers
-  //@ Data
-  const passengersList = data?.passengers
   //@ UI
   function StudentsView() {
+    //@ Data
+    const passengersList = data?.passengers
     return (
       <>
         <div style={{ width: '100%' }}>
@@ -130,20 +129,19 @@ export default function Details() {
   }
 
   //$ 4: Fee Statistics
-  //@ Data
-  const [month, setMonth] = useState()
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  let curMonthNo = new Date().getMonth() + 1
-  let curYearNo = new Date().getYear()
-  const currentMonth = monthNames[new Date().getMonth()]
-
-  //@ Stats
-  const fetchStats = useFetch(`route/stats/${id}`) //` Get Owner Details API
-  const dataStats = fetchStats?.data //` Response from API
-  console.log(dataStats)
-
   //@ UI
   function FeesView() {
+    //@ Data
+    const [month, setMonth] = useState()
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    let curMonthNo = new Date().getMonth() + 1
+    let curYearNo = new Date().getYear()
+    const currentMonth = monthNames[new Date().getMonth()]
+
+    //@ Stats
+    const fetchStats = useFetch(`route/stats/${id}`) //` Get Owner Details API
+    const dataStats = fetchStats?.data //` Response from API
+    console.log(dataStats)
     return (
       <>
         {/* //@ Choose Month */}
@@ -236,73 +234,35 @@ export default function Details() {
   ]
 
   //$ 8: View Route
-  // const route = [
-  //   {
-  //     coordinates: [23.86362509727341, 78.80081381534576],
-  //     timestamp: { type: new Date() },
-  //     passenger: {
-  //       location: {
-  //         coordinates: [23.86362509727341, 78.80081381534576],
-  //       },
-  //     },
-  //   },
-  //   {
-  //     coordinates: [23.862864677645935, 78.80082454189913],
-  //     timestamp: { type: new Date() },
-  //   },
-  //   {
-  //     coordinates: [23.862864697615935, 78.80082754179913],
-  //     timestamp: { type: new Date() },
-  //     passenger: {
-  //       location: {
-  //         coordinates: [23.864, 78.8001],
-  //       },
-  //     },
-  //   },
-  //   {
-  //     coordinates: [23.862864677615935, 78.80072454179913],
-  //     timestamp: { type: new Date() },
-  //   },
-  //   {
-  //     coordinates: [23.862869677615935, 78.80092454179913],
-  //     timestamp: { type: new Date() },
-  //   },
-  //   {
-  //     coordinates: [23.864, 78.8001],
-  //     timestamp: { type: new Date() },
-  //   },
-  // ]
-
-  const [routeTime, setRouteTime] = useState('Morning')
-
-  const routeMapped =
-    routeTime === 'Morning'
-      ? data?.upTrace?.map(path => {
-          return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger || 'OK' }
-        })
-      : data?.downTrace?.map(path => {
-          return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger || 'OK' }
-        })
-  console.log('route onine', routeMapped)
-
-  //@ Function To Draw Path
-  const drawPath = google => {
-    var flightPath = new google.maps.Polyline({
-      path: routeMapped,
-      geodesic: true,
-      strokeColor: '#38b2ac',
-      strokeOpacity: 0.3,
-      strokeWeight: 7,
-    })
-
-    flightPath.setMap(google.map)
-  }
-
-  //@ Get Middle Point of All Students
-  const { midLat, midLng } = getMidPoint(routeMapped)
-
   //@ UI
   function RouteView() {
+    const [routeTime, setRouteTime] = useState('Morning')
+
+    const routeMapped =
+      routeTime === 'Morning'
+        ? data?.upTrace?.map(path => {
+            return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger || 'OK' }
+          })
+        : data?.downTrace?.map(path => {
+            return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger || 'OK' }
+          })
+    console.log('route onine', routeMapped)
+
+    //@ Function To Draw Path
+    const drawPath = google => {
+      var flightPath = new google.maps.Polyline({
+        path: routeMapped,
+        geodesic: true,
+        strokeColor: '#38b2ac',
+        strokeOpacity: 0.3,
+        strokeWeight: 7,
+      })
+
+      flightPath.setMap(google.map)
+    }
+
+    //@ Get Middle Point of All Students
+    const { midLat, midLng } = getMidPoint(routeMapped)
     return (
       <div
         className="layout-form"
