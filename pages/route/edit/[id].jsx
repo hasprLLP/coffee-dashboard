@@ -16,11 +16,11 @@ export default function EditRoute() {
   const { id } = router.query
 
   const lib = ['places']
-  
+
   const [name, setName] = useState()
   const [morningDeparture, setMorningDeparture] = useState()
   const [morningArrival, setMorningArrival] = useState()
-  const [afternoonDeparture, setEveningDeparture] = useState()
+  const [afternoonDeparture, setAfternoonDeparture] = useState()
   const [startsFrom, setStartsFrom] = useState()
   const [school, setSchool] = useState({})
   const [schools, setSchools] = useState([])
@@ -35,7 +35,7 @@ export default function EditRoute() {
       setName(data?.name)
       setMorningDeparture(data?.morningDeparture)
       setMorningArrival(data?.morningArrival)
-      setEveningDeparture(data?.afternoonDeparture)
+      setAfternoonDeparture(data?.afternoonDeparture)
       setStartsFrom(data?.startsFrom?.address)
       setSchool(data?.school)
       setBus(data?.bus)
@@ -101,11 +101,11 @@ export default function EditRoute() {
       setter: setMorningArrival,
     },
     {
-      title: 'Bus Leaves School (Evening)',
+      title: 'Bus Leaves School (Afternoon)',
       type: 'time',
-      placeholder: 'Time of departure in evening',
+      placeholder: 'Time of departure in Afternoon',
       value: afternoonDeparture,
-      setter: setEveningDeparture,
+      setter: setAfternoonDeparture,
     },
   ]
 
