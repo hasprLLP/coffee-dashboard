@@ -53,7 +53,7 @@ export default function Create() {
   const getPackages = useCallback(async () => {
     try {
       const response = await axios.get(`package`)
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setPackages(response.data.data)
       const tempPackageNames = []
       response.data.data.map(bus => {
@@ -61,7 +61,7 @@ export default function Create() {
       })
       setPackageNames(tempPackageNames)
     } catch (error) {
-      console.log('Error while fetching Packages: ', error)
+      // console.log('Error while fetching Packages: ', error)
     }
   }, [])
   const setPackageID = packageName => {
@@ -79,7 +79,7 @@ export default function Create() {
       })
       setSchoolNames(tempSchoolNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }, [])
 
@@ -100,13 +100,13 @@ export default function Create() {
         })
         setRouteNames(tempRoutesName)
       } catch (error) {
-        console.log('error', error)
+        // console.log('error', error)
         setPassengerID('')
         setRoutes([])
         setLoading(false)
       }
     } else {
-      console.log('Here !')
+      // console.log('Here !')
       setSchool({ name: '' })
 
       setRoute({ name: '' })
@@ -181,7 +181,7 @@ export default function Create() {
     }
   }, [pack, package_, joiningDate])
 
-  console.log('p[ack duration', pack)
+  // console.log('p[ack duration', pack)
 
   useEffect(() => {
     setTotal(amount - discount)
@@ -267,7 +267,7 @@ export default function Create() {
                 setIsStudent(!e.target.checked)
               }}
               value={!isStudent}
-              size='md'
+              size="md"
               defaultIsChecked={false}
             />
           </div>
@@ -370,20 +370,20 @@ export default function Create() {
               )
             })}
           </div>
-          <div className='layout-not-student'>
+          <div className="layout-not-student">
             <h1>Add CLF Subscription </h1>
             <Switch
               onChange={e => {
                 setClf(state => !state)
               }}
               value={!clf}
-              size='md'
+              size="md"
               defaultIsChecked={false}
               isChecked={clf}
             />
           </div>
           <div
-            className='layout-form'
+            className="layout-form"
             style={{
               width: '80%',
             }}

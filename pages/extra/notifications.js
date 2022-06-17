@@ -28,7 +28,7 @@ export default function Notifications() {
       })
       setSchoolList(tempSchoolNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }
 
@@ -41,7 +41,7 @@ export default function Notifications() {
       })
       setRouteList(tempRouteNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }
 
@@ -59,7 +59,7 @@ export default function Notifications() {
     try {
       setStatus('success')
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 

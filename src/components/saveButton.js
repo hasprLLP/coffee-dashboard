@@ -1,39 +1,39 @@
-import { Button } from '@chakra-ui/react';
-import Notification from '@/components/notification';
-import axios from 'axios';
-import { useState } from 'react';
+import { Button } from '@chakra-ui/react'
+import Notification from '@/components/notification'
+import axios from 'axios'
+import { useState } from 'react'
 
 const SaveButton = ({ collection, data, reset }) => {
-  const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const onSave = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      const response = await axios.post(`${collection}/`, data);
-      setLoading(false);
-      setStatus('success');
-      Array.isArray(reset) ? reset.map((setter) => {
-        setter("");
-      }) :
-        reset((state) => !state)
-      setStatus();
-
+      const response = await axios.post(`${collection}/`, data)
+      setLoading(false)
+      setStatus('success')
+      Array.isArray(reset)
+        ? reset.map(setter => {
+            setter('')
+          })
+        : reset(state => !state)
+      setStatus()
     } catch (error) {
-      setLoading(false);
-      setStatus(error?.response?.data?.message);
-      console.log(error?.response);
+      setLoading(false)
+      setStatus(error?.response?.data?.message)
+      // console.log(error?.response);
     }
-  };
+  }
   return (
-    <div className='button'>
-      <Button onClick={onSave} colorScheme='teal' size='md' isFullWidth isLoading={loading} loadingText='Submitting'>
+    <div className="button">
+      <Button onClick={onSave} colorScheme="teal" size="md" isFullWidth isLoading={loading} loadingText="Submitting">
         Save
       </Button>
       <Notification type={status} />
     </div>
-  );
-};
+  )
+}
 
-export default SaveButton;
+export default SaveButton

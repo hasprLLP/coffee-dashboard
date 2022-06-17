@@ -5,7 +5,6 @@ import FilePicker from '@/components/filepicker'
 import UpdateButton from '@/components/updateButton'
 import DeleteButton from '@/components/deleteButton'
 import GoBack from '@/helpers/goback'
-import { Switch } from '@chakra-ui/react'
 import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -46,7 +45,7 @@ export default function EditPassenger() {
   const [packages, setPackages] = useState([])
   const [packageNames, setPackageNames] = useState([])
 
-  console.log('Current POack', package_)
+  // console.log('Current POack', package_)
 
   const [pack, setPack] = useState([])
   const [clean, setClean] = useState(true)
@@ -56,7 +55,7 @@ export default function EditPassenger() {
   const getPackages = useCallback(async () => {
     try {
       const response = await axios.get(`package`)
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setPackages(response.data.data)
       const tempPackageNames = []
       response.data.data.map(bus => {
@@ -64,7 +63,7 @@ export default function EditPassenger() {
       })
       setPackageNames(tempPackageNames)
     } catch (error) {
-      console.log('Error while fetching Packages: ', error)
+      // console.log('Error while fetching Packages: ', error)
     }
   }, [])
   const setPackageID = packageName => {
@@ -96,6 +95,8 @@ export default function EditPassenger() {
       const DOB = data?.DOB?.split('T') || ''
       const joiningDate = data?.joiningDate?.split('T') || ''
       const dueDate = data?.payDate?.split('T') || ''
+
+      console.log('dob', DOB)
 
       setIsStudent(data?.isStudent)
       setDOB(DOB[0])
@@ -130,7 +131,7 @@ export default function EditPassenger() {
       })
       setSchoolNames(tempSchoolNames)
     } catch (error) {
-      console.log('School Error', error)
+      // console.log('School Error', error)
     }
   }
   const getRoutes = async () => {
@@ -143,7 +144,7 @@ export default function EditPassenger() {
       })
       setRouteNames(tempRoutesName)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }
 
@@ -234,7 +235,7 @@ export default function EditPassenger() {
     },
     { title: 'Route', isRequired: true, options: routeNames, type: 'number', value: route?.name, setter: setRouteID, type: 'dropdown' },
   ]
-  console.log(pack)
+  // console.log(pack)
 
   const feeDetails = [
     { title: 'Select Package', isRequired: true, options: packageNames, value: package_?.name, setter: setPackageID, type: 'dropdown' },

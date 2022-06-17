@@ -28,6 +28,8 @@ export default function Details() {
   const fetchData = useFetch(`route/${id}`) //` Get Owner Details API
   const data = fetchData?.data //` Response from API
 
+  console.log(data)
+
   //@ UI
   function BasicView() {
     return (
@@ -79,7 +81,7 @@ export default function Details() {
       try {
         alert('Do Something')
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     }
     //@ Function 2
@@ -87,7 +89,7 @@ export default function Details() {
       try {
         alert('Do Something')
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     }
     return (
@@ -104,30 +106,6 @@ export default function Details() {
     )
   }
 
-  //$ 3: List of Passengers
-  //@ UI
-  function StudentsView() {
-    //@ Data
-    const passengersList = data?.passengers
-    return (
-      <>
-        <div style={{ width: '100%' }}>
-          <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginBottom: '1vw' }}>
-            Passengers under {data?.name}
-          </div>
-        </div>
-        {/* //@ Buses Mapped */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {passengersList?.map((kid, i) => {
-            return (
-              <GeneralCard key={i} id={kid.id} page={'passenger'} first={kid.name} second={kid.passengerID} third={kid.cls} photo={kid?.photo?.url} />
-            )
-          })}
-        </div>
-      </>
-    )
-  }
-
   //$ 4: Fee Statistics
   //@ UI
   function FeesView() {
@@ -141,7 +119,7 @@ export default function Details() {
     //@ Stats
     const fetchStats = useFetch(`route/stats/${id}`) //` Get Owner Details API
     const dataStats = fetchStats?.data //` Response from API
-    console.log(dataStats)
+    // console.log(dataStats)
     return (
       <>
         {/* //@ Choose Month */}
@@ -194,7 +172,7 @@ export default function Details() {
 
   //$ 5: List of Bus
   //@ UI
-  function StudentsView() {
+  function BusView() {
     const busCurrent = data?.bus
     return (
       <>
@@ -212,6 +190,26 @@ export default function Details() {
             second={busCurrent?.RCNumber}
             third={'Commission : ₹ ' + busCurrent?.commission}
           />
+        </div>
+      </>
+    )
+  }
+
+  //$ 5: List of Students
+  //@ UI
+  function StudentsView() {
+    return (
+      <>
+        <div style={{ width: '100%' }}>
+          <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '1vw', marginBottom: '1vw' }}>
+            Students on this Route
+          </div>
+        </div>
+        {/* //@ Show Kids Mapped */}
+        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+          {data?.passengers?.map((kid, i) => {
+            return <GeneralCard key={i} id={kid.id} page={'passenger'} first={kid.name} second={kid.passengerID} third={kid.cls} />
+          })}
         </div>
       </>
     )
@@ -246,7 +244,7 @@ export default function Details() {
         : data?.downTrace?.map(path => {
             return { lat: path.coordinates[0], lng: path.coordinates[1], passenger: path.passenger || 'OK' }
           })
-    console.log('route onine', routeMapped)
+    // console.log('route onine', routeMapped)
 
     //@ Function To Draw Path
     const drawPath = google => {
@@ -270,29 +268,38 @@ export default function Details() {
       >
         <DropDown title={'Choose Morning or Evening Route'} options={['Morning', 'Evening']} value={routeTime || 'Morning'} setter={setRouteTime} />
         {/* //@ Map */}
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.MAP_KEY, libraries: ['places', 'geometry', 'drawing', 'visualization'] }}
-          defaultCenter={{
-            lat: midLat || 0,
-            lng: midLng || 0,
-          }}
-          defaultZoom={18}
-          yesIWantToUseGoogleMapApiInternals={true}
-          onGoogleApiLoaded={drawPath}
-        >
-          {/* //@ Students on Map */}
-          {data?.passengers?.map((route, i) => {
-            return route?.location ? (
-              <div key={i} lat={route.location.coordinates[0]} lng={route.location.coordinates[1]} text="My Marker">
-                <img
-                  alt="tracking"
-                  style={{ width: '2.5vw', height: '100%', objectFit: 'contain', transform: 'translate(-50%,-90%)' }}
-                  src={'/static/svg/tracking.svg'}
-                />
-              </div>
-            ) : null
-          })}
-        </GoogleMapReact>
+        {routeMapped?.length ? (
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.MAP_KEY, libraries: ['places', 'geometry', 'drawing', 'visualization'] }}
+            defaultCenter={{
+              lat: midLat || 0,
+              lng: midLng || 0,
+            }}
+            defaultZoom={18}
+            yesIWantToUseGoogleMapApiInternals={true}
+            onGoogleApiLoaded={drawPath}
+          >
+            {/* //@ Students on Map */}
+            {data?.passengers?.map((route, i) => {
+              return route?.location ? (
+                <div key={i} lat={route.location.coordinates[0]} lng={route.location.coordinates[1]} text="My Marker">
+                  <img
+                    alt="tracking"
+                    style={{ width: '2.5vw', height: '100%', objectFit: 'contain', transform: 'translate(-50%,-90%)' }}
+                    src={'/static/svg/tracking.svg'}
+                  />
+                </div>
+              ) : null
+            })}
+          </GoogleMapReact>
+        ) : (
+          <>
+            <br />
+            <div className="layout-sub-title" style={{ width: '100%', height: 'auto', color: 'black', marginTop: '1vw', marginLeft: '1vw' }}>
+              Route Not Available Yet
+            </div>
+          </>
+        )}
       </div>
     )
   }
@@ -320,6 +327,8 @@ export default function Details() {
         </div>
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
+          <BusView />
+          {/* //& 3:  Students */}
           <StudentsView />
           {/* //& 4: Fee Statistics */}
           <div style={{ width: '100%', marginTop: '2vw' }}>

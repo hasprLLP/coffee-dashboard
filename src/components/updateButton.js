@@ -1,35 +1,36 @@
-import { Button } from '@chakra-ui/react';
-import Notification from '@/components/notification';
-import { useState } from 'react';
-import axios from 'axios';
+import { Button } from '@chakra-ui/react'
+import Notification from '@/components/notification'
+import { useState } from 'react'
+import axios from 'axios'
 
 const UpdateButton = ({ collection, data }) => {
-  const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const onUpdate = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      const response = await axios.patch(`${collection}/`, data);
-      console.log(response.status);
-        setStatus('success');
-        setLoading(false);
-        setStatus(null);
+      console.log('Updating...')
+      const response = await axios.patch(`${collection}/`, data)
+      console.log('Update Status : ', response.status)
+      setStatus('success')
+      setStatus(null)
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
-      setStatus(error?.response?.data?.message);
-      console.log(error?.response);
+      setLoading(false)
+      setStatus(error?.response?.data?.message)
+      console.log('Update Error : ', error?.response)
     }
-  };
+  }
   return (
-    <div className='button'>
-      <Button onClick={onUpdate} colorScheme='teal' size='md' isFullWidth>
+    <div className="button">
+      <Button onClick={onUpdate} colorScheme="teal" size="md" isFullWidth isLoading={loading}>
         Update
       </Button>
       <Notification type={status} />
     </div>
-  );
-};
+  )
+}
 
-export default UpdateButton;
+export default UpdateButton

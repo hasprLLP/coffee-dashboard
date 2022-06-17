@@ -24,7 +24,7 @@ export default function Announcements() {
     try {
       alert('Save Announcemnet')
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 

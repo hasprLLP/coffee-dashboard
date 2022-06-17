@@ -158,7 +158,7 @@ const DownloadPDF = ({ data, size, orientation }) => {
           'Loading document...'
         ) : (
           <div style={{ display: 'flex', flexDirection: 'row', paddingTop: '2vw' }}>
-            <BasicButton title="Print Invoice" func={() => console.log('Printed')} />
+            <BasicButton title="Print Invoice" func={() => // console.log('Printed')} />
           </div>
         )
       }

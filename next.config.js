@@ -18,4 +18,9 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV === 'development',
   },
   swcMinify: true,
+  minify: {
+    removeComments: true,
+    minifyCSS: true,
+    minifyJS: true,
+  },
 })

@@ -36,14 +36,14 @@ export default function AddRoute() {
       })
       setSchoolNames(tempSchoolNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }, [])
 
   const getBuses = useCallback(async () => {
     try {
       const response = await axios.get(`bus/`)
-      console.log('response', response)
+      // console.log('response', response)
       setBuses(response.data.data)
       const tempBusNames = []
       response.data.data.map(bus => {
@@ -51,7 +51,7 @@ export default function AddRoute() {
       })
       setBusNames(tempBusNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }, [])
 

@@ -53,7 +53,7 @@ export default function EditBus() {
       })
       setOwnerNames(tempOwnerName)
     } catch (error) {
-      console.log('Error while fetching Owner: ', error)
+      // console.log('Error while fetching Owner: ', error)
     }
   }, [])
 

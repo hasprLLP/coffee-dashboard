@@ -18,7 +18,7 @@ export default function Create() {
   const [commission, setCommission] = useState(0)
   const [vehicleType, setVehicleType] = useState('Bus')
   const [selfOwn, setSelfOwn] = useState(false)
-  const [photos,setPhotos] = useState()
+  const [photos, setPhotos] = useState()
   const [RCPhoto, setRCPhoto] = useState()
   const [permitPhoto, setPermitPhoto] = useState()
   const [pucPhoto, setPucPhoto] = useState()
@@ -37,7 +37,7 @@ export default function Create() {
       })
       setOwnerNames(tempOwnerName)
     } catch (error) {
-      console.log('Error while fetching Owner: ', error)
+      // console.log('Error while fetching Owner: ', error)
     }
   }
 

@@ -52,7 +52,7 @@ export default function EditRoute() {
       })
       setSchoolNames(tempSchoolNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }, [])
 
@@ -66,7 +66,7 @@ export default function EditRoute() {
       })
       setBusNames(tempBusNames)
     } catch (error) {
-      console.log('error', error)
+      // console.log('error', error)
     }
   }, [])
 

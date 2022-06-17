@@ -42,7 +42,7 @@ export default function Login() {
       Cookies.set('authorization', response.data.token)
       ls.set('authorization', response.data.token)
 
-      console.log(response.data.data)
+      // console.log(response.data.data)
 
       axios.defaults.headers.common['authorization'] = response?.data?.token
 
@@ -52,7 +52,7 @@ export default function Login() {
         setLoading(false)
       }
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       setError(err?.response?.data?.message || err?.message)
       setLoading(false)
       setError()
@@ -79,6 +79,7 @@ export default function Login() {
                     <Input
                       focusBorderColor="#38B2AC"
                       type="email"
+                      id="email-field-login"
                       onChange={e => {
                         setEmail(e.target.value)
                       }}
@@ -93,6 +94,7 @@ export default function Login() {
                         setPassword(e.target.value)
                       }}
                       focusBorderColor="#38B2AC"
+                      id="password-field-login"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Password"
                     />

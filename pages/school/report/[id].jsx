@@ -14,7 +14,7 @@ import BasicModal from '@/components/basicModal'
 import getMidPoint from '@/utilities/getMidPoint'
 import GoogleMapReact from 'google-map-react'
 
-//& Create & Export Driver [#FUNCTION#]
+//& Create & Export School [#FUNCTION#]
 export default function Details() {
   //& PART 1: Path and Page Data
   const router = useRouter()
@@ -24,11 +24,7 @@ export default function Details() {
 
   //$ 1: Basic Details
   //@ Data
-  const populateRoute = {
-    path: 'routes',
-    select: 'upTrace,downTrace',
-  }
-  const fetchData = useFetch(`school/${id}?populate=${JSON.stringify(populateRoute)}`) //` Get Owner Details API
+  const fetchData = useFetch(`school/${id}?populate=["routes"]`) //` Get Owner Details API
   const data = fetchData?.data //` Response from API
 
   //@ UI
@@ -60,27 +56,27 @@ export default function Details() {
   }
 
   //$ 2: Control Panel Actions
-  //@ Data
-  const ref1 = useRef() //` Modal Ref 1
-  const ref2 = useRef() //` Modal Ref 2
-  //@ Function 1
-  const change1 = () => {
-    try {
-      alert('Do Something')
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  //@ Function 2
-  const change2 = () => {
-    try {
-      alert('Do Something')
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  //@ UI
   function ControlsView() {
+    //@ Data
+    const ref1 = useRef() //` Modal Ref 1
+    const ref2 = useRef() //` Modal Ref 2
+    //@ Function 1
+    const change1 = () => {
+      try {
+        alert('Do Something')
+      } catch (error) {
+        // console.log(error)
+      }
+    }
+    //@ Function 2
+    const change2 = () => {
+      try {
+        alert('Do Something')
+      } catch (error) {
+        // console.log(error)
+      }
+    }
+    //@ UI
     return (
       <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
         <TextField title={'Change Prefix'} placeholder={'Input Prefix'} />
@@ -103,178 +99,29 @@ export default function Details() {
     )
   }
 
-  //$ 3: List of Buses
-  const fetchDataBus = useFetch(`route?school=${id}`) //` Get Owner Details API //! TODO DONOW
-  const dataBus = fetchDataBus?.data //` Response from API
-  console.log(dataBus)
-
-  //@ Data
-  const buses = [
-    { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
-    { id: '0123', name: 'Red Bus 2', passengers: '59 Passengers', redeem: 'Redeem : ₹600' },
-    { id: '0123', name: 'Red Bus 3', passengers: '60 Passengers', redeem: 'Redeem : ₹700' },
-    { id: '0123', name: 'Red Bus 4', passengers: '51 Passengers', redeem: 'Redeem : ₹800' },
-    { id: '0123', name: 'Red Bus 5', passengers: '52 Passengers', redeem: 'Redeem : ₹900' },
-    { id: '0123', name: 'Red Bus 6', passengers: '53 Passengers', redeem: 'Redeem : ₹250' },
-    { id: '0123', name: 'Red Bus 7', passengers: '54 Passengers', redeem: 'Redeem : ₹100' },
-  ]
+  //$ 5: List of Routes
   //@ UI
-  function BusesView() {
-    return (
-      <>
-        <div style={{ width: '100%' }}>
-          <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginBottom: '1vw' }}>
-            Buses under {data?.name}
-          </div>
-        </div>
-        {/* //@ Buses Mapped */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {buses.map((bus, i) => {
-            return <GeneralCard key={i} id={bus.id} page={'bus'} first={bus.name} second={bus.passengers} third={bus.redeem} />
-          })}
-        </div>
-      </>
-    )
-  }
-
-  //$ 4: Fee Statistics
-  //@ Data
-  const [month, setMonth] = useState()
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const currentMonth = monthNames[new Date().getMonth()]
-  //@ UI
-  function FeesView() {
-    return (
-      <>
-        {/* //@ Choose Month */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <DropDown title={false} options={monthNames} value={month || currentMonth} setter={setMonth} />
-          <div className="button">
-            <Button onClick={() => alert('Change Month')} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
-              Change
-            </Button>
-            <Notification type={''} />
-          </div>
-        </div>
-        {/* //@ Show Money Cards */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <GeneralMoney type={'green'} title={'Redeemed'} />
-          <GeneralMoney type={'green'} title={'Cashback'} />
-          <GeneralMoney type={'blue'} title={'Unverified'} />
-          <GeneralMoney type={'red'} title={'Pending'} />
-        </div>
-      </>
-    )
-  }
-
-  //$ 5: List of Students
-  //@ Data
-  const fetchDataPass = useFetch(`passenger?school=${id}`) //` Get Owner Details API
-  const dataPass = fetchDataPass?.data //` Response from API
-
-  const kids = [
-    { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
-    { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
-    { id: '0123', name: 'Student 3', phone: '9874563254', money: 'Money : ₹700' },
-    { id: '0123', name: 'Student 4', phone: '9874563254', money: 'Money : ₹800' },
-    { id: '0123', name: 'Student 5', phone: '9874563254', money: 'Money : ₹900' },
-    { id: '0123', name: 'Student 6', phone: '9874563254', money: 'Money : ₹250' },
-    { id: '0123', name: 'Student 7', phone: '9874563254', money: 'Money : ₹100' },
-  ]
-  //@ UI
-  function StudentsView() {
+  function RoutesView() {
     return (
       <>
         <div style={{ width: '100%' }}>
           <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '1vw', marginBottom: '1vw' }}>
-            Students under {data?.name}
+            Routes going to {data?.name}
           </div>
         </div>
         {/* //@ Show Kids Mapped */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {kids.map((kid, i) => {
-            return <GeneralCard key={i} id={kid.id} page={'passenger'} first={kid.name} second={kid.phone} third={kid.money} />
+          {data?.routes?.map((kid, i) => {
+            return <GeneralCard key={i} id={kid.id} page={'route'} first={kid.name} second={kid.morningDeparture} third={kid.cls} />
           })}
         </div>
       </>
     )
   }
 
-  //$ 6: View Documents
-  //@ Data
-  const documents = [
-    {
-      id: '0123',
-      name: 'Aadhar Card Front',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'Aadhar Card Back',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'PAN Card',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'Driving License',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'PUC',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-  ]
+  //$ 8: View School on Map
   //@ UI
-  function DocumentsView() {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {documents.map((doc, i) => {
-          return (
-            <div
-              key={i}
-              onClick={() => window.open(doc.url)}
-              style={{
-                fontSize: '1vw',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                color: 'teal',
-                textDecoration: 'underline',
-                padding: '1vw',
-                marginLeft: '-1vw',
-              }}
-            >
-              {doc.name}
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
-
-  //$ 7: Previous Transactions
-  //@ Data
-  const tableData = [
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-    { id: 0, name: 'Transaction', phone: 9874654123, date: '02-01-2022' },
-  ]
-  //@ Columns
-  const tableColumn = [
-    { title: 'ID', field: 'id' },
-    { title: 'Name', field: 'name' },
-    { title: 'Phone', field: 'phone' },
-    { title: 'Date', field: 'date' },
-  ]
-
-  //$ 8: View Route
-
-  //@ UI
-  function RouteView() {
+  function SchoolOnMap() {
     return (
       <div
         className="layout-form"
@@ -323,19 +170,17 @@ export default function Details() {
             <ControlsView />
           </div>
         </div>
-        {/* //& 3:  Bus Owner Buses */}
+        {/* //& 3: Routes */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {/* <BusesView /> */}
-          {/* //& 5: List of Students */}
-          {/* <StudentsView /> */}
+          <RoutesView />
         </div>
         {/* //& 8: Route Display */}
         <div style={{ width: '100%', marginTop: '2vw' }}>
           <div className="layout-sub-title" style={{ color: 'black', width: '100%', marginBottom: '1vw' }}>
-            Bus Location On Map
+            School Location On Map
           </div>
         </div>
-        <RouteView />
+        <SchoolOnMap />
         <br />
       </div>
     </div>

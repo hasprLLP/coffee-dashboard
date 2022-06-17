@@ -41,7 +41,7 @@ export default function Details() {
       const response = await axios.get(`passenger/${id}`)
       setData(response.data.data)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }, [id])
 
@@ -58,7 +58,7 @@ export default function Details() {
       })
       setPackageNames(tempPackageNames)
     } catch (error) {
-      console.log('Error while fetching Packages: ', error)
+      // console.log('Error while fetching Packages: ', error)
     }
   }, [])
 
@@ -73,7 +73,7 @@ export default function Details() {
       })
       setRouteNames(tempRoutesName)
     } catch (error) {
-      console.log('Error while fetching Routes', error)
+      // console.log('Error while fetching Routes', error)
     }
   }, [data?.school?.id])
 
@@ -130,7 +130,7 @@ export default function Details() {
       )
       setRouteLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setRouteLoading(false)
     }
   }
@@ -143,7 +143,7 @@ export default function Details() {
 
       setUnsetRouteLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setUnsetRouteLoading(false)
     }
   }
@@ -167,7 +167,7 @@ export default function Details() {
       )
       setPackageLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setPackageLoading(false)
     }
   }
@@ -180,7 +180,7 @@ export default function Details() {
 
       setUnsetPackageLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setUnsetPackageLoading(false)
     }
   }
@@ -205,7 +205,7 @@ export default function Details() {
       )
       setVerifyLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setVerifyLoading(false)
     }
   }
@@ -222,7 +222,7 @@ export default function Details() {
 
       setExtendDueDateLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setExtendDueDateLoading(false)
     }
   }
@@ -230,21 +230,22 @@ export default function Details() {
   //$ Due date
   const [dueDateChange, setDueDateChange] = useState()
 
-  useEffect(() => {
-    getPackages()
-    getStudentData()
-    getRoutes()
-  }, [getPackages, getStudentData, getRoutes])
-
-  useEffect(() => {
+  //& Get Page Data
+  const getAllData = useCallback(() => {
     if (!data) {
       getStudentData()
     }
-  }, [data])
+    getPackages()
+    getRoutes()
+  }, [getPackages, getRoutes, getStudentData, data])
+
+  useEffect(() => {
+    getAllData()
+  }, [getAllData])
 
   //$ Accept Payment
   const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
-  // console.log('going', data)
+  // // console.log('going', data)
 
   const acceptPayment = async () => {
     try {
@@ -257,7 +258,6 @@ export default function Details() {
           title: `Congratulations ${data?.name}`,
           body: `Payment has been processed and you can now Track Bus, View Attendance and make payments Online`,
           android_channel_id: 'notification',
-          image: 'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg',
           data: {
             code: 0,
           },
@@ -265,9 +265,9 @@ export default function Details() {
         [fcmToken]
       )
       setData(null) //! Testing Fix if Works Keeping Else Remove
-      console.log(response)
+      // console.log(response)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
@@ -286,7 +286,7 @@ export default function Details() {
       <>
         <div style={{ width: '100%' }}>
           <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginBottom: '1vw' }}>
-            {data?.name}&apos; Bus
+            {data?.name}&apos;s Bus
           </div>
         </div>
         {/* //@ Buses Mapped */}
@@ -303,49 +303,20 @@ export default function Details() {
     )
   }
 
-  //$ 4: Fee Statistics
-  //@ Data
-  const [month, setMonth] = useState()
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const currentMonth = monthNames[new Date().getMonth()]
-  //@ UI
-  function FeesView() {
-    return (
-      <>
-        {/* //@ Choose Month */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <DropDown title={false} options={monthNames} value={month || currentMonth} setter={setMonth} />
-          <div className="button">
-            <Button onClick={() => alert('Change Month')} colorScheme="teal" size="md" isFullWidth isLoading={false} loadingText="Submitting">
-              Change
-            </Button>
-            <Notification type={''} />
-          </div>
-        </div>
-        {/* //@ Show Money Cards */}
-        <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <GeneralMoney type={'green'} title={'Redeemed'} />
-          <GeneralMoney type={'green'} title={'Cashback'} />
-          <GeneralMoney type={'blue'} title={'Unverified'} />
-          <GeneralMoney type={'red'} title={'Pending'} />
-        </div>
-      </>
-    )
-  }
-
   //$ 5: List of Students
-  //@ Data
-  const kids = [
-    { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
-    { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
-    { id: '0123', name: 'Student 3', phone: '9874563254', money: 'Money : ₹700' },
-    { id: '0123', name: 'Student 4', phone: '9874563254', money: 'Money : ₹800' },
-    { id: '0123', name: 'Student 5', phone: '9874563254', money: 'Money : ₹900' },
-    { id: '0123', name: 'Student 6', phone: '9874563254', money: 'Money : ₹250' },
-    { id: '0123', name: 'Student 7', phone: '9874563254', money: 'Money : ₹100' },
-  ]
-  //@ UI
+
   function StudentsView() {
+    //@ Data
+    const kids = [
+      { id: '0123', name: 'Student 1', phone: '9874563254', money: 'Money : ₹500' },
+      { id: '0123', name: 'Student 2', phone: '9874563254', money: 'Money : ₹600' },
+      { id: '0123', name: 'Student 3', phone: '9874563254', money: 'Money : ₹700' },
+      { id: '0123', name: 'Student 4', phone: '9874563254', money: 'Money : ₹800' },
+      { id: '0123', name: 'Student 5', phone: '9874563254', money: 'Money : ₹900' },
+      { id: '0123', name: 'Student 6', phone: '9874563254', money: 'Money : ₹250' },
+      { id: '0123', name: 'Student 7', phone: '9874563254', money: 'Money : ₹100' },
+    ]
+    //@ UI
     return (
       <>
         <div style={{ width: '100%' }}>
@@ -363,94 +334,49 @@ export default function Details() {
     )
   }
 
-  //$ 6: View Documents
-  //@ Data
-  const documents = [
-    {
-      id: '0123',
-      name: 'Aadhar Card Front',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'Aadhar Card Back',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'PAN Card',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'Driving License',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-    {
-      id: '0123',
-      name: 'PUC',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
-    },
-  ]
-  //@ UI
-  function DocumentsView() {
+  //$ 7: Previous Transactions
+  function PreviousTransactions() {
+    //@ Data
+    const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
+    const dataTrans = fetchDataTrans?.data //` Response from API
+    const dataTransMap = dataTrans?.map((item, i) => {
+      return {
+        id: i,
+        clf: item?.withClf ? 'CLF' : 'NA',
+        total: item?.noDiscountAmount,
+        discount: item?.discount,
+        amount: item?.amount,
+        invoice: item?.invoice,
+        mode: item?.mode?.toUpperCase(),
+        pack: item?.pack?.toUpperCase(),
+        date: item?.payDate?.substring(0, 10),
+      }
+    })
+    // const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
+    // const dataClf = fetchDataClf?.data //` Response from API
+
+    //@ Columns
+    const tableColumn = [
+      { title: 'SNo', field: 'id' },
+      { title: 'CLF', field: 'clf' },
+      { title: 'Total', field: 'total' },
+      { title: 'Discount', field: 'discount' },
+      { title: 'Amount', field: 'amount' },
+      { title: 'Invoice', field: 'invoice' },
+      { title: 'Mode', field: 'mode' },
+      { title: 'Pack', field: 'pack' },
+      { title: 'Date', field: 'date' },
+    ]
+
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {documents.map((doc, i) => {
-          return (
-            <div
-              key={i}
-              onClick={() => window.open(doc.url)}
-              style={{
-                fontSize: '1vw',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                color: 'teal',
-                textDecoration: 'underline',
-                padding: '1vw',
-                marginLeft: '-1vw',
-              }}
-            >
-              {doc.name}
-            </div>
-          )
-        })}
+      <div style={{ width: '100%' }}>
+        <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>
+          Previous Transactions
+        </div>
+        <GeneralTable title="Transactions" data={dataTransMap} column={tableColumn} />
       </div>
     )
   }
-
-  //$ 7: Previous Transactions
-  //@ Data
-  const fetchDataTrans = useFetch(`transaction?passenger=${id}`) //` Get Owner Details API
-  const dataTrans = fetchDataTrans?.data //` Response from API
-  const dataTransMap = dataTrans?.map((item, i) => {
-    return {
-      id: i,
-      clf: item?.withClf ? 'CLF' : 'NA',
-      total: item?.noDiscountAmount,
-      discount: item?.discount,
-      amount: item?.amount,
-      invoice: item?.invoice,
-      mode: item?.mode?.toUpperCase(),
-      pack: item?.pack?.toUpperCase(),
-      date: item?.payDate?.substring(0, 10),
-    }
-  })
-  // const fetchDataClf = useFetch(`clf_transaction?passenger=${id}`) //` Get Owner Details API
-  // const dataClf = fetchDataClf?.data //` Response from API
-
-  //@ Columns
-  const tableColumn = [
-    { title: 'SNo', field: 'id' },
-    { title: 'CLF', field: 'clf' },
-    { title: 'Total', field: 'total' },
-    { title: 'Discount', field: 'discount' },
-    { title: 'Amount', field: 'amount' },
-    { title: 'Invoice', field: 'invoice' },
-    { title: 'Mode', field: 'mode' },
-    { title: 'Pack', field: 'pack' },
-    { title: 'Date', field: 'date' },
-  ]
 
   //$ 8: View Boarding Point
   //@ UI
@@ -661,20 +587,8 @@ export default function Details() {
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
           <BusesView />
-          {/* //& 4: Fee Statistics */}
-          {/* <div style={{ width: '100%', marginTop: '2vw' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%' }}>
-              Fee Statistics
-            </div>
-          </div>
-          <FeesView /> */}
-          {/* //& 7: Bus Owner Transactions */}
-          <div style={{ width: '100%' }}>
-            <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>
-              Previous Transactions
-            </div>
-            <GeneralTable title="Transactions" data={dataTransMap} column={tableColumn} />
-          </div>
+          {/* //& 7: Previous Transactions */}
+          <PreviousTransactions />
         </div>
         {/* //& 8: Route Display */}
         <div style={{ width: '100%', marginTop: '2vw' }}>

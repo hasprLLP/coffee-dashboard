@@ -1,27 +1,25 @@
-import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button } from "@chakra-ui/react";
-import { useState, useRef } from "react";
-import Cookies from 'js-cookie';
-var ls = require('local-storage');
+import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button } from '@chakra-ui/react'
+import { useState, useRef } from 'react'
+import Cookies from 'js-cookie'
+var ls = require('local-storage')
 import { useRouter } from 'next/router'
 
 export default function Logout() {
+  const router = useRouter()
 
-  const router = useRouter();
-
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const onClose = () => {
     // logout code
     try {
-      ls.clear();
+      ls.clear()
       Cookies.remove('authorization')
       router.push('/login')
     } catch (error) {
-      console.log(error);
-
+      // console.log(error);
     }
-    setIsOpen(false);
-  };
-  const cancelRef = useRef();
+    setIsOpen(false)
+  }
+  const cancelRef = useRef()
 
   return (
     <>
@@ -49,5 +47,5 @@ export default function Logout() {
         </AlertDialogOverlay>
       </AlertDialog>
     </>
-  );
+  )
 }

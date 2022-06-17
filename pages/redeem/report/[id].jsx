@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import GoBack from '@/helpers/goback'
 import DropDown from '@/components/dropdown'
@@ -23,6 +23,7 @@ export default function Details() {
   //& PART 1: Path and Page Data
   const router = useRouter()
   const { id } = router.query //` Doc ID of Bus Owner
+  const [busesHere, setBusesHere] = useState([])
 
   //& PART 2: Panel Sections
 
@@ -30,7 +31,7 @@ export default function Details() {
   //@ Data
   const fetchData = useFetch(`owner/${id}`) //` Get Owner Details API
   const data = fetchData?.data //` Response from API
-  console.log(data)
+
   //@ UI
   function BasicView() {
     return (
@@ -81,7 +82,7 @@ export default function Details() {
     //@ Get Stats Bus Owner
     const fetchDataStats = useFetch(`owner/redeem/${id}?month=${finalMonthNo}&year=${finalYear}`) //` Get Owner Details API
     const dataStats = fetchDataStats?.data //` Response from API
-    console.log(dataStats)
+    // console.log(dataStats)
 
     //@ Data
     const ref1 = useRef() //` Modal Ref 1
@@ -108,7 +109,7 @@ export default function Details() {
       try {
         alert('Do Something')
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     }
 
@@ -167,7 +168,7 @@ export default function Details() {
   //$ 3: List of Buses
   //@ Data
   const dataBus = fetchData?.data?.buses //` Response from API
-  console.log(dataBus)
+  // console.log(dataBus)
 
   const buses = [
     { id: '0123', name: 'Red Bus 1', passengers: '58 Passengers', redeem: 'Redeem : ₹500' },
@@ -189,17 +190,8 @@ export default function Details() {
         </div>
         {/* //@ Buses Mapped */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          {dataBus?.map((bus, i) => {
-            return (
-              <GeneralCard
-                key={i}
-                id={bus.id}
-                page={'bus'}
-                first={bus?.bus?.RCNumber}
-                second={bus?.bus?.name}
-                third={`Commission ₹ ${bus?.bus?.commission}`}
-              />
-            )
+          {busesHere?.map((bus, i) => {
+            return <GeneralCard key={i} id={bus.id} page={'bus'} first={bus?.RCNumber} second={bus?.name} third={`Commission ₹ ${bus?.commission}`} />
           })}
         </div>
       </>
@@ -272,27 +264,27 @@ export default function Details() {
     {
       id: '0123',
       name: 'Aadhar Card Front',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
     },
     {
       id: '0123',
       name: 'Aadhar Card Back',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
     },
     {
       id: '0123',
       name: 'PAN Card',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
     },
     {
       id: '0123',
       name: 'Driving License',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
     },
     {
       id: '0123',
       name: 'PUC',
-      url: 'https://cdn.dnaindia.com/sites/default/files/styles/full/public/2021/09/07/994765-aadhar-card-photo-update.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png',
     },
   ]
   //@ UI
@@ -430,7 +422,7 @@ export default function Details() {
         </div>
         {/* //& 3:  Bus Owner Buses */}
         <div className="layout-form" style={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-          <BusesView />
+          {/* <BusesView /> */}
           {/* //& 7: Bus Owner Transactions */}
           <div style={{ width: '100%' }}>
             <div className="layout-sub-title" style={{ color: 'black', width: '40%', marginTop: '2vw' }}>

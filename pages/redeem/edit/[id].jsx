@@ -23,7 +23,7 @@ export default function EditSchool() {
   useEffect(() => {
     if (router.query.data) {
       const data = JSON.parse(router.query.data)
-      console.log(data)
+      // console.log(data)
       setName(data?.name)
       setPhone(data?.phone)
       setPhoto(data?.photo)
