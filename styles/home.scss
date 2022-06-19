@@ -1,15 +1,22 @@
 .home {
   $root: &;
 
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 100vh;
   background: $color-bg;
 
-  padding-left: 13.5vw;  //` Start off everything beside Drawer
+  padding-left: 13.5vw; //` Start off everything beside Drawer
 
   &-shift {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     padding-left: 4vw;
     padding-top: 2vw;
-    height: 100vh;
+    height: 100%;
   }
 
   &-empty {
@@ -18,10 +25,9 @@
     margin-top: 15vw;
     display: flex;
     flex: 1;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     font-size: $h3;
     color: $color-smooth;
   }
-
 }

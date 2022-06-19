@@ -264,7 +264,7 @@ export default function Details() {
     return (
       <div
         className="layout-form"
-        style={{ height: '75%', width: '95%', borderRadius: 'var(--chakra-radii-lg)', overflow: 'hidden', marginBottom: '2vw' }}
+        style={{ height: '45vw', width: '95%', borderRadius: 'var(--chakra-radii-lg)', overflow: 'hidden', marginBottom: '2vw' }}
       >
         <DropDown title={'Choose Morning or Evening Route'} options={['Morning', 'Evening']} value={routeTime || 'Morning'} setter={setRouteTime} />
         {/* //@ Map */}

@@ -11,7 +11,7 @@ body {
   min-height: 100vh !important;
   margin-top: 0 !important;
   padding-top: 0 !important;
-  overflow: hidden;
+  // overflow: hidden;
 
   background: $color-bg;
   color: $color-text;
@@ -94,9 +94,9 @@ textarea {
 
 //& Buttons
 button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
+[type='button'],
+[type='reset'],
+[type='submit'] {
   &:not(:disabled) {
     cursor: pointer;
   }

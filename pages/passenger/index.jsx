@@ -15,13 +15,12 @@ export default function Passenger() {
   const passengersData = useFetch(`passenger`)
   const data = passengersData?.data
 
-
   //$ States and Hooks [#STATES#]
   const onEdit = (id, data) => {
-    router.push({ pathname: `/passenger/edit/${id}`, query: { data: JSON.stringify(data) } })
+    router.push({ pathname: `/passenger/edit/${id}`, query: { data: id } })
   }
   const onDetail = (id, data) => {
-    router.push({ pathname: `/passenger/report/${id}`, query: { data: JSON.stringify(data) } })
+    router.push({ pathname: `/passenger/report/${id}`, query: { data: id } })
   }
 
   //& Fuse JS [#FUSE#]

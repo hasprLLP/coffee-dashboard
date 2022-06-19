@@ -235,7 +235,7 @@ export default function Details() {
       <div
         className="layout-form"
         style={{
-          height: '75%',
+          height: '45vw',
           width: '95%',
           borderRadius: 'var(--chakra-radii-lg)',
           overflow: 'hidden',

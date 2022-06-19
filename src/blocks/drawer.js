@@ -37,14 +37,7 @@ export default function Drawer() {
 
   return (
     <div className="drawer fixed">
-      <Image
-        alt="logo"
-        src="/icons/logo/logo.png"
-        layout="responsive"
-        width="14.5vw"
-        height="4.5vw"
-        objectFit="contain"
-      />
+      <Image alt="logo" src="/icons/logo/logo.png" layout="responsive" width="14.5vw" height="4.5vw" objectFit="contain" />
       <div className="drawer-gap" />
       <div onClick={dashButton} className="drawer-button">
         <Image
@@ -158,6 +151,7 @@ export default function Drawer() {
           pages={[
             { name: 'Notifications', path: '/extra/notifications' },
             { name: 'Announcements', path: '/extra/announcements' },
+            { name: 'App Banner Ad', path: '/extra/banner' },
           ]}
           active={activePage}
           setter={setActivePage}

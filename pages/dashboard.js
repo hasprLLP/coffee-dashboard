@@ -38,17 +38,23 @@ export default function Dashboard() {
             <div className="dashboard-verify">
               <div className="dashboard-subtitle">Verify Students & Assign Bus</div>
               {unverifiedPassengers?.data?.length > 0
-                ? unverifiedPassengers?.data?.map((item, index) => {
-                    return <VerifyStudent key={index} student={item} onButton={onButton} />
-                  })
+                ? unverifiedPassengers?.data
+                    ?.slice(0)
+                    .reverse()
+                    .map((item, index) => {
+                      return <VerifyStudent key={index} student={item} onButton={onButton} />
+                    })
                 : 'No Pending Verifications'}
             </div>
             <div className="dashboard-verify flex-more">
               <div className="dashboard-subtitle">Verify Fee Payment</div>
               {pendingCashRequests?.data?.length > 0
-                ? pendingCashRequests?.data?.map((item, index) => {
-                    return !item?.isResolved ? <CollectFee key={index} item={item} onButton={onButton} /> : null
-                  })
+                ? pendingCashRequests?.data
+                    ?.slice(0)
+                    .reverse()
+                    .map((item, index) => {
+                      return !item?.isResolved ? <CollectFee key={index} item={item} onButton={onButton} /> : null
+                    })
                 : 'No pending requests'}
             </div>
           </div>

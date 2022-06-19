@@ -33,20 +33,8 @@ export default function MyApp({ Component, pageProps }) {
     useLayoutEffect = useEffect
   }
 
-
-  //$ Run on Page Load - Scroll Jack
-  useLayoutEffect(() => {
-    const view = document.querySelector('.home') //` Declare View Reference to be Jellyfied
-    const settings = {
-      damping: 0.075,
-      renderByPixels: true,
-    } //` Options
-    Scrollbar.use(EdgeDamping) //` EDGE DAMPING VENDOR PLUGIN
-    view && Scrollbar.init(view, settings)
-  }, [router])
-
   // `Authorization Check
-  useLayoutEffect(() => {
+  useEffect(() => {
     let authorization = Cookies.get('authorization') || ls.get('authorization')
 
     if (!authorization) {
@@ -60,7 +48,7 @@ export default function MyApp({ Component, pageProps }) {
         router.push('/login')
       }
     }
-  }, [router.pathname])
+  }, [router, router.pathname])
 
   return (
     <>
