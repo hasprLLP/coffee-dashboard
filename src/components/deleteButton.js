@@ -11,7 +11,7 @@ const DeleteButton = ({ collection, data }) => {
   const onSave = async () => {
     // setStatus("success");
     // const response = await axios.post(`${process.env.SERVER_URL}${collection}`, data);
-    // // console.log("response", response);
+    // console.log("response", response);
     // if (response.status === 201) {
     //   setStatus("success");
     // } else {

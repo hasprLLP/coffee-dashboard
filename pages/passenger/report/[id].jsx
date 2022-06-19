@@ -65,7 +65,6 @@ export default function Details() {
       try {
         const response = await axios.get(`route?school=${data?.school?.id}`)
         setRoutes(response?.data?.data)
-        console.log('response?.data?.data', response?.data?.data)
         let tempRoutesName = []
         response?.data?.data?.map(route => {
           tempRoutesName.push(route.name)
@@ -79,7 +78,6 @@ export default function Details() {
 
     getPackages()
     if (data?.school?.id) {
-      console.log('data?.school?.id', data?.school?.id)
       getRoutes()
     }
   }, [data?.school?.id])
@@ -240,7 +238,7 @@ export default function Details() {
 
     //$ Accept Payment
     const pendingCashRequests = useFetch(`payment/${data?.paymentRequest}`)
-    // // console.log('going', data)
+    // console.log('going', data)
 
     const acceptPayment = async () => {
       try {
