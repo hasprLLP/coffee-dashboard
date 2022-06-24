@@ -48,7 +48,7 @@ export default function MyApp({ Component, pageProps }) {
         router.push('/login')
       }
     }
-  }, [router, router.pathname])
+  }, [])
 
   return (
     <>
@@ -115,11 +115,9 @@ export default function MyApp({ Component, pageProps }) {
         {/* //$ Footer */}
         <Footer />
         {/* //$ App Entry Point */}
-        <div id="view-main">
-          <Global>
-            <Component {...pageProps} />
-          </Global>
-        </div>
+        <Global>
+          <Component {...pageProps} />
+        </Global>
       </ChakraProvider>
     </>
   )
