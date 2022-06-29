@@ -17,10 +17,10 @@ export default function Passenger() {
 
   //$ States and Hooks [#STATES#]
   const onEdit = (id, data) => {
-    router.push({ pathname: `/passenger/edit/${id}`, query: { data: id } })
+    router.push({ pathname: `/passenger/edit/${id}`, query: { data: JSON.stringify(data) } })
   }
   const onDetail = (id, data) => {
-    router.push({ pathname: `/passenger/report/${id}`, query: { data: id } })
+    router.push({ pathname: `/passenger/report/${id}`, query: { data: JSON.stringify(data) } })
   }
 
   //& Fuse JS [#FUSE#]
